@@ -46,7 +46,7 @@ const demoFeaturedAward: Award = {
     "Federation of Indian Education & Industry Councils (FICCI & WEC)",
   recipientName: "Eklabya Institute of Technology",
   recipientRole: "Academic Excellence Council",
-  externalLink: "https://www.eklabya.com",
+  externalLink: "https://www.inxyme.com",
 };
 
 const demoAwards: Award[] = [
@@ -60,7 +60,7 @@ const demoAwards: Award[] = [
     organizationName: "Global Education Innovation Summit",
     recipientName: "Eklabya Learning Systems",
     recipientRole: "Curriculum Design Team",
-    externalLink: "https://www.eklabya.com",
+    externalLink: "https://www.inxyme.com",
   },
   {
     _id: "demo-2",
@@ -72,7 +72,7 @@ const demoAwards: Award[] = [
     organizationName: "National HR & Talent Development Forum",
     recipientName: "Eklabya Corporate Training Division",
     recipientRole: "Enterprise Solutions",
-    externalLink: "https://www.eklabya.com",
+    externalLink: "https://www.inxyme.com",
   },
   {
     _id: "demo-3",
@@ -84,7 +84,7 @@ const demoAwards: Award[] = [
     organizationName: "Indian Tech & Skill Leadership Council",
     recipientName: "Eklabya",
     recipientRole: "Founding Board",
-    externalLink: "https://www.eklabya.com",
+    externalLink: "https://www.inxyme.com",
   },
   {
     _id: "demo-4",
@@ -96,7 +96,7 @@ const demoAwards: Award[] = [
     organizationName: "Asia-Pacific Digital Education Forum",
     recipientName: "Anand & Mentorship Team",
     recipientRole: "Academic Directors",
-    externalLink: "https://www.eklabya.com",
+    externalLink: "https://www.inxyme.com",
   },
   {
     _id: "demo-5",
@@ -108,7 +108,7 @@ const demoAwards: Award[] = [
     organizationName: "Enterprise Cloud & Software Consortium",
     recipientName: "Eklabya Mentor Network",
     recipientRole: "Technical Instructors",
-    externalLink: "https://www.eklabya.com",
+    externalLink: "https://www.inxyme.com",
   },
 ];
 

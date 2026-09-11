@@ -18,4 +18,4 @@ Disallow: /*?fbclid=
 Disallow: /*?gclid=
 
 # Sitemap
-Sitemap: https://www.eklabya.com/sitemap.xml
+Sitemap: https://www.inxyme.com/sitemap.xml

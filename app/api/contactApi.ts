@@ -6,7 +6,7 @@ export const submitContactForm = async (data: Record<string, any>) => {
 };
 
 export const getSecretContactData = async (
-  secretKey = "eklabya_contact_secret_key_2026",
+  secretKey = "inxyme_contact_secret_key_2026",
   options: Record<string, any> = {},
 ) => {
   const response = await api.get("/contact-data", {

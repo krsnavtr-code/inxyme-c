@@ -244,7 +244,7 @@ export default function MyLearning() {
       <SEO
         title="My Learning Dashboard | Eklabya"
         description="Track your enrolled courses, progress, and continue learning with Eklabya."
-        keywords="my learning, dashboard, enrolled courses, online learning, eklabya"
+        keywords="my learning, dashboard, enrolled courses, online learning, inxyme"
       />
       <div className="max-w-7xl mx-auto">
         <div className="mb-8">

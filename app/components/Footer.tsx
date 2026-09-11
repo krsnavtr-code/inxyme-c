@@ -23,23 +23,23 @@ function Footer() {
       courses: [
         {
           name: "LLMOps Large Language Model Operations",
-          url: "https://www.eklabya.com/course/large-language-model-operations",
+          url: "https://www.inxyme.com/course/large-language-model-operations",
         },
         {
           name: "Machine Learning & AI Certification",
-          url: "https://www.eklabya.com/course/machine-learning-artificial-intelligence-certification",
+          url: "https://www.inxyme.com/course/machine-learning-artificial-intelligence-certification",
         },
         {
           name: "MLOps Certification Training",
-          url: "https://www.eklabya.com/course/machine-learning-operations-training",
+          url: "https://www.inxyme.com/course/machine-learning-operations-training",
         },
         {
           name: "Data Science & Analytics Certification",
-          url: "https://www.eklabya.com/course/data-science-and-data-analytics-course",
+          url: "https://www.inxyme.com/course/data-science-and-data-analytics-course",
         },
         {
           name: "Data Science, Analytics & Power BI Program",
-          url: "https://www.eklabya.com/course/data-science-and-power-bi",
+          url: "https://www.inxyme.com/course/data-science-and-power-bi",
         },
       ],
     },
@@ -48,23 +48,23 @@ function Footer() {
       courses: [
         {
           name: "SAP ABAP Certification Training",
-          url: "https://www.eklabya.com/course/sap-abap-certification-training",
+          url: "https://www.inxyme.com/course/sap-abap-certification-training",
         },
         {
           name: "SAP FICO Financial Accounting",
-          url: "https://www.eklabya.com/course/sap-fico-online-training",
+          url: "https://www.inxyme.com/course/sap-fico-online-training",
         },
         {
           name: "SAP PP Production Planning",
-          url: "https://www.eklabya.com/course/sap-pp-online-traning",
+          url: "https://www.inxyme.com/course/sap-pp-online-traning",
         },
         {
           name: "SAP SD Sales & Distribution",
-          url: "https://www.eklabya.com/course/sap-sd-certification-training",
+          url: "https://www.inxyme.com/course/sap-sd-certification-training",
         },
         {
           name: "SAP MM Materials Management",
-          url: "https://www.eklabya.com/course/sap-mm-online-training",
+          url: "https://www.inxyme.com/course/sap-mm-online-training",
         },
       ],
     },
@@ -73,23 +73,23 @@ function Footer() {
       courses: [
         {
           name: "Python Programming Mastery",
-          url: "https://www.eklabya.com/course/python-programming-mastery-basics-to-advanced",
+          url: "https://www.inxyme.com/course/python-programming-mastery-basics-to-advanced",
         },
         {
           name: "RESTful Web Services API Design",
-          url: "https://www.eklabya.com/course/restful-web-services-api-design-mastery",
+          url: "https://www.inxyme.com/course/restful-web-services-api-design-mastery",
         },
         {
           name: "Node.js Backend Architecture",
-          url: "https://www.eklabya.com/course/node-js-mastery-backend-architecture",
+          url: "https://www.inxyme.com/course/node-js-mastery-backend-architecture",
         },
         {
           name: "Java Web Services Enterprise",
-          url: "https://www.eklabya.com/course/java-web-services-enterprise-integration",
+          url: "https://www.inxyme.com/course/java-web-services-enterprise-integration",
         },
         {
           name: "Core Java Professional Training",
-          url: "https://www.eklabya.com/course/core-java-mastery-professional-training",
+          url: "https://www.inxyme.com/course/core-java-mastery-professional-training",
         },
       ],
     },
@@ -98,15 +98,15 @@ function Footer() {
       courses: [
         {
           name: "Full Stack MERN Stack",
-          url: "https://www.eklabya.com/course/full-stack-web-development-mern-stack",
+          url: "https://www.inxyme.com/course/full-stack-web-development-mern-stack",
         },
         {
           name: "React Native Full Stack",
-          url: "https://www.eklabya.com/course/react-native-full-stack-developer-mastery",
+          url: "https://www.inxyme.com/course/react-native-full-stack-developer-mastery",
         },
         {
           name: "Frontend Mastery HTML CSS JS React",
-          url: "https://www.eklabya.com/course/frontend-web-development",
+          url: "https://www.inxyme.com/course/frontend-web-development",
         },
       ],
     },
@@ -164,10 +164,10 @@ function Footer() {
                   icon: FaWhatsapp,
                   href: "https://wa.me/919891030303?text=Hi%2C%20I%20am%20interested%20in%20learning%20more%20about%20your%20courses.",
                 },
-                { icon: FaTwitter, href: "https://x.com/eklabyaofficial" },
+                { icon: FaTwitter, href: "https://x.com/inxymeofficial" },
                 {
                   icon: FaLinkedin,
-                  href: "https://www.linkedin.com/company/eklabya-centre-of-excellence/",
+                  href: "https://www.linkedin.com/company/inxyme-centre-of-excellence/",
                 },
                 {
                   icon: FaFacebook,
@@ -175,11 +175,11 @@ function Footer() {
                 },
                 {
                   icon: FaInstagram,
-                  href: "https://www.instagram.com/eklabya_official",
+                  href: "https://www.instagram.com/inxyme_official",
                 },
                 {
                   icon: FaPinterest,
-                  href: "https://in.pinterest.com/eklabyaofficial",
+                  href: "https://in.pinterest.com/inxymeofficial",
                 },
               ].map((social, idx) => (
                 <a
@@ -272,19 +272,19 @@ function Footer() {
               <li className="flex items-center gap-2.5">
                 <FaEnvelope className="h-3.5 w-3.5 text-purple-500 shrink-0" />
                 <a
-                  href="mailto:info@eklabya.com"
+                  href="mailto:info@inxyme.com"
                   className="hover:text-blue-600 dark:hover:text-blue-400"
                 >
-                  info@eklabya.com
+                  info@inxyme.com
                 </a>
               </li>
               {/* <li className="flex items-center gap-2.5">
                 <FaEnvelope className="h-3.5 w-3.5 text-purple-500 shrink-0" />
                 <a
-                  href="mailto:anand@eklabya.com"
+                  href="mailto:anand@inxyme.com"
                   className="hover:text-blue-600 dark:hover:text-blue-400"
                 >
-                  anand@eklabya.com
+                  anand@inxyme.com
                 </a>
               </li> */}
             </ul>

@@ -4,7 +4,7 @@ import { fetchCourseBySlug, getSiteBase } from "../../lib/server-api";
 import { getImageUrl } from "../../utils/imageUtils";
 import CourseDetailClient from "../_components/CourseDetailClient";
 
-const FALLBACK_SITE_URL = "https://www.eklabya.com";
+const FALLBACK_SITE_URL = "https://www.inxyme.com";
 
 function getCourseImageUrl(courseImage: string | undefined, siteBase: string) {
   return getImageUrl(courseImage) || `${siteBase}${courseImage}`;
@@ -23,7 +23,7 @@ export async function generateMetadata({
   }
 
   const siteBase = getSiteBase() || FALLBACK_SITE_URL;
-  const courseImage = course.imageUrl || "/images/eklabya-logo-fit-E.jpeg";
+  const courseImage = course.imageUrl || "/images/inxyme-logo-fit-E.jpeg";
   const courseImageUrl = getCourseImageUrl(courseImage, siteBase);
 
   const title = course.metaTitle || course.title;
@@ -68,7 +68,7 @@ export default async function CoursePage({
   }
 
   const siteBase = getSiteBase() || FALLBACK_SITE_URL;
-  const courseImage = course.imageUrl || "/images/eklabya-logo-fit-E.jpeg";
+  const courseImage = course.imageUrl || "/images/inxyme-logo-fit-E.jpeg";
   const courseImageUrl = getCourseImageUrl(courseImage, siteBase);
   const canonical = `${siteBase}/course/${course.slug || slug}`;
   const seoDescription =

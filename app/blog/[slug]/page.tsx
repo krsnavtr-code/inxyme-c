@@ -18,7 +18,7 @@ import { getImageUrl } from "../../utils/imageUtils";
 import ShareButton from "../../components/ShareButton";
 import RelatedPosts from "../_components/RelatedPosts";
 
-const FALLBACK_SITE_URL = "https://www.eklabya.com";
+const FALLBACK_SITE_URL = "https://www.inxyme.com";
 
 const formatDate = (dateString?: string) => {
   if (!dateString) return "";
@@ -80,7 +80,7 @@ export default async function BlogDetailPage({
   const canonical = `${siteBase}/blog/${post.slug}`;
   const blogImage =
     getImageUrl(post.imageUrl || post.featuredImage) ||
-    `${siteBase}/images/eklabya-logo-fit-E.jpeg`;
+    `${siteBase}/images/inxyme-logo-fit-E.jpeg`;
 
   const rawFeaturedImage = post.featuredImage || post.imageUrl;
   const featuredImageUrl = rawFeaturedImage
@@ -107,7 +107,7 @@ export default async function BlogDetailPage({
         name: "The Eklavya",
         logo: {
           "@type": "ImageObject",
-          url: `${siteBase}/images/eklabya-logo-fit-E.jpeg`,
+          url: `${siteBase}/images/inxyme-logo-fit-E.jpeg`,
         },
       },
       datePublished: post.createdAt,

@@ -76,7 +76,7 @@ function SearchContent() {
             : "Search Courses | Eklabya"
         }
         description="Find the right course for your career. Search by title, skill, category, or technology."
-        keywords="search courses, find courses, online learning, eklabya"
+        keywords="search courses, find courses, online learning, inxyme"
       />
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-10">

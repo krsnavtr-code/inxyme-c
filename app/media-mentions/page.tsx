@@ -113,7 +113,7 @@ export default function MediaMentionsPage() {
       <SEO
         title="Media Mentions | Eklabya"
         description="Explore media coverage, press releases, and news mentions about Eklabya."
-        keywords="media mentions, press, news, eklabya, coverage"
+        keywords="media mentions, press, news, inxyme, coverage"
       />
       {/* Hero Section */}
       <div className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-16 px-4">
@@ -332,7 +332,7 @@ export default function MediaMentionsPage() {
               <div className="space-y-2">
                 <p className="text-gray-300">
                   <span className="font-semibold">Email:</span>{" "}
-                  press@eklabya.com
+                  press@inxyme.com
                 </p>
                 <p className="text-gray-300">
                   <span className="font-semibold">Phone:</span> +91 98910 30303

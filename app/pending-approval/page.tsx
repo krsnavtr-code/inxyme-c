@@ -9,7 +9,7 @@ export default function PendingApprovalPage() {
       <SEO
         title="Pending Approval | Eklabya"
         description="Your Eklabya account is pending administrator approval. You will receive an email once approved."
-        keywords="pending approval, account approval, eklabya"
+        keywords="pending approval, account approval, inxyme"
       />
       <div className="max-w-md w-full space-y-8 text-center">
         <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">

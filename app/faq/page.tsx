@@ -67,7 +67,7 @@ export default function FAQPage() {
     );
   }
 
-  const siteBase = "https://www.eklabya.com";
+  const siteBase = "https://www.inxyme.com";
 
   const schemas: Record<string, any>[] = [
     {

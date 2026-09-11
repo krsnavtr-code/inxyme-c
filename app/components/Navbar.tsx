@@ -48,7 +48,7 @@ function Navbar() {
   const pathname = usePathname();
   const { currentUser, isAuthenticated, isAdmin, logout } = useAuth();
   const logoImg =
-    "http://eklabya.com/api/upload/file/eKlabya-fit-logo-8874.png";
+    "http://inxyme.com/api/upload/file/eKlabya-fit-logo-8874.png";
 
   // --- State ---
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -245,7 +245,7 @@ function Navbar() {
               <FaPhoneAlt size={10} /> Call
             </a>
             <a
-              href="mailto:info@eklabya.com"
+              href="mailto:info@inxyme.com"
               className="flex items-center gap-1 hover:text-blue-900 dark:hover:text-orange-300 transition-colors"
             >
               <FaEnvelope size={10} /> Mail
@@ -255,7 +255,7 @@ function Navbar() {
           {/* Mobile */}
           <div className="md:hidden flex items-center gap-4">
             {/* <a
-              href="mailto:info@eklabya.com"
+              href="mailto:info@inxyme.com"
               className="flex items-center gap-1 hover:text-blue-900 dark:hover:text-orange-300 transition-colors"
             >
               <FaEnvelope size={10} />
@@ -644,7 +644,7 @@ function Navbar() {
                 >
                   <img
                     src={logoImg}
-                    alt="eklabya – Your Online Learning Partner"
+                    alt="inxyme – Your Online Learning Partner"
                     className="h-10 rounded"
                   />
                 </Link>

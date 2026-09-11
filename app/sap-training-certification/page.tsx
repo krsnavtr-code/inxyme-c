@@ -53,13 +53,13 @@ export const metadata: Metadata = {
   keywords:
     "SAP training, SAP certification, SAP courses online, SAP ABAP course, SAP FICO course, SAP MM training, SAP SD course, SAP PP training, SAP online training India, SAP certification course, learn SAP, SAP career, Eklabya SAP courses",
   alternates: {
-    canonical: "https://www.eklabya.com/sap-training-certification",
+    canonical: "https://www.inxyme.com/sap-training-certification",
   },
   openGraph: {
     title: "SAP Training & Certification Courses Online in India | Eklabya",
     description:
       "Master SAP with Eklabya's job-oriented online training and certification courses in SAP ABAP, FICO, MM, SD and PP. Live classes, real projects, certification and placement support.",
-    url: "https://www.eklabya.com/sap-training-certification",
+    url: "https://www.inxyme.com/sap-training-certification",
     type: "website",
   },
   twitter: {
@@ -261,7 +261,7 @@ export default function SapTrainingCertification() {
     "@context": "https://schema.org",
     "@type": "ItemList",
     name: "SAP Training & Certification Courses",
-    url: "https://www.eklabya.com/sap-training-certification",
+    url: "https://www.inxyme.com/sap-training-certification",
     itemListElement: sapCourses.map((course, index) => ({
       "@type": "ListItem",
       position: index + 1,
@@ -269,11 +269,11 @@ export default function SapTrainingCertification() {
         "@type": "Course",
         name: course.name,
         description: course.description,
-        url: `https://www.eklabya.com${course.href}`,
+        url: `https://www.inxyme.com${course.href}`,
         provider: {
           "@type": "Organization",
           name: "Eklabya",
-          sameAs: "https://www.eklabya.com",
+          sameAs: "https://www.inxyme.com",
         },
       },
     })),
@@ -287,13 +287,13 @@ export default function SapTrainingCertification() {
         "@type": "ListItem",
         position: 1,
         name: "Home",
-        item: "https://www.eklabya.com",
+        item: "https://www.inxyme.com",
       },
       {
         "@type": "ListItem",
         position: 2,
         name: "SAP Training & Certification",
-        item: "https://www.eklabya.com/sap-training-certification",
+        item: "https://www.inxyme.com/sap-training-certification",
       },
     ],
   };
@@ -821,10 +821,10 @@ export default function SapTrainingCertification() {
                 <div className="flex flex-wrap gap-2 pt-1">
                   {[
                     { icon: FaWhatsapp, href: WHATSAPP_URL },
-                    { icon: FaTwitter, href: "https://x.com/eklabyaofficial" },
+                    { icon: FaTwitter, href: "https://x.com/inxymeofficial" },
                     {
                       icon: FaLinkedin,
-                      href: "https://www.linkedin.com/company/eklabya-centre-of-excellence/",
+                      href: "https://www.linkedin.com/company/inxyme-centre-of-excellence/",
                     },
                     {
                       icon: FaFacebook,
@@ -832,11 +832,11 @@ export default function SapTrainingCertification() {
                     },
                     {
                       icon: FaInstagram,
-                      href: "https://www.instagram.com/eklabya_official",
+                      href: "https://www.instagram.com/inxyme_official",
                     },
                     {
                       icon: FaPinterest,
-                      href: "https://in.pinterest.com/eklabyaofficial",
+                      href: "https://in.pinterest.com/inxymeofficial",
                     },
                   ].map((social, idx) => (
                     <a
@@ -919,10 +919,10 @@ export default function SapTrainingCertification() {
                   <li className="flex items-center gap-2.5">
                     <FaEnvelope className="h-3.5 w-3.5 text-purple-500 shrink-0" />
                     <a
-                      href="mailto:info@eklabya.com"
+                      href="mailto:info@inxyme.com"
                       className="hover:text-blue-400"
                     >
-                      info@eklabya.com
+                      info@inxyme.com
                     </a>
                   </li>
                 </ul>

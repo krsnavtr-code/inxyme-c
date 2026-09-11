@@ -17,13 +17,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Eklabya",
-  description: "Eklabya - Online Learning Platform",
+  title: "Inxyme",
+  description: "Inxyme - Online Learning Platform",
   icons: {
     icon: {
       rel: "icon",
       type: "image/png",
-      url: "/images/eKlabya-e-fit.png",
+      url: "/images/inxyme-logo.png",
     },
   },
 };

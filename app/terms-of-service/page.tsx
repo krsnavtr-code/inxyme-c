@@ -32,10 +32,10 @@ const TermsOfService = () => {
             </h2>
             <p className="mb-4">
               We are Eklabya Centre of Excellence ("Company," "we," "us,"
-              "our"). We operate https://www.eklabya.com/, as well as any other
+              "our"). We operate https://www.inxyme.com/, as well as any other
               related products and services that refer or link to these legal
               terms (the "Legal Terms") (collectively, the "Services"). You can
-              contact us by email at info@eklabya.com or by mail to G-25, Block
+              contact us by email at info@inxyme.com or by mail to G-25, Block
               G, Sector 3, Noida, Uttar Pradesh, 201301.
             </p>
             <p className="mb-4">
@@ -287,7 +287,7 @@ const TermsOfService = () => {
             <p className="mb-4">
               If you wish to make any use of the Services, Content, or Marks
               other than as set out in this section or elsewhere in our Legal
-              Terms, please address your request to: info@eklabya.com.
+              Terms, please address your request to: info@inxyme.com.
             </p>
             <p className="mb-4">
               If we ever grant you the permission to post, reproduce, or
@@ -877,7 +877,7 @@ const TermsOfService = () => {
               <br />
               Noida, Uttar Pradesh 201301
               <br />
-              Email: info@eklabya.com
+              Email: info@inxyme.com
             </address>
           </div>
         </div>

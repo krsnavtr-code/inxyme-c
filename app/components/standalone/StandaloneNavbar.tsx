@@ -15,7 +15,7 @@ interface StandaloneNavbarProps {
   ctaHref?: string;
 }
 
-const LOGO_URL = "http://eklabya.com/api/upload/file/eKlabya-fit-logo-8874.png";
+const LOGO_URL = "http://inxyme.com/api/upload/file/eKlabya-fit-logo-8874.png";
 
 // Self-contained navbar for standalone landing pages. Uses the main site's
 // logo but only scrolls to sections within the current page — it never
@@ -51,7 +51,7 @@ export default function StandaloneNavbar({
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={LOGO_URL}
-                alt="eklabya – Your Online Learning Partner"
+                alt="inxyme – Your Online Learning Partner"
                 className="h-10 rounded"
               />
             </a>

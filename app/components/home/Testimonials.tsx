@@ -11,7 +11,7 @@ const Testimonials = () => {
       role: "Data Science | Eklabya",
       content:
         "The Data Science course was practical and easy to understand. I especially liked the hands-on projects and real-world examples.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745027-1855.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
       rating: 5,
     },
     {
@@ -20,7 +20,7 @@ const Testimonials = () => {
       role: "Digital Marketing | Eklabya",
       content:
         "A great course for learning SEO, Google Ads and social media marketing. The practical approach made everything easier to understand.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745036-6410.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745036-6410.png",
       rating: 5,
     },
     {
@@ -29,7 +29,7 @@ const Testimonials = () => {
       role: "Full Stack Development | Eklabya",
       content:
         "The development training helped me understand frontend and backend concepts through practical projects. Overall, a very useful learning experience.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745003-1010.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745003-1010.png",
       rating: 5,
     },
     {
@@ -38,7 +38,7 @@ const Testimonials = () => {
       role: "AI & Machine Learning | Eklabya",
       content:
         "The AI and Machine Learning course explained complex topics in a simple way. The practical sessions were especially helpful.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745009-2116.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745009-2116.png",
       rating: 5,
     },
     {
@@ -47,7 +47,7 @@ const Testimonials = () => {
       role: "Python | Eklabya",
       content:
         "I really enjoyed the Python training. The concepts were explained clearly and the practical exercises helped me build confidence.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960744997-1415.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960744997-1415.png",
       rating: 5,
     },
     {
@@ -56,7 +56,7 @@ const Testimonials = () => {
       role: "SAP FICO | Eklabya",
       content:
         "The SAP FICO training gave me a clear understanding of accounting concepts and their practical use in SAP.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745027-1855.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
       rating: 5,
     },
     {
@@ -65,7 +65,7 @@ const Testimonials = () => {
       role: "Web Development | Eklabya",
       content:
         "A good learning experience with practical web development projects. The training helped me improve my technical skills.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745036-6410.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745036-6410.png",
       rating: 5,
     },
     {
@@ -74,7 +74,7 @@ const Testimonials = () => {
       role: "Cyber Security | Eklabya",
       content:
         "The Cyber Security course covered important concepts in an easy-to-understand way. I found the practical learning very useful.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745003-1010.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745003-1010.png",
       rating: 5,
     },
     {
@@ -83,7 +83,7 @@ const Testimonials = () => {
       role: "Data Analytics | Eklabya",
       content:
         "The Data Analytics training helped me understand data visualization and analysis through practical examples and projects.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745009-2116.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745009-2116.png",
       rating: 5,
     },
     {
@@ -92,7 +92,7 @@ const Testimonials = () => {
       role: "Digital Marketing & SEO | Eklabya",
       content:
         "The Digital Marketing training gave me practical knowledge of SEO, paid advertising and social media marketing. A useful course for beginners.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960744997-1415.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960744997-1415.png",
       rating: 5,
     },
     {
@@ -101,7 +101,7 @@ const Testimonials = () => {
       role: "React Development | Eklabya",
       content:
         "The React training was structured well and focused on practical development. I gained much more confidence after working on projects.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745027-1855.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
       rating: 5,
     },
     {
@@ -110,7 +110,7 @@ const Testimonials = () => {
       role: "Overall Experience | Eklabya",
       content:
         "Eklabya offers a practical learning environment with courses covering technology, digital marketing and professional skills. I had a positive learning experience.",
-      avatar: "https://www.eklabya.com/api/upload/file/1777960745036-6410.png",
+      avatar: "https://www.inxyme.com/api/upload/file/1777960745036-6410.png",
       rating: 5,
     },
   ];

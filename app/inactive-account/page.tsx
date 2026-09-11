@@ -9,7 +9,7 @@ export default function InactiveAccountPage() {
       <SEO
         title="Account Inactive | Eklabya"
         description="Your Eklabya account is currently inactive. Contact support for assistance."
-        keywords="account inactive, support, eklabya"
+        keywords="account inactive, support, inxyme"
       />
       <div className="max-w-md w-full space-y-8 text-center">
         <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md">

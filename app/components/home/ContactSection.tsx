@@ -100,8 +100,8 @@ const ContactSection = () => {
         <FaEnvelope className="text-xl text-purple-600 dark:text-purple-400" />
       ),
       title: "Email Address",
-      description: "info@eklabya.com",
-      link: "mailto:info@eklabya.com",
+      description: "info@inxyme.com",
+      link: "mailto:info@inxyme.com",
       linkText: "Send email",
     },
   ];

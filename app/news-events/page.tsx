@@ -120,7 +120,7 @@ const defaultEvents: NewsOrEvent[] = [
     date: "2026-08-10",
     publisher: "Education Technology Today",
     tag: "Partnership & Growth",
-    externalLink: "https://www.eklabya.com",
+    externalLink: "https://www.inxyme.com",
     featured: false,
   },
   {
@@ -134,7 +134,7 @@ const defaultEvents: NewsOrEvent[] = [
     date: "2026-07-28",
     publisher: "Tech Digest India",
     tag: "Placements",
-    externalLink: "https://www.eklabya.com",
+    externalLink: "https://www.inxyme.com",
     featured: false,
   },
   {

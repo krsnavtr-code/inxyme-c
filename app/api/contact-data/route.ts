@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
       process.env.CONTACT_SECRET_KEY,
       process.env.SECRET_KEY,
       process.env.CONTACT_API_KEY,
-      "eklabya_contact_secret_key_2026",
+      "inxyme_contact_secret_key_2026",
       "firstvite_data_importing_in_origanation_id_1_FV",
     ].filter(Boolean);
 
@@ -33,7 +33,7 @@ export async function GET(request: NextRequest) {
       );
     }
 
-    const apiBase = (process.env.NEXT_PUBLIC_API_URL || "https://www.eklabya.com/api").replace(/\/$/, "");
+    const apiBase = (process.env.NEXT_PUBLIC_API_URL || "https://www.inxyme.com/api").replace(/\/$/, "");
 
     // Pass the query params to the backend API
     const response = await axios.get(`${apiBase}/contact-data`, {

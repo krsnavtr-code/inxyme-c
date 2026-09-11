@@ -70,10 +70,10 @@ const PrivacyPolicy = () => {
               and practices, please do not use our Services. If you still have
               any questions or concerns, please contact us at{" "}
               <a
-                href="mailto:info@eklabya.com"
+                href="mailto:info@inxyme.com"
                 className="text-blue-600 dark:text-blue-400 underline"
               >
-                info@eklabya.com
+                info@inxyme.com
               </a>
               .
             </p>
@@ -142,7 +142,7 @@ const PrivacyPolicy = () => {
                 <li>
                   <strong>How do you exercise your rights?</strong> You may
                   exercise applicable privacy rights by contacting us at
-                  info@eklabya.com. We will consider and act upon requests in
+                  info@inxyme.com. We will consider and act upon requests in
                   accordance with applicable data protection laws.
                 </li>
               </ul>
@@ -571,10 +571,10 @@ const PrivacyPolicy = () => {
               required. If you believe that we may have collected personal
               information from a person under 18, please contact us at{" "}
               <a
-                href="mailto:info@eklabya.com"
+                href="mailto:info@inxyme.com"
                 className="text-blue-600 dark:text-blue-400 underline"
               >
-                info@eklabya.com
+                info@inxyme.com
               </a>
               .
             </p>
@@ -646,10 +646,10 @@ const PrivacyPolicy = () => {
               questions or requests relating to your privacy rights, please
               email{" "}
               <a
-                href="mailto:info@eklabya.com"
+                href="mailto:info@inxyme.com"
                 className="text-blue-600 dark:text-blue-400 underline"
               >
-                info@eklabya.com
+                info@inxyme.com
               </a>
               .
             </p>
@@ -710,10 +710,10 @@ const PrivacyPolicy = () => {
               <br />
               Email:{" "}
               <a
-                href="mailto:info@eklabya.com"
+                href="mailto:info@inxyme.com"
                 className="text-blue-600 dark:text-blue-400 underline"
               >
-                info@eklabya.com
+                info@inxyme.com
               </a>
             </address>
 
@@ -729,10 +729,10 @@ const PrivacyPolicy = () => {
               withdraw consent where applicable. To request to review, update,
               or delete your personal information, please contact us at:{" "}
               <a
-                href="mailto:info@eklabya.com"
+                href="mailto:info@inxyme.com"
                 className="text-blue-600 dark:text-blue-400 underline"
               >
-                info@eklabya.com
+                info@inxyme.com
               </a>
               . We will review and respond to valid requests in accordance with
               applicable data protection and privacy laws. Some requests may be

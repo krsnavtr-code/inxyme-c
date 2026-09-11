@@ -172,10 +172,10 @@ export default function Contact() {
                 <li className="flex items-center gap-3">
                   <FaEnvelope className="text-purple-500" />
                   <a
-                    href="mailto:info@eklabya.com"
+                    href="mailto:info@inxyme.com"
                     className="hover:text-blue-600 dark:hover:text-blue-400"
                   >
-                    info@eklabya.com
+                    info@inxyme.com
                   </a>
                 </li>
               </ul>

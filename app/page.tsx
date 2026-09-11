@@ -7,7 +7,6 @@ import ScholarshipProgram from "./components/home/ScholarshipProgram";
 import WhyLearnWithEklabya from "./components/home/WhyLearnWithEklabya";
 import HowWillYourTrainingWork from "./components/home/HowWillYourTrainingWork";
 import Stats from "./components/home/Stats";
-import StudentPlacements from "./components/home/StudentPlacements";
 import Content from "./components/home/Content";
 import Testimonials from "./components/home/Testimonials";
 import GoogleReviews from "./components/home/GoogleReviews";
@@ -22,13 +21,13 @@ export const metadata: Metadata = {
   keywords:
     "online certification courses, professional certification courses, job oriented courses, online courses in India, skill development courses, career oriented courses, technical courses online, Data Science course, Artificial Intelligence course, Machine Learning course, SAP courses, SAP ABAP course, SAP FICO course, Digital Marketing course, Web Development course, Power BI course, Python course, IT certification courses, online professional courses, Eklabya courses",
   alternates: {
-    canonical: "https://www.eklabya.com",
+    canonical: "https://www.inxyme.com",
   },
   openGraph: {
     title: "Eklabya | Job-Ready Online Certification Courses in India",
     description:
       "Learn job-ready skills with Eklabya's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
-    url: "https://www.eklabya.com",
+    url: "https://www.inxyme.com",
     type: "website",
   },
   twitter: {
@@ -44,11 +43,11 @@ export default function Home() {
   const websiteSchema = {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "The Eklavya",
-    url: "https://www.eklabya.com",
+    name: "The Inxyme",
+    url: "https://www.inxyme.com",
     potentialAction: {
       "@type": "SearchAction",
-      target: "https://www.eklabya.com/courses?search={search_term_string}",
+      target: "https://www.inxyme.com/courses?search={search_term_string}",
       "query-input": "required name=search_term_string",
     },
   };
@@ -57,28 +56,28 @@ export default function Home() {
   const organizationSchema = {
     "@context": "https://schema.org",
     "@type": "Organization",
-    "@id": "https://www.eklabya.com/#organization",
-    name: "Eklabya",
-    alternateName: "Eklabya Online Learning Platform",
-    url: "https://www.eklabya.com",
+    "@id": "https://www.inxyme.com/#organization",
+    name: "Inxyme",
+    alternateName: "Inxyme Online Learning Platform",
+    url: "https://www.inxyme.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.eklabya.com/logo.png",
+      url: "https://www.inxyme.com/logo.png",
     },
     description:
       "Eklabya is an online learning platform offering industry-focused courses, certifications, and career-oriented training programs across Data Science, Digital Marketing, SAP, IT, Business, and emerging technologies.",
     sameAs: [
-      "https://www.instagram.com/eklabya_official",
-      "https://www.facebook.com/eklabyaofficial",
-      "https://in.pinterest.com/eklabya_official/",
-      "https://x.com/eklabyaofficial",
+      "https://www.instagram.com/inxyme_official",
+      "https://www.facebook.com/inxymeofficial",
+      "https://in.pinterest.com/inxyme_official/",
+      "https://x.com/inxymeofficial",
       "https://www.linkedin.com/in/anand-shekhar-71515a408/",
-      "https://www.youtube.com/@eklabya_official",
+      "https://www.youtube.com/@inxyme_official",
     ],
     contactPoint: {
       "@type": "ContactPoint",
       contactType: "customer support",
-      url: "https://www.eklabya.com/contact",
+      url: "https://www.inxyme.com/contact",
     },
   };
 

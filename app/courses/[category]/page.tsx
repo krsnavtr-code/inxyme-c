@@ -11,7 +11,7 @@ import {
 import { getImageUrl } from "../../utils/imageUtils";
 import { formatPrice } from "../../utils/format";
 
-const FALLBACK_SITE_URL = "https://www.eklabya.com";
+const FALLBACK_SITE_URL = "https://www.inxyme.com";
 
 export async function generateMetadata({
   params,
