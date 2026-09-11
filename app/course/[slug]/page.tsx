@@ -1,229 +1,171 @@
-"use client";
+import type { Metadata } from "next";
+import { notFound } from "next/navigation";
+import { fetchCourseBySlug, getSiteBase } from "../../lib/server-api";
+import { getImageUrl } from "../../utils/imageUtils";
+import CourseDetailClient from "../_components/CourseDetailClient";
 
-import React, {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
-import { useRouter } from "next/navigation";
-import api from "../../utils/api";
+const FALLBACK_SITE_URL = "https://www.inxyme.com";
 
-interface User {
-  _id: string;
-  name?: string;
-  fullname?: string;
-  email: string;
-  phone?: string;
-  discount?: number;
-  role?: string;
-  isAdmin?: boolean;
-  isApproved?: boolean;
-  isActive?: boolean;
-  address?: string;
-  adminRoleId?: string;
-  adminPermissions?: Record<string, any>;
+function getCourseImageUrl(courseImage: string | undefined, siteBase: string) {
+  return getImageUrl(courseImage) || `${siteBase}${courseImage}`;
 }
 
-interface AuthContextType {
-  currentUser: User | null;
-  isAuthenticated: boolean;
-  isAdmin: boolean;
-  isApproved: boolean;
-  isActive: boolean;
-  isLoading: boolean;
-  login: (email: string, password: string) => Promise<any>;
-  register: (userData: any) => Promise<any>;
-  logout: () => void;
-  refreshUser: () => Promise<void>;
-  updateUser: (updates: Partial<User>) => void;
-  setUserFromTokens: (token: string, refreshToken: string, user: any) => void;
-}
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const course = await fetchCourseBySlug(slug);
 
-const AuthContext = createContext<AuthContextType | undefined>(undefined);
-
-export const useAuth = () => {
-  const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+  if (!course) {
+    notFound();
   }
-  return context;
-};
 
-interface AuthProviderProps {
-  children: ReactNode;
+  const siteBase = getSiteBase() || FALLBACK_SITE_URL;
+  const courseImage = course.imageUrl || "/images/inxyme-logo-fit-E.jpeg";
+  const courseImageUrl = getCourseImageUrl(courseImage, siteBase);
+
+  const title = course.metaTitle || course.title;
+  const description =
+    course.metaDescription ||
+    course.shortDescription ||
+    "Learn valuable skills with our comprehensive course.";
+  const canonical = `${siteBase}/course/${course.slug || slug}`;
+
+  return {
+    title,
+    description,
+    keywords: course.metaKeywords,
+    alternates: {
+      canonical,
+    },
+    openGraph: {
+      title,
+      description,
+      url: canonical,
+      images: [{ url: courseImageUrl }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [courseImageUrl],
+    },
+  };
 }
 
-const normalizeUser = (user: any): User => ({
-  _id: user._id,
-  fullname: user.fullname || user.name || "",
-  email: user.email || "",
-  phone: user.phone || "",
-  discount: user.discount || 0,
-  role: user.role || "user",
-  isAdmin: user.role === "admin" || user.isAdmin || false,
-  isApproved: user.isApproved || false,
-  isActive: user.isActive !== false,
-  address: user.address || "",
-  adminRoleId: user.adminRoleId,
-  adminPermissions: user.adminPermissions || {},
-});
+export default async function CoursePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
+  const course = await fetchCourseBySlug(slug);
 
-export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
-  const router = useRouter();
-  const [currentUser, setCurrentUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  if (!course) {
+    notFound();
+  }
 
-  // Restore user from localStorage while the server verification runs
-  useEffect(() => {
-    const checkAuth = async () => {
-      const token = localStorage.getItem("token");
-      const storedUser = localStorage.getItem("user");
+  const siteBase = getSiteBase() || FALLBACK_SITE_URL;
+  const courseImage = course.imageUrl || "/images/inxyme-logo-fit-E.jpeg";
+  const courseImageUrl = getCourseImageUrl(courseImage, siteBase);
+  const canonical = `${siteBase}/course/${course.slug || slug}`;
+  const seoDescription =
+    course.metaDescription ||
+    course.shortDescription ||
+    "Learn valuable skills with our comprehensive course.";
 
-      if (token) {
-        if (storedUser) {
-          try {
-            setCurrentUser(JSON.parse(storedUser));
-          } catch {
-            localStorage.removeItem("user");
-          }
-        }
+  const schemas: Record<string, any>[] = [];
 
-        try {
-          const response = await api.get("/auth/me");
-          const user =
-            response?.data?.data || response?.data?.user || response?.data;
-          if (user && user._id) {
-            const normalized = normalizeUser(user);
-            localStorage.setItem("user", JSON.stringify(normalized));
-            setCurrentUser(normalized);
-          }
-        } catch (error) {
-          console.error("Auth check failed:", error);
-          localStorage.removeItem("token");
-          localStorage.removeItem("refreshToken");
-          localStorage.removeItem("user");
-          setCurrentUser(null);
-        }
-      }
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "Course",
+    name: course.title,
+    description:
+      course.description || course.shortDescription || seoDescription,
+    provider: {
+      "@type": "Organization",
+      name: "The Eklavya",
+      sameAs: siteBase,
+    },
+    url: canonical,
+    image: courseImageUrl,
+    ...(course.price !== undefined && {
+      offers: {
+        "@type": "Offer",
+        price: course.price,
+        priceCurrency: "INR",
+        availability: "https://schema.org/InStock",
+        url: canonical,
+      },
+    }),
+    ...(course.rating && {
+      aggregateRating: {
+        "@type": "AggregateRating",
+        ratingValue: course.rating,
+        reviewCount: course.reviews?.length || course.enrolledStudents || 0,
+      },
+    }),
+    ...(course.duration && {
+      timeRequired:
+        typeof course.duration === "number"
+          ? `PT${course.duration}H`
+          : course.duration,
+    }),
+    ...(course.level && { educationalLevel: course.level }),
+  });
 
-      setIsLoading(false);
-    };
+  schemas.push({
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: siteBase,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Courses",
+        item: `${siteBase}/courses`,
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: course.title,
+        item: canonical,
+      },
+    ],
+  });
 
-    checkAuth();
-  }, []);
-
-  const login = async (email: string, password: string) => {
-    try {
-      const response = await api.post("/auth/login", { email, password });
-
-      // Admin OTP flow: just return the response so the page can show OTP
-      if (response?.data?.success && response?.data?.requiresOTP) {
-        return response.data;
-      }
-
-      const token =
-        response?.data?.token ||
-        response?.data?.data?.token ||
-        response?.data?.data?.accessToken;
-      const refreshToken =
-        response?.data?.refreshToken || response?.data?.data?.refreshToken;
-      const user =
-        response?.data?.user ||
-        response?.data?.data?.user ||
-        response?.data?.data;
-
-      if (!token) {
-        throw new Error("No authentication token received");
-      }
-
-      localStorage.setItem("token", token);
-      if (refreshToken) {
-        localStorage.setItem("refreshToken", refreshToken);
-      }
-
-      const normalized = normalizeUser(user);
-      localStorage.setItem("user", JSON.stringify(normalized));
-      setCurrentUser(normalized);
-
-      return { success: true, user: normalized };
-    } catch (error: any) {
-      console.error("Login failed:", error);
-      throw error;
-    }
-  };
-
-  const register = async (userData: any) => {
-    try {
-      const response = await api.post("/auth/register", userData);
-      return response.data;
-    } catch (error: any) {
-      console.error("Registration failed:", error);
-      throw error;
-    }
-  };
-
-  const setUserFromTokens = (
-    token: string,
-    refreshToken: string,
-    user: any,
-  ) => {
-    localStorage.setItem("token", token);
-    localStorage.setItem("refreshToken", refreshToken);
-
-    const normalized = normalizeUser(user);
-    localStorage.setItem("user", JSON.stringify(normalized));
-    setCurrentUser(normalized);
-  };
-
-  const logout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("refreshToken");
-    localStorage.removeItem("user");
-    setCurrentUser(null);
-    router.push("/login");
-  };
-
-  const refreshUser = async () => {
-    try {
-      const response = await api.get("/auth/me");
-      const user =
-        response?.data?.data || response?.data?.user || response?.data;
-      if (user && user._id) {
-        const normalized = normalizeUser(user);
-        localStorage.setItem("user", JSON.stringify(normalized));
-        setCurrentUser(normalized);
-      }
-    } catch (error) {
-      console.error("Refresh user failed:", error);
-      logout();
-    }
-  };
-
-  const updateUser = (updates: Partial<User>) => {
-    setCurrentUser((prev) => {
-      if (!prev) return null;
-      const next = { ...prev, ...updates };
-      localStorage.setItem("user", JSON.stringify(next));
-      return next;
+  if (course.faqs && course.faqs.length > 0) {
+    schemas.push({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: course.faqs.map((faq) => ({
+        "@type": "Question",
+        name: faq.question,
+        acceptedAnswer: {
+          "@type": "Answer",
+          text: faq.answer,
+        },
+      })),
     });
-  };
+  }
 
-  const value: AuthContextType = {
-    currentUser,
-    isAuthenticated: !!currentUser,
-    isAdmin: currentUser?.isAdmin || false,
-    isApproved: currentUser?.isApproved || false,
-    isActive: currentUser?.isActive !== false,
-    isLoading,
-    login,
-    register,
-    logout,
-    refreshUser,
-    updateUser,
-    setUserFromTokens,
-  };
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
-};
+  return (
+    <>
+      {schemas.map((schema, index) => (
+        <script
+          key={`course-schema-${index}`}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
+      <CourseDetailClient course={course} />
+    </>
+  );
+}
