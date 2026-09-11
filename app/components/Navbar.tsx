@@ -48,7 +48,7 @@ function Navbar() {
   const pathname = usePathname();
   const { currentUser, isAuthenticated, isAdmin, logout } = useAuth();
   const logoImg =
-    "http://eklabya.com/api/upload/file/eKlabya-fit-logo-8874.png";
+    "https://www.eklabya.com/api/upload/file/final-logo-png-6483.png";
 
   // --- State ---
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -645,7 +645,7 @@ function Navbar() {
                   <img
                     src={logoImg}
                     alt="inxyme – Your Online Learning Partner"
-                    className="h-10 rounded"
+                    className="h-20 rounded"
                   />
                 </Link>
               </div>

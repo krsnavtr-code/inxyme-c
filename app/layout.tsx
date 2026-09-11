@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     icon: {
       rel: "icon",
       type: "image/png",
-      url: "/images/inxyme-logo.png",
+      url: "/images/only-final-logo-png.jpg",
     },
   },
 };
