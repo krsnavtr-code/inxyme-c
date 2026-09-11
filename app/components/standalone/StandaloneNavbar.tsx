@@ -15,7 +15,7 @@ interface StandaloneNavbarProps {
   ctaHref?: string;
 }
 
-const LOGO_URL = "http://inxyme.com/api/upload/file/eKlabya-fit-logo-8874.png";
+const LOGO_URL = "http://eklabya.com/api/upload/file/eKlabya-fit-logo-8874.png";
 
 // Self-contained navbar for standalone landing pages. Uses the main site's
 // logo but only scrolls to sections within the current page — it never

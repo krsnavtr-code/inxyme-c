@@ -399,7 +399,7 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   className="certificate-image-container"
                   style={{
                     backgroundImage:
-                      "url('http://www.inxyme.com/api/upload/file/inxyme-certificate-4563.png')",
+                      "url('http://www.eklabya.com/api/upload/file/inxyme-certificate-4563.png')",
                     backgroundSize: "contain",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
@@ -1237,7 +1237,7 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   <source
                     src={
                       course.previewVideo ||
-                      "http://www.inxyme.com/api/upload/file/DemoVideo-1781.mp4"
+                      "http://www.eklabya.com/api/upload/file/DemoVideo-1781.mp4"
                     }
                     type="video/mp4"
                   />

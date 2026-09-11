@@ -62,7 +62,7 @@ export default function Home() {
     url: "https://www.inxyme.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.inxyme.com/logo.png",
+      url: "https://www.eklabya.com/logo.png",
     },
     description:
       "Inxyme is an online learning platform offering industry-focused courses, certifications, and career-oriented training programs across Data Science, Digital Marketing, SAP, IT, Business, and emerging technologies.",

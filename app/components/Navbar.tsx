@@ -48,7 +48,7 @@ function Navbar() {
   const pathname = usePathname();
   const { currentUser, isAuthenticated, isAdmin, logout } = useAuth();
   const logoImg =
-    "http://inxyme.com/api/upload/file/eKlabya-fit-logo-8874.png";
+    "http://eklabya.com/api/upload/file/eKlabya-fit-logo-8874.png";
 
   // --- State ---
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
