@@ -267,7 +267,7 @@ const PopularCourses = () => {
         <div className="bg-white/50 dark:bg-gray-800/40 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/60 rounded-2xl p-4 md:p-6 space-y-6 shadow-sm">
           {/* Main Intro Paragraph with Domain List Highlights */}
           <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
-            Eklabya gives you a range of job-focused online certification
+            Inxyme gives you a range of job-focused online certification
             courses that are tailored to the real skills that bosses are after
             in 2026, not just some generic theory to be honest. The selection is{" "}
             <strong className="text-blue-600 dark:text-blue-400">
@@ -348,7 +348,7 @@ const PopularCourses = () => {
             <p className="text-xs md:text-sm text-slate-800 dark:text-slate-300 leading-relaxed italic">
               "Whether you're a student preparing for your first job, a working
               professional pivoting industries, or an entrepreneur building
-              technical fluency, Eklabya's online certification courses are
+              technical fluency, Inxyme's online certification courses are
               structured to get you from 'learning' to 'employable', fast."
             </p>
           </div>

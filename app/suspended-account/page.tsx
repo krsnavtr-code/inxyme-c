@@ -16,8 +16,8 @@ export default function SuspendedAccountPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4">
       <SEO
-        title="Account Suspended | Eklabya"
-        description="Your Eklabya account has been suspended. Please contact support for assistance."
+        title="Account Suspended | Inxyme"
+        description="Your Inxyme account has been suspended. Please contact support for assistance."
         keywords="account suspended, support, inxyme"
       />
       <div className="max-w-lg w-full bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 text-center">

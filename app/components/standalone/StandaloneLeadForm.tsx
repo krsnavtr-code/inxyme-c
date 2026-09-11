@@ -287,7 +287,7 @@ export default function StandaloneLeadForm({
               htmlFor="leadAgreedToTerms"
               className="text-xs text-slate-600 dark:text-slate-400"
             >
-              I agree to be contacted by Eklabya regarding courses and career
+              I agree to be contacted by Inxyme regarding courses and career
               counselling.
             </label>
           </div>

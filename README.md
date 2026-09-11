@@ -1,4 +1,4 @@
-# Eklabya - Online Learning Platform
+# Inxyme - Online Learning Platform
 
 A modern online learning platform built with Next.js.
 

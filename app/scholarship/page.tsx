@@ -121,9 +121,9 @@ export default function ScholarshipPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans">
       <SEO
-        title="Eklabya Scholarship 2026 | Get Up to 50% Off"
-        description="Apply for the Eklabya Scholarship 2026. Take the assessment test and unlock up to 50% tuition fee waiver on career-focused programs."
-        keywords="Eklabya Scholarship, scholarship 2026, tuition fee waiver, scholarship test, merit scholarship, career courses, up to 50% off"
+        title="Inxyme Scholarship 2026 | Get Up to 50% Off"
+        description="Apply for the Inxyme Scholarship 2026. Take the assessment test and unlock up to 50% tuition fee waiver on career-focused programs."
+        keywords="Inxyme Scholarship, scholarship 2026, tuition fee waiver, scholarship test, merit scholarship, career courses, up to 50% off"
       />
 
       {/* ================= COMPACT HERO SECTION ================= */}

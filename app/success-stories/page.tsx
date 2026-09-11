@@ -44,7 +44,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     hike: "140% Hike",
     image: "https://www.inxyme.com/api/upload/file/Krishna-4629.png",
     content:
-      "Before joining Eklabya, I had very little knowledge of Data Science and Machine Learning pipelines, and was unsure about transitioning into AI. After joining Eklabya Centre of Excellence, I gained deep practical mastery in containerized ML deployments, Docker, and real-world LLM pipelines. The step-by-step mentoring and placement assistance helped me land my dream role as an MLOps Engineer.",
+      "Before joining Inxyme, I had very little knowledge of Data Science and Machine Learning pipelines, and was unsure about transitioning into AI. After joining Inxyme Centre of Excellence, I gained deep practical mastery in containerized ML deployments, Docker, and real-world LLM pipelines. The step-by-step mentoring and placement assistance helped me land my dream role as an MLOps Engineer.",
     rating: 5,
     featured: true,
   },
@@ -72,7 +72,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     hike: "Campus Placed",
     image: "https://www.inxyme.com/api/upload/file/Adarsh-3832.png",
     content:
-      "As a final year student, I needed real project experience to stand out. The Database Management & GenAI course at Eklabya covered both core architectural principles and hands-on vector database projects. The portfolio of assignments I built directly helped me clear technical rounds and receive multiple offers before graduation.",
+      "As a final year student, I needed real project experience to stand out. The Database Management & GenAI course at Inxyme covered both core architectural principles and hands-on vector database projects. The portfolio of assignments I built directly helped me clear technical rounds and receive multiple offers before graduation.",
     rating: 5,
     featured: false,
   },
@@ -100,7 +100,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     hike: "125% Hike",
     image: "https://www.inxyme.com/api/upload/file/df-3710.png",
     content:
-      "I was working in a non-technical support role and desperately wanted to transition into Data Science. The instructors at Eklabya explained statistical modelling and predictive algorithms from the ground up. Building my first end-to-end predictive project gave me the technical edge to switch my career path successfully.",
+      "I was working in a non-technical support role and desperately wanted to transition into Data Science. The instructors at Inxyme explained statistical modelling and predictive algorithms from the ground up. Building my first end-to-end predictive project gave me the technical edge to switch my career path successfully.",
     rating: 5,
     featured: false,
   },
@@ -203,14 +203,14 @@ export default function TestimonialsPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-gray-950 text-slate-900 dark:text-white transition-colors duration-300 pb-20">
       <SEO
-        title="Eklabya Success Stories | Real Career Transformations"
-        description="Explore inspiring success stories from Eklabya learners who gained skills, built confidence and achieved career growth through practical learning."
+        title="Inxyme Success Stories | Real Career Transformations"
+        description="Explore inspiring success stories from Inxyme learners who gained skills, built confidence and achieved career growth through practical learning."
         keywords="Eklavya success stories, student success stories, career success, learner achievements, career transformation, skill development, job ready skills, career growth, Eklavya learners"
         robots="index, follow"
         og={{
-          title: "Eklabya Success Stories | Real Career Transformations",
+          title: "Inxyme Success Stories | Real Career Transformations",
           description:
-            "Explore inspiring success stories from Eklabya learners who gained skills, built confidence and achieved career growth through practical learning.",
+            "Explore inspiring success stories from Inxyme learners who gained skills, built confidence and achieved career growth through practical learning.",
           type: "website",
         }}
       />
@@ -237,7 +237,7 @@ export default function TestimonialsPage() {
           <p className="max-w-7xl mx-auto text-xs sm:text-sm md:text-base text-blue-100/90 font-medium leading-relaxed">
             Real stories from real engineers and career-switchers who upskilled,
             mastered enterprise workflows, and unlocked life-changing career
-            opportunities with Eklabya.
+            opportunities with Inxyme.
           </p>
 
           {/* Key Metrics Counters */}

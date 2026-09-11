@@ -13,14 +13,14 @@ const FAQ = () => {
 
   const faqs: FAQItem[] = [
     {
-      question: "Is Eklabya's certification recognized by employers?",
+      question: "Is Inxyme's certification recognized by employers?",
       answer:
-        "Yeah, it is. Eklabya has got ISO certification, along with partnerships with NSDC and NIELIT. So what you get at the end of the course is a real, verifiable certificate that counts in both the industry and government sectors, not just some generic 'completion certificate'.",
+        "Yeah, it is. Inxyme has got ISO certification, along with partnerships with NSDC and NIELIT. So what you get at the end of the course is a real, verifiable certificate that counts in both the industry and government sectors, not just some generic 'completion certificate'.",
     },
     {
-      question: "Do Eklabya courses actually help with job placement?",
+      question: "Do Inxyme courses actually help with job placement?",
       answer:
-        "They do. Eklabya has got a dedicated placement support team that can help you out with resume building, interview prep, and actually get you in front of their hiring partner network. We've had alumni from Eklabya get hired by companies like TCS, Infosys, Wipro, HCL, Capgemini, IBM, Microsoft and even Amazon.",
+        "They do. Inxyme has got a dedicated placement support team that can help you out with resume building, interview prep, and actually get you in front of their hiring partner network. We've had alumni from Inxyme get hired by companies like TCS, Infosys, Wipro, HCL, Capgemini, IBM, Microsoft and even Amazon.",
     },
     {
       question: "Are the courses live or self-paced?",
@@ -30,11 +30,11 @@ const FAQ = () => {
     {
       question: "What if I have no prior experience in tech or business?",
       answer:
-        "Don't worry about that. Most of Eklabya's courses are designed to take you from being clueless to job-ready, with a structured, project-based approach. You don't need to have any prior experience, just a commitment to the process.",
+        "Don't worry about that. Most of Inxyme's courses are designed to take you from being clueless to job-ready, with a structured, project-based approach. You don't need to have any prior experience, just a commitment to the process.",
     },
     {
       question:
-        "How is the Eklabya Scholarship Exam different from a regular discount?",
+        "How is the Inxyme Scholarship Exam different from a regular discount?",
       answer:
         "The Scholarship Exam is a genuine, merit-based, digitally proctored assessment. The thing is, the awards are based purely on how you do in the exam, not your financial situation, so students who really know their stuff get some real help towards paying for certification.",
     },
@@ -46,7 +46,7 @@ const FAQ = () => {
     {
       question: "Are courses available in languages other than English?",
       answer:
-        "Yes, Eklabya courses are available in all the multiple languages including Hindi and more, which makes high quality technical and professional education more accessible to a wider range of folks across India.",
+        "Yes, Inxyme courses are available in all the multiple languages including Hindi and more, which makes high quality technical and professional education more accessible to a wider range of folks across India.",
     },
   ];
 
@@ -66,7 +66,7 @@ const FAQ = () => {
             Frequently Asked Questions
           </h2>
           <p className="text-sm sm:text-base text-slate-800 dark:text-slate-400 leading-relaxed font-normal">
-            Find answers to common questions about Eklabya courses and
+            Find answers to common questions about Inxyme courses and
             certifications.
           </p>
         </div>

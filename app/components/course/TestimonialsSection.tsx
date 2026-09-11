@@ -36,7 +36,7 @@ const testimonials: Testimonial[] = [
     name: "Ritika Bhadani",
     platform: "facebook",
     rating: 5,
-    text: "Excellent curriculum and amazing support from the team. I landed my first MNC job within two months of completing the program. Thank you Eklabya!",
+    text: "Excellent curriculum and amazing support from the team. I landed my first MNC job within two months of completing the program. Thank you Inxyme!",
     date: "1 month ago",
   },
   {
@@ -44,7 +44,7 @@ const testimonials: Testimonial[] = [
     name: "Amit Verma",
     platform: "x",
     rating: 4,
-    text: "Myself Ritika I have learned Data Science and Power BI form Eklabya, As students I have experienced well structured training and practical from here. The trainer explained every concept step-by-step clear my all doubts with practical examples and real-time scenario, thats helped me build my knowledge strong and improve my skills in data science",
+    text: "Myself Ritika I have learned Data Science and Power BI form Inxyme, As students I have experienced well structured training and practical from here. The trainer explained every concept step-by-step clear my all doubts with practical examples and real-time scenario, thats helped me build my knowledge strong and improve my skills in data science",
     date: "2 months ago",
   },
   {
@@ -52,7 +52,7 @@ const testimonials: Testimonial[] = [
     name: "Sheeba Jaidiya",
     platform: "instagram",
     rating: 5,
-    text: "I had a great learning experience with Eklabya while pursuing Data Science. The course was well-structured, practical, and helped me understand important concepts with real-world applications. The guidance and support from the trainers were really helpful throughout the learning journey. Highly recommended for anyone looking to build a career in Data Science!",
+    text: "I had a great learning experience with Inxyme while pursuing Data Science. The course was well-structured, practical, and helped me understand important concepts with real-world applications. The guidance and support from the trainers were really helpful throughout the learning journey. Highly recommended for anyone looking to build a career in Data Science!",
     date: "10 days ago",
   },
 ];
@@ -192,7 +192,7 @@ const TestimonialsSection: React.FC = () => {
                         {review.name}
                       </p>
                       <p className="text-xs text-slate-500 dark:text-slate-400">
-                        Eklabya Verified Learner
+                        Inxyme Verified Learner
                       </p>
                     </div>
                   </div>

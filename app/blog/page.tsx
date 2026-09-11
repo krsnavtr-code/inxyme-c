@@ -109,13 +109,13 @@ function BlogListContent() {
   return (
     <div className="min-h-screen">
       <SEO
-        title="Eklabya Blog | Learn Skills, Build Your Career Today"
-        description="Explore career tips, skill insights, industry trends and expert learning resources to build in-demand skills and grow your career with Eklabya."
-        keywords="Eklabya blog, career tips, skill development, online learning, professional courses, career growth, industry trends, job skills, career guidance, education blog"
+        title="Inxyme Blog | Learn Skills, Build Your Career Today"
+        description="Explore career tips, skill insights, industry trends and expert learning resources to build in-demand skills and grow your career with Inxyme."
+        keywords="Inxyme blog, career tips, skill development, online learning, professional courses, career growth, industry trends, job skills, career guidance, education blog"
         og={{
-          title: "Eklabya Blog | Learn Skills, Build Your Career Today",
+          title: "Inxyme Blog | Learn Skills, Build Your Career Today",
           description:
-            "Explore career tips, skill insights, industry trends and expert learning resources to build in-demand skills and grow your career with Eklabya.",
+            "Explore career tips, skill insights, industry trends and expert learning resources to build in-demand skills and grow your career with Inxyme.",
           type: "website",
         }}
       />
@@ -125,7 +125,7 @@ function BlogListContent() {
         <div className="relative z-10 max-w-6xl mx-auto text-center space-y-2">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full backdrop-blur-md border border-white/20 text-gray-800 dark:text-gray-100 text-xs sm:text-sm font-semibold tracking-wide">
             <FaBook className="text-yellow-300" />
-            <span>Eklabya Insights</span>
+            <span>Inxyme Insights</span>
           </div>
 
           <h1 className="text-2xl sm:text-4xl md:text-5xl text-gray-800 dark:text-gray-100 font-black tracking-tight leading-tight">

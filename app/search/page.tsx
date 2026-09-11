@@ -72,8 +72,8 @@ function SearchContent() {
       <SEO
         title={
           query
-            ? `${query} - Search Courses | Eklabya`
-            : "Search Courses | Eklabya"
+            ? `${query} - Search Courses | Inxyme`
+            : "Search Courses | Inxyme"
         }
         description="Find the right course for your career. Search by title, skill, category, or technology."
         keywords="search courses, find courses, online learning, inxyme"

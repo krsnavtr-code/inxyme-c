@@ -1,441 +1,377 @@
-import { Metadata } from "next";
-import { notFound } from "next/navigation";
+"use client";
+
+import { useEffect, useState, Suspense, FormEvent } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  FaArrowLeft,
-  FaUserCircle,
   FaCalendarAlt,
   FaClock,
-  FaTags,
-  FaFolderOpen,
+  FaArrowRight,
+  FaSearch,
+  FaBook,
 } from "react-icons/fa";
-import {
-  fetchBlogPostBySlug,
-  fetchNextBlogs,
-  getSiteBase,
-} from "../../lib/server-api";
-import { getImageUrl } from "../../utils/imageUtils";
-import ShareButton from "../../components/ShareButton";
-import RelatedPosts from "../_components/RelatedPosts";
+import { getImageUrl } from "../utils/imageUtils";
+import { getBlogPosts, searchBlogPosts } from "../api/blogApi";
+import SEO from "../components/SEO";
 
-const FALLBACK_SITE_URL = "https://www.inxyme.com";
-
-const formatDate = (dateString?: string) => {
-  if (!dateString) return "";
-  const date = new Date(dateString);
-  if (isNaN(date.getTime())) return "";
-  return date.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-};
-
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const post = await fetchBlogPostBySlug(slug);
-
-  if (!post) return {};
-
-  const siteBase = getSiteBase() || FALLBACK_SITE_URL;
-  const canonical = `${siteBase}/blog/${post.slug}`;
-  const image = getImageUrl(post.imageUrl || post.featuredImage);
-
-  return {
-    title: `${post.title} | Eklabya Blog`,
-    description: post.excerpt || "Read this article on Eklabya",
-    keywords: post.tags?.join(", ") || "blog, article, education, learning",
-    alternates: { canonical },
-    openGraph: {
-      title: post.title,
-      description: post.excerpt || "Read this article on Eklabya",
-      url: canonical,
-      type: "article",
-      images: image ? [{ url: image }] : [],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: post.title,
-      description: post.excerpt || "Read this article on Eklabya",
-      images: image ? [image] : [],
-    },
-  };
+interface Category {
+  _id: string;
+  name: string;
 }
 
-export default async function BlogDetailPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
-  const post = await fetchBlogPostBySlug(slug);
+interface Post {
+  _id: string;
+  slug: string;
+  title: string;
+  excerpt?: string;
+  content?: string;
+  featuredImage?: string;
+  createdAt: string;
+  readingTime?: number;
+  categories?: Category[];
+}
 
-  if (!post) notFound();
+const pageSize = 9;
 
-  const siteBase = getSiteBase() || FALLBACK_SITE_URL;
-  const canonical = `${siteBase}/blog/${post.slug}`;
-  const blogImage =
-    getImageUrl(post.imageUrl || post.featuredImage) ||
-    `${siteBase}/images/inxyme-logo-fit-E.jpeg`;
+function BlogListContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const rawFeaturedImage = post.featuredImage || post.imageUrl;
-  const featuredImageUrl = rawFeaturedImage
-    ? rawFeaturedImage.startsWith("http")
-      ? rawFeaturedImage
-      : getImageUrl(rawFeaturedImage) || ""
-    : "";
+  const page = parseInt(searchParams.get("page") || "1", 10);
+  const q = searchParams.get("q") || "";
 
-  const nextBlogs = await fetchNextBlogs(post.slug, 4);
+  const [loading, setLoading] = useState(true);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [total, setTotal] = useState(0);
+  const [searchInput, setSearchInput] = useState(q);
 
-  const schemas = [
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      headline: post.title,
-      description: post.excerpt || "Read this article on Eklabya",
-      image: blogImage,
-      author: {
-        "@type": "Person",
-        name: post.author?.name || "Eklabya",
-      },
-      publisher: {
-        "@type": "Organization",
-        name: "The Eklavya",
-        logo: {
-          "@type": "ImageObject",
-          url: `${siteBase}/images/inxyme-logo-fit-E.jpeg`,
-        },
-      },
-      datePublished: post.createdAt,
-      dateModified: post.createdAt,
-      mainEntityOfPage: {
-        "@type": "WebPage",
-        "@id": canonical,
-      },
-    },
-  ];
+  useEffect(() => {
+    setSearchInput(q);
+  }, [q]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        setLoading(true);
+
+        if (q.trim()) {
+          const response = await searchBlogPosts(q.trim());
+          const found = response.data?.posts || [];
+          setPosts(found);
+          setTotal(found.length);
+        } else {
+          const response = await getBlogPosts({
+            page,
+            limit: pageSize,
+            status: "published",
+          });
+          setPosts(response.data?.posts || []);
+          setTotal(response.data?.total || 0);
+        }
+      } catch (error) {
+        console.error("Error fetching blog posts:", error);
+        setPosts([]);
+        setTotal(0);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPosts();
+  }, [page, q]);
+
+  const handleSearch = (e: FormEvent) => {
+    e.preventDefault();
+    const term = searchInput.trim();
+    if (term) {
+      router.push(`/blog?q=${encodeURIComponent(term)}`);
+    } else {
+      router.push("/blog");
+    }
+  };
+
+  const clearSearch = () => {
+    router.push("/blog");
+  };
+
+  const totalPages = Math.ceil(total / pageSize);
+
+  const buildPageHref = (p: number) => (p === 1 ? "/blog" : `/blog?page=${p}`);
+
+  const formatDate = (dateString: string) => {
+    return new Date(dateString).toLocaleDateString("en-US", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    });
+  };
 
   return (
-    <div className="min-h-screen font-sans selection:bg-blue-500/30">
-      {schemas.map((schema, index) => (
-        <script
-          key={index}
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      ))}
-
-      {/* 
-        ======================================================================
-        Custom CSS for Quill Editor Rendering
-        Updated to handle base64 images (copy/pasted) and text colors.
-        ======================================================================
-      */}
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `
-        .blog-content .ql-align-center { text-align: center; }
-        .blog-content .ql-align-right { text-align: right; }
-        .blog-content .ql-align-justify { text-align: justify; }
-        .blog-content .ql-size-small { font-size: 0.875rem; }
-        .blog-content .ql-size-large { font-size: 1.5rem; font-weight: 600; line-height: 1.2; }
-        .blog-content .ql-size-huge { font-size: 2.25rem; font-weight: 700; line-height: 1.1; }
-        
-        /* ✨ Fix for Copy/Pasted Images ✨ */
-        .blog-content img {
-          max-width: 100%;
-          height: auto;
-          border-radius: 12px;
-          margin: 2rem auto;
-          display: block;
-          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
-        }
-
-        /* Responsive iframe for YouTube/Vimeo Videos */
-        .blog-content iframe.ql-video { 
-          width: 100%; 
-          aspect-ratio: 16/9; 
-          border-radius: 12px; 
-          margin: 2rem 0; 
-          box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1); 
-        }
-
-        /* ✨ Fix for Text Colors & Background Colors ✨ */
-        /* Forces Tailwind Typography to respect inline colors */
-        .blog-content span[style*="color"] {
-          color: inherit !important; 
-        }
-        
-        .blog-content [style*="background-color"] {
-          padding: 0.1rem 0.25rem;
-          border-radius: 0.25rem;
-        }
-
-        /* Blockquote Styling */
-        .blog-content blockquote {
-          border-left: 4px solid #3b82f6;
-          background-color: #f8fafc;
-          padding: 1rem 1.5rem;
-          margin: 1.5rem 0;
-          border-radius: 0 0.5rem 0.5rem 0;
-          font-style: italic;
-        }
-        .dark .blog-content blockquote {
-          background-color: #1e293b;
-          border-left-color: #60a5fa;
-        }
-      `,
+    <div className="min-h-screen">
+      <SEO
+        title="Inxyme Blog | Learn Skills, Build Your Career Today"
+        description="Explore career tips, skill insights, industry trends and expert learning resources to build in-demand skills and grow your career with Inxyme."
+        keywords="Inxyme blog, career tips, skill development, online learning, professional courses, career growth, industry trends, job skills, career guidance, education blog"
+        og={{
+          title: "Inxyme Blog | Learn Skills, Build Your Career Today",
+          description:
+            "Explore career tips, skill insights, industry trends and expert learning resources to build in-demand skills and grow your career with Inxyme.",
+          type: "website",
         }}
       />
 
-      <main className="max-w-7xl text-gray-800 mx-auto px-2 md:px-0 grid grid-cols-1 lg:grid-cols-12 gap-3">
-        {/* ================= LEFT CONTENT AREA ================= */}
-        <section className="lg:col-span-8 space-y-3">
-          <article className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-            {/* Header / Meta Info */}
-            <div className="p-2 md:p-6 pb-6">
-              {post.categories && post.categories.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {post.categories.map((category) => (
-                    <Link
-                      key={category._id}
-                      href={`/blog?category=${category.slug}`}
-                      className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-blue-50 text-blue-700hover:bg-blue-100 transition-colors"
-                    >
-                      {category.name}
-                    </Link>
-                  ))}
-                </div>
-              )}
+      {/* ===== HERO HEADER WITH SEARCH ===== */}
+      <section className="relative overflow-hidden pt-4 sm:pt-10 px-4 sm:px-6 lg:px-8">
+        <div className="relative z-10 max-w-6xl mx-auto text-center space-y-2">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full backdrop-blur-md border border-white/20 text-gray-800 dark:text-gray-100 text-xs sm:text-sm font-semibold tracking-wide">
+            <FaBook className="text-yellow-300" />
+            <span>Inxyme Insights</span>
+          </div>
 
-              <h1 className="text-2xl md:text-4xl font-extrabold text-slate-900 leading-[1.2] tracking-tight mb-6">
-                {post.title}
-              </h1>
+          <h1 className="text-2xl sm:text-4xl md:text-5xl text-gray-800 dark:text-gray-100 font-black tracking-tight leading-tight">
+            Career Insights &amp; Learning Resources
+          </h1>
+          <p className="text-sm sm:text-base text-gray-800 dark:text-gray-100 font-medium max-w-5xl mx-auto leading-relaxed">
+            Expert articles, tutorials, and industry updates to help you stay
+            ahead in your career and learning journey.
+          </p>
 
-              {post.excerpt && (
-                <p className="text-lg md:text-xl text-slate-600 mb-8 leading-relaxed font-medium">
-                  {post.excerpt}
-                </p>
-              )}
-
-              <div className="flex flex-wrap items-center gap-y-4 gap-x-6 text-sm font-medium text-slate-500 py-4 border-y border-slate-200">
-                <div className="flex items-center gap-2">
-                  <FaUserCircle className="w-5 h-5 text-slate-400" />
-                  <span className="text-slate-800 font-bold">
-                    {post.author?.name || "Eklabya"}
-                  </span>
-                </div>
-                <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-slate-300"></div>
-                <div className="flex items-center gap-2">
-                  <FaCalendarAlt className="text-blue-500" />
-                  <time dateTime={post.createdAt}>
-                    {formatDate(post.createdAt)}
-                  </time>
-                </div>
-                <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-slate-300"></div>
-                <div className="flex items-center gap-2">
-                  <FaClock className="text-emerald-500" />
-                  <span>{Math.ceil(post.readingTime || 5)} min read</span>
-                </div>
-                <div className="hidden sm:block w-1.5 h-1.5 rounded-full bg-slate-300"></div>
-                <ShareButton
-                  title={post.title}
-                  text={post.excerpt}
-                  url={canonical}
-                  className="!py-1.5 !px-3 text-xs"
-                />
-              </div>
-            </div>
-
-            {/* Featured Image */}
-            {featuredImageUrl && (
-              <div className="px-2 md:px-6 pb-3 md:pb-8">
-                <div className="w-full h-auto rounded-2xl overflow-hidden relative shadow-inner bg-slate-100 flex items-center justify-center">
-                  <img
-                    src={featuredImageUrl}
-                    alt={post.title}
-                    className="w-full h-auto object-cover hover:scale-105 transition-transform duration-700"
-                  />
-                  <div className="absolute inset-0 ring-1 ring-inset ring-black/10 rounded-2xl pointer-events-none"></div>
-                </div>
-              </div>
-            )}
-
-            {/* 
-              Article Content 
-              Prose classes modified to respect inline styles from Quill 
-            */}
-            <div className="px-2 md:px-6 pb-10">
-              <div className="prose prose-lg prose-slate max-w-none prose-headings:font-bold prose-a:text-blue-600 hover:prose-a:text-blue-500 prose-img:rounded-xl">
-                {post.content ? (
-                  <div
-                    className="blog-content leading-relaxed"
-                    dangerouslySetInnerHTML={{ __html: post.content }}
-                  />
-                ) : (
-                  <p className="text-center text-slate-500 italic py-10">
-                    No content available for this post.
-                  </p>
-                )}
-              </div>
-            </div>
-
-            {/* Footer Tags */}
-            {post.tags && post.tags.length > 0 && (
-              <div className="px-6 md:px-10 py-6 bg-slate-50 border-t border-slate-200">
-                <div className="flex flex-wrap items-center gap-2">
-                  <span className="text-sm font-bold text-slate-900 mr-2 flex items-center gap-2">
-                    <FaTags className="text-blue-500" /> Tags:
-                  </span>
-                  {post.tags.map((tag, index) => (
-                    <Link
-                      key={index}
-                      href={`/blog?tag=${encodeURIComponent(tag)}`}
-                      className="px-3 py-1.5 rounded-lg text-xs font-semibold bg-white border border-slate-200  text-slate-600 hover:border-blue-500 hover:text-blue-600 transition-all shadow-sm"
-                    >
-                      {tag}
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </article>
-
-          {/* Related Posts */}
-          {post.categories && post.categories.length > 0 && (
-            <div className="pt-8">
-              <h2 className="text-2xl font-extrabold text-slate-900 mb-6 tracking-tight">
-                Keep Reading
-              </h2>
-              <RelatedPosts
-                categoryId={post.categories[0]._id}
-                excludePostId={post._id}
+          <form onSubmit={handleSearch} className="pt-2">
+            <div className="relative max-w-2xl mx-auto">
+              <FaSearch className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+              <input
+                type="text"
+                value={searchInput}
+                onChange={(e) => setSearchInput(e.target.value)}
+                placeholder="Search articles, topics, skills..."
+                className="w-full pl-11 pr-24 py-3.5 bg-white/95 dark:bg-gray-900/95 text-slate-900 dark:text-white placeholder-slate-400 rounded-2xl text-sm border border-white/20 shadow-lg focus:outline-none focus:ring-2 focus:ring-sky-400 transition-all"
               />
+              <button
+                type="submit"
+                className="absolute right-2 top-1/2 -translate-y-1/2 px-4 py-1.5 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl transition-colors shadow-md"
+              >
+                Search
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      {/* ===== RESULTS BAR ===== */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          {q ? (
+            <p className="text-sm font-bold text-slate-700 dark:text-slate-300">
+              Found{" "}
+              <span className="text-blue-600 dark:text-blue-400">{total}</span>{" "}
+              results for &ldquo;{q}&rdquo;
+            </p>
+          ) : (
+            <p className="text-sm font-bold text-slate-700 dark:text-slate-300">
+              Showing{" "}
+              <span className="text-blue-600 dark:text-blue-400">
+                {posts.length}
+              </span>{" "}
+              of{" "}
+              <span className="text-blue-600 dark:text-blue-400">{total}</span>{" "}
+              articles
+            </p>
+          )}
+
+          {q && (
+            <button
+              onClick={clearSearch}
+              className="text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Clear Search
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* ===== POSTS GRID ===== */}
+      <section className="pb-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto">
+          {loading ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(pageSize)].map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-700/60 p-5 space-y-4 animate-pulse shadow-md"
+                >
+                  <div className="h-48 bg-slate-200 dark:bg-slate-700 rounded-2xl" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-1/3" />
+                  <div className="h-6 bg-slate-200 dark:bg-slate-700 rounded w-3/4" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-full" />
+                  <div className="h-4 bg-slate-200 dark:bg-slate-700 rounded w-2/3" />
+                </div>
+              ))}
+            </div>
+          ) : posts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {posts.map((post) => (
+                  <article
+                    key={post._id}
+                    className="group relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-300 dark:border-slate-600 hover:border-blue-500 dark:hover:border-blue-500 hover:-translate-y-1 flex flex-col h-full"
+                  >
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="block h-auto bg-slate-100 dark:bg-gray-700 overflow-hidden relative"
+                    >
+                      {post.featuredImage ? (
+                        <img
+                          src={getImageUrl(post.featuredImage)}
+                          alt={post.title}
+                          className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-full h-auto flex items-center justify-center text-slate-400">
+                          <FaBook className="text-4xl opacity-50" />
+                        </div>
+                      )}
+                    </Link>
+
+                    <div className="p-5 flex flex-col flex-grow">
+                      <div className="flex flex-wrap items-center gap-3 text-xs text-slate-500 dark:text-slate-400 mb-3">
+                        <span className="inline-flex items-center gap-1">
+                          <FaCalendarAlt className="text-blue-500" />
+                          {formatDate(post.createdAt)}
+                        </span>
+                        <span className="inline-flex items-center gap-1">
+                          <FaClock className="text-emerald-500" />
+                          {Math.ceil(post.readingTime || 5)} min read
+                        </span>
+                      </div>
+
+                      <h2 className="text-lg font-bold text-slate-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <Link href={`/blog/${post.slug}`}>{post.title}</Link>
+                      </h2>
+
+                      <p className="text-sm text-slate-600 dark:text-slate-300 line-clamp-3 mb-4 flex-grow leading-relaxed">
+                        {post.excerpt ||
+                          `${post.content?.substring(0, 180) || ""}...`}
+                      </p>
+
+                      {post.categories && post.categories.length > 0 && (
+                        <div className="flex flex-wrap gap-2 mb-4">
+                          {post.categories.slice(0, 3).map((category) => (
+                            <span
+                              key={category._id}
+                              className="inline-flex items-center px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400 border border-blue-100 dark:border-blue-900"
+                            >
+                              {category.name}
+                            </span>
+                          ))}
+                        </div>
+                      )}
+
+                      <div className="mt-auto pt-4 border-t border-slate-200 dark:border-slate-700/60">
+                        <Link
+                          href={`/blog/${post.slug}`}
+                          className="inline-flex items-center text-sm font-bold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
+                        >
+                          Read More
+                          <FaArrowRight className="w-3.5 h-3.5 ml-1.5 group-hover:translate-x-1 transition-transform" />
+                        </Link>
+                      </div>
+                    </div>
+                  </article>
+                ))}
+              </div>
+
+              {/* Pagination */}
+              {!q && totalPages > 1 && (
+                <div className="mt-12 flex justify-center items-center gap-2 flex-wrap">
+                  {page > 1 && (
+                    <Link
+                      href={buildPageHref(page - 1)}
+                      className="px-4 py-2 rounded-xl text-sm font-bold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    >
+                      Previous
+                    </Link>
+                  )}
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map(
+                    (p) => (
+                      <Link
+                        key={p}
+                        href={buildPageHref(p)}
+                        className={`px-4 py-2 rounded-xl text-sm font-bold transition-colors ${
+                          p === page
+                            ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                            : "border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800"
+                        }`}
+                      >
+                        {p}
+                      </Link>
+                    ),
+                  )}
+                  {page < totalPages && (
+                    <Link
+                      href={buildPageHref(page + 1)}
+                      className="px-4 py-2 rounded-xl text-sm font-bold border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+                    >
+                      Next
+                    </Link>
+                  )}
+                </div>
+              )}
+            </>
+          ) : (
+            <div className="text-center py-16 bg-white/70 dark:bg-gray-900/70 backdrop-blur-xl rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8 space-y-3">
+              <div className="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto text-lg">
+                <FaSearch />
+              </div>
+              <p className="text-base font-bold text-slate-900 dark:text-white">
+                {q ? "No articles matching your search" : "No articles found"}
+              </p>
+              <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
+                {q ? (
+                  <>
+                    We couldn&apos;t find any articles for &ldquo;{q}&rdquo;.
+                    Try a different keyword or clear the search.
+                  </>
+                ) : (
+                  "Check back soon for new career insights and learning resources."
+                )}
+              </p>
+              {q && (
+                <button
+                  onClick={clearSearch}
+                  className="mt-2 inline-block px-5 py-2 bg-blue-600 text-white text-xs font-bold rounded-xl hover:bg-blue-700 transition-colors"
+                >
+                  Clear Search
+                </button>
+              )}
             </div>
           )}
-        </section>
-
-        {/* ================= RIGHT SIDEBAR ================= */}
-        <aside className="lg:col-span-4">
-          <div className="sticky top-24 space-y-3 lg:max-h-[calc(100vh-7rem)] lg:overflow-y-auto lg:pr-1">
-            {/* Author Widget */}
-            <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 sm:p-4">
-              <div className="flex items-center gap-4 mb-4">
-                <div className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xl font-bold shadow-md">
-                  {(post.author?.name || "Eklabya").charAt(0).toUpperCase()}
-                </div>
-                <div>
-                  <p className="text-xs font-bold text-slate-400 uppercase tracking-widest mb-0.5">
-                    Written By
-                  </p>
-                  <h3 className="text-lg font-bold text-slate-900">
-                    {post.author?.name || "Eklabya"}
-                  </h3>
-                </div>
-              </div>
-              <p className="text-slate-600 text-sm leading-relaxed">
-                {post.author?.bio ||
-                  "Passionate about education, technology, and sharing knowledge to help students build a better future."}
-              </p>
-            </div>
-
-            {/* Share Widget */}
-            <div className="bg-white rounded-2xl text-gray-800 shadow-sm border border-slate-200 p-2 sm:p-4 text-center relative overflow-hidden">
-              <h3 className="text-lg font-bold mb-2 relative z-10">
-                Enjoyed this article?
-              </h3>
-              <p className="text-sm mb-6 relative z-10">
-                Share it with your network and help others learn something new
-                today.
-              </p>
-              <div className="relative z-10 rounded-xl p-1">
-                <ShareButton
-                  title={post.title}
-                  text={post.excerpt}
-                  url={canonical}
-                  className="w-full font-bold"
-                />
-              </div>
-            </div>
-
-            {/* Next 4 Blogs */}
-            {nextBlogs.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-2 sm:p-4">
-                <h3 className="text-base font-bold text-slate-900 mb-4">
-                  Let's Read Next Blog
-                </h3>
-                <div className="flex flex-col gap-4">
-                  {nextBlogs.map((nextPost) => (
-                    <Link
-                      key={nextPost._id}
-                      href={`/blog/${nextPost.slug}`}
-                      className="group flex gap-3 items-start"
-                    >
-                      <div className="w-auto h-16 rounded-lg overflow-hidden bg-slate-100 flex-shrink-0">
-                        {nextPost.featuredImage ? (
-                          <img
-                            src={getImageUrl(nextPost.featuredImage)}
-                            alt={nextPost.title}
-                            className="w-auto h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          />
-                        ) : (
-                          <div className="w-full h-full flex items-center justify-center text-slate-400 text-xs">
-                            No Image
-                          </div>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <h4 className="text-sm font-bold text-slate-900 leading-snug line-clamp-2 group-hover:text-blue-600 transition-colors">
-                          {nextPost.title}
-                        </h4>
-                        <div className="flex items-center gap-3 mt-1 text-xs text-slate-500">
-                          <span className="flex items-center gap-1">
-                            <FaCalendarAlt className="text-blue-500" />{" "}
-                            {formatDate(nextPost.createdAt)}
-                          </span>
-                          <span className="flex items-center gap-1">
-                            <FaClock className="text-emerald-500" />{" "}
-                            {Math.ceil(nextPost.readingTime || 5)} min
-                          </span>
-                        </div>
-                      </div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {/* Categories Widget */}
-            {post.categories && post.categories.length > 0 && (
-              <div className="bg-white rounded-2xl shadow-sm border border-slate-200 p-6">
-                <h3 className="text-base font-bold text-slate-900 mb-4 flex items-center gap-2">
-                  <FaFolderOpen className="text-blue-500" /> Topics in this post
-                </h3>
-                <div className="flex flex-col gap-2">
-                  {post.categories.map((category) => (
-                    <Link
-                      key={category._id}
-                      href={`/blog?category=${category.slug}`}
-                      className="group flex items-center justify-between p-3 rounded-xl bg-slate-50  hover:bg-blue-50 transition-colors border border-transparent hover:border-blue-100"
-                    >
-                      <span className="text-sm font-semibold text-slate-700 group-hover:text-blue-600 transition-colors">
-                        {category.name}
-                      </span>
-                      <span className="text-slate-400 group-hover:text-blue-500 group-hover:translate-x-1 transition-all">
-                        →
-                      </span>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </aside>
-      </main>
+        </div>
+      </section>
     </div>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-slate-50 dark:bg-gray-950">
+          <div className="h-64 sm:h-80 bg-gradient-to-br from-blue-700 via-indigo-800 to-slate-900 animate-pulse" />
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(pageSize)].map((_, i) => (
+                <div
+                  key={i}
+                  className="bg-white/70 dark:bg-gray-800/70 rounded-3xl border border-slate-200/80 dark:border-slate-700/60 p-5 space-y-4 animate-pulse h-80"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      }
+    >
+      <BlogListContent />
+    </Suspense>
   );
 }

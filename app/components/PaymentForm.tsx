@@ -148,7 +148,7 @@ export default function PaymentForm({
       key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID || "",
       amount: orderData.amount,
       currency: orderData.currency,
-      name: "Eklabya",
+      name: "Inxyme",
       description: isCompanyRegistration
         ? "JobFair Registration Fee"
         : `Payment for ${formData.course}`,

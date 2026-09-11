@@ -11,13 +11,13 @@ const Content = () => {
         {/* --- Header & Brand Story --- */}
         <div className="text-center max-w-5xl mx-auto space-y-2">
           <div className="inline-flex items-center gap-1.5 bg-blue-50/80 dark:bg-blue-950/60 backdrop-blur-md border border-blue-200/80 dark:border-blue-800/80 px-3 py-1 rounded-full text-blue-600 dark:text-blue-400 text-xs font-extrabold uppercase tracking-wider">
-            <FaGraduationCap className="text-xs" /> About Eklabya
+            <FaGraduationCap className="text-xs" /> About Inxyme
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-            Eklabya Centre of Excellence – Your Online Learning Partner
+            Inxyme Centre of Excellence – Your Online Learning Partner
           </h2>
           <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-400 leading-relaxed font-normal">
-            Eklabya is an ISO-certified, NSDC and NIELIT-recognized online
+            Inxyme is an ISO-certified, NSDC and NIELIT-recognized online
             learning platform built to make career-ready education accessible,
             regardless of your city, schedule, or background. We started with a
             simple belief: high-quality, job-relevant education shouldn't
@@ -27,10 +27,10 @@ const Content = () => {
           </p>
         </div>
 
-        {/* --- Why Choose Eklabya (Compact 4-grid) --- */}
+        {/* --- Why Choose Inxyme (Compact 4-grid) --- */}
         <div>
           <h3 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white mb-4 text-center">
-            Why Choose Eklabya?
+            Why Choose Inxyme?
           </h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             <div className="p-4 rounded-2xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/60 shadow-2xs space-y-1.5">
@@ -118,7 +118,7 @@ const Content = () => {
               </h3>
               <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-400 leading-relaxed">
                 Thousands of students and working professionals have upskilled
-                or switched careers. Eklabya is built to be your complete
+                or switched careers. Inxyme is built to be your complete
                 learning partner, offering current course content, real
                 mentorship, and placement assistance.
               </p>
@@ -135,7 +135,7 @@ const Content = () => {
             Ready to Start Your Learning Journey?
           </h3>
           <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-400 max-w-lg mx-auto">
-            Empower your future with Eklabya. No classroom needed—just a device,
+            Empower your future with Inxyme. No classroom needed—just a device,
             internet, and the passion to grow.
           </p>
           <div>

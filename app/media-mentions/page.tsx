@@ -111,8 +111,8 @@ export default function MediaMentionsPage() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <SEO
-        title="Media Mentions | Eklabya"
-        description="Explore media coverage, press releases, and news mentions about Eklabya."
+        title="Media Mentions | Inxyme"
+        description="Explore media coverage, press releases, and news mentions about Inxyme."
         keywords="media mentions, press, news, inxyme, coverage"
       />
       {/* Hero Section */}

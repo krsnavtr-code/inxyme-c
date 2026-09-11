@@ -51,7 +51,7 @@ const StudentPlacements = () => {
       image:
         "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face",
       quote:
-        "The Data Science course at Eklabya was very practical and easy to understand. Trainers explained concepts with real projects.",
+        "The Data Science course at Inxyme was very practical and easy to understand. Trainers explained concepts with real projects.",
     },
     {
       name: "Priya Sharma",

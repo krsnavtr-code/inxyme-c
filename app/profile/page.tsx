@@ -254,8 +254,8 @@ export default function Profile() {
   return (
     <>
       <SEO
-        title="My Profile | Eklabya"
-        description="Manage your Eklabya account, view scholarship test results and track your enrolled courses."
+        title="My Profile | Inxyme"
+        description="Manage your Inxyme account, view scholarship test results and track your enrolled courses."
         robots="noindex, nofollow"
       />
       <div className="min-h-screen bg-gray-50/50 dark:bg-gray-900 pb-12 text-gray-900 dark:text-white">

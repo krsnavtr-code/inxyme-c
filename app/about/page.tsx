@@ -8,13 +8,13 @@ export default function About() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <SEO
-        title="About Eklabya | Online Learning and Career Growth"
-        description="Discover Eklabya, an online learning platform offering career-focused courses, certifications and flexible skill training for modern professionals."
-        keywords="Eklabya, about Eklabya, online learning platform, career development, online courses, skill development, professional certifications, career growth, flexible learning, online education, career-focused courses, job-ready skills, professional training, e-learning platform, skill training"
+        title="About Inxyme | Online Learning and Career Growth"
+        description="Discover Inxyme, an online learning platform offering career-focused courses, certifications and flexible skill training for modern professionals."
+        keywords="Inxyme, about Inxyme, online learning platform, career development, online courses, skill development, professional certifications, career growth, flexible learning, online education, career-focused courses, job-ready skills, professional training, e-learning platform, skill training"
         og={{
-          title: "About Eklabya | Online Learning and Career Growth",
+          title: "About Inxyme | Online Learning and Career Growth",
           description:
-            "Discover Eklabya, an online learning platform offering career-focused courses, certifications and flexible skill training for modern professionals.",
+            "Discover Inxyme, an online learning platform offering career-focused courses, certifications and flexible skill training for modern professionals.",
           type: "website",
         }}
       />
@@ -22,7 +22,7 @@ export default function About() {
       <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
-            About Us – Eklabya
+            About Us – Inxyme
           </h1>
           <p className="text-xl md:text-2xl max-w-3xl mx-auto">
             Empowering minds through knowledge and learning resources
@@ -282,7 +282,7 @@ export default function About() {
             </Link>
           </div>
           <p className="text-center text-lg text-black dark:text-white mt-12">
-            Welcome to Eklabya — your partner in skill-building and success.
+            Welcome to Inxyme — your partner in skill-building and success.
           </p>
         </div>
       </section>

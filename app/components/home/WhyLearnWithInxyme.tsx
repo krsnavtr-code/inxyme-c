@@ -12,7 +12,7 @@ interface ComparisonData {
 
 const data: ComparisonData[] = [
   {
-    benefit: "Eklabya ISO certified certificate",
+    benefit: "Inxyme ISO certified certificate",
     firstVITE: true,
     others: false,
     youtube: false,
@@ -84,7 +84,7 @@ const renderIcon = (value: boolean) => {
   return <span className="text-gray-300 dark:text-gray-600 font-bold">—</span>;
 };
 
-const WhyLearnWithEklabya = () => {
+const WhyLearnWithInxyme = () => {
   const [comparisonData, setComparisonData] = useState<ComparisonData[]>(data);
   const [isVisible, setIsVisible] = useState(false);
   const componentRef = useRef<HTMLDivElement>(null);
@@ -164,7 +164,7 @@ const WhyLearnWithEklabya = () => {
                         Key Benefits & Features
                       </th>
                       <th className="w-1/6 px-4 py-2.5 text-center text-blue-600 dark:text-blue-400 font-black">
-                        Eklabya
+                        Inxyme
                       </th>
                       <th className="w-1/6 px-4 py-2.5 text-center text-slate-500 dark:text-slate-400">
                         Other Platforms
@@ -256,13 +256,13 @@ const WhyLearnWithEklabya = () => {
                 </h3>
 
                 <div className="grid grid-cols-3 gap-2 border-t border-slate-200/60 dark:border-slate-700/60 pt-2">
-                  {/* Eklabya */}
+                  {/* Inxyme */}
                   <div
                     className="flex flex-col items-center justify-center p-1.5 rounded-xl bg-blue-50/70 dark:bg-blue-950/40 border border-blue-200/80 dark:border-blue-900/60"
                     onClick={() => toggleValue(idx, "firstVITE")}
                   >
                     <span className="text-[10px] font-black uppercase text-blue-600 dark:text-blue-400 mb-1.5">
-                      Eklabya
+                      Inxyme
                     </span>
                     {renderIcon(row.firstVITE)}
                   </div>
@@ -298,4 +298,4 @@ const WhyLearnWithEklabya = () => {
   );
 };
 
-export default WhyLearnWithEklabya;
+export default WhyLearnWithInxyme;

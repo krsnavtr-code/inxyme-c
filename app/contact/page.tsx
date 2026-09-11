@@ -125,13 +125,13 @@ export default function Contact() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <SEO
-        title="Contact Eklabya | Courses & Admissions Support"
-        description="Contact Eklabya for admissions, courses and corporate training. Get expert guidance and find the right learning path to achieve your career goals today."
-        keywords="Eklabya contact, contact Eklabya, Eklabya courses, admissions support, online courses, corporate training, career guidance, Noida"
+        title="Contact Inxyme | Courses & Admissions Support"
+        description="Contact Inxyme for admissions, courses and corporate training. Get expert guidance and find the right learning path to achieve your career goals today."
+        keywords="Inxyme contact, contact Inxyme, Inxyme courses, admissions support, online courses, corporate training, career guidance, Noida"
         og={{
-          title: "Contact Eklabya | Courses & Admissions Support",
+          title: "Contact Inxyme | Courses & Admissions Support",
           description:
-            "Contact Eklabya for admissions, courses and corporate training. Get expert guidance and find the right learning path to achieve your career goals today.",
+            "Contact Inxyme for admissions, courses and corporate training. Get expert guidance and find the right learning path to achieve your career goals today.",
           type: "website",
         }}
       />

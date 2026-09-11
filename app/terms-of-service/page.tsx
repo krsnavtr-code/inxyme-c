@@ -7,13 +7,13 @@ const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <SEO
-        title="Eklabya Terms of Service | User Agreement & Rules"
-        description="Read Eklabya Terms of Service to understand user responsibilities, website rules, intellectual property rights, services and legal terms."
-        keywords="Eklabya terms of service, Eklabya user agreement, terms and conditions, website terms, user responsibilities, legal terms, online learning terms, education platform rules, intellectual property rights"
+        title="Inxyme Terms of Service | User Agreement & Rules"
+        description="Read Inxyme Terms of Service to understand user responsibilities, website rules, intellectual property rights, services and legal terms."
+        keywords="Inxyme terms of service, Inxyme user agreement, terms and conditions, website terms, user responsibilities, legal terms, online learning terms, education platform rules, intellectual property rights"
         og={{
-          title: "Eklabya Terms of Service | User Agreement & Rules",
+          title: "Inxyme Terms of Service | User Agreement & Rules",
           description:
-            "Read Eklabya Terms of Service to understand user responsibilities, website rules, intellectual property rights, services and legal terms.",
+            "Read Inxyme Terms of Service to understand user responsibilities, website rules, intellectual property rights, services and legal terms.",
           type: "article",
         }}
       />
@@ -31,7 +31,7 @@ const TermsOfService = () => {
               AGREEMENT TO OUR LEGAL TERMS
             </h2>
             <p className="mb-4">
-              We are Eklabya Centre of Excellence ("Company," "we," "us,"
+              We are Inxyme Centre of Excellence ("Company," "we," "us,"
               "our"). We operate https://www.inxyme.com/, as well as any other
               related products and services that refer or link to these legal
               terms (the "Legal Terms") (collectively, the "Services"). You can
@@ -41,7 +41,7 @@ const TermsOfService = () => {
             <p className="mb-4">
               These Legal Terms constitute a legally binding agreement made
               between you, whether personally or on behalf of an entity ("you"),
-              and Eklabya Centre of Excellence, concerning your access to and
+              and Inxyme Centre of Excellence, concerning your access to and
               use of the Services. You agree that by accessing the Services, you
               have read, understood, and agreed to be bound by all of these
               Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS,
@@ -623,7 +623,7 @@ const TermsOfService = () => {
             </h2>
             <p className="mb-4">
               These Legal Terms shall be governed by and defined following the
-              laws of India. Eklabya Centre of Excellence and yourself
+              laws of India. Inxyme Centre of Excellence and yourself
               irrevocably consent that the courts of Noida, Uttar Pradesh shall
               have exclusive jurisdiction to resolve any dispute which may arise
               in connection with these Legal Terms.
@@ -871,7 +871,7 @@ const TermsOfService = () => {
               contact us at:
             </p>
             <address className="not-italic text-black dark:text-white mb-4">
-              Eklabya Centre of Excellence
+              Inxyme Centre of Excellence
               <br />
               G-25, Block G, Sector 3
               <br />

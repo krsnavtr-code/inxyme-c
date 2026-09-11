@@ -50,7 +50,7 @@ const steps = [
       <FaCertificate className="text-xl text-blue-600 dark:text-blue-400" />
     ),
     title: "Get your certification",
-    desc: "When you've finished, you'll get a certificate from Eklabya that's got some real weight behind it, thanks to our partnerships with NSDC and NIELIT, and employers can actually check it out.",
+    desc: "When you've finished, you'll get a certificate from Inxyme that's got some real weight behind it, thanks to our partnerships with NSDC and NIELIT, and employers can actually check it out.",
   },
 ];
 
@@ -65,18 +65,18 @@ const HowWillYourTrainingWork = () => {
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            How Your Training Works - With Eklabya
+            How Your Training Works - With Inxyme
           </h2>
 
           <div className="bg-white/50 dark:bg-gray-800/40 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/60 rounded-2xl p-4 md:p-6 text-left space-y-2 shadow-sm">
             <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-              From enrollment to certification, every step of the Eklabya
+              From enrollment to certification, every step of the Inxyme
               learning journey is structured, transparent, and built around
               outcomes, not just attendance. Here's what the path looks like:
             </p>
             <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
               From signing up all the way to getting certified, the whole
-              Eklabya learning experience is laid out in a way that's clear to
+              Inxyme learning experience is laid out in a way that's clear to
               see, follows a specific path, and is focused on results — not just
               on showing up. Here's how it all plays out:
             </p>

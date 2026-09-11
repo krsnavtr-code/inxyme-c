@@ -242,8 +242,8 @@ export default function MyLearning() {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900 pb-16 px-4">
       <SEO
-        title="My Learning Dashboard | Eklabya"
-        description="Track your enrolled courses, progress, and continue learning with Eklabya."
+        title="My Learning Dashboard | Inxyme"
+        description="Track your enrolled courses, progress, and continue learning with Inxyme."
         keywords="my learning, dashboard, enrolled courses, online learning, inxyme"
       />
       <div className="max-w-7xl mx-auto">

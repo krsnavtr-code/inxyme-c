@@ -325,14 +325,14 @@ export default function ScholarshipTestPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center p-5">
         <SEO
-          title="Scholarship Test | Eklabya Centre of Excellence"
-          description="Apply for the Eklabya Centre of Excellence Scholarship Test and unlock academic excellence with merit-based rewards, career guidance, and expert mentoring."
-          keywords="scholarship test, scholarship evaluation, online test, Eklabya scholarship, student scholarship"
+          title="Scholarship Test | Inxyme Centre of Excellence"
+          description="Apply for the Inxyme Centre of Excellence Scholarship Test and unlock academic excellence with merit-based rewards, career guidance, and expert mentoring."
+          keywords="scholarship test, scholarship evaluation, online test, Inxyme scholarship, student scholarship"
           robots="index, follow"
           og={{
-            title: "Scholarship Test | Eklabya Centre of Excellence",
+            title: "Scholarship Test | Inxyme Centre of Excellence",
             description:
-              "Apply for the Eklabya Centre of Excellence Scholarship Test and unlock academic excellence with merit-based rewards, career guidance, and expert mentoring.",
+              "Apply for the Inxyme Centre of Excellence Scholarship Test and unlock academic excellence with merit-based rewards, career guidance, and expert mentoring.",
             type: "article",
           }}
         />
@@ -341,7 +341,7 @@ export default function ScholarshipTestPage() {
             <div className="text-center mb-10">
               <FaShieldAlt className="mx-auto text-6xl text-indigo-600" />
               <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mt-6 mb-2">
-                Eklabya Scholarship Test – Online Scholarship Evaluation for
+                Inxyme Scholarship Test – Online Scholarship Evaluation for
                 Students
               </h1>
               <div className="h-1 w-24 bg-indigo-500 mx-auto rounded-full"></div>
@@ -368,13 +368,13 @@ export default function ScholarshipTestPage() {
               <div className="flex items-center gap-3 mb-6">
                 <FaFileAlt className="text-indigo-600 text-xl" />
                 <h2 className="text-xl font-bold text-gray-900">
-                  Scholarship Test Policy & Important Warnings – Eklabya
+                  Scholarship Test Policy & Important Warnings – Inxyme
                 </h2>
               </div>
 
               <div className="space-y-6 text-gray-700 leading-relaxed text-sm md:text-base">
                 <p>
-                  The Eklabya Scholarship Evaluation Test is designed to ensure
+                  The Inxyme Scholarship Evaluation Test is designed to ensure
                   a fair, transparent, and merit-based assessment process for
                   all candidates.
                 </p>
@@ -383,7 +383,7 @@ export default function ScholarshipTestPage() {
                   {[
                     {
                       title: "Time Management",
-                      text: "Each question in the Eklabya scholarship exam has a strict time limit. Once the time expires, the system will automatically move to the next question, and unanswered questions cannot be revisited.",
+                      text: "Each question in the Inxyme scholarship exam has a strict time limit. Once the time expires, the system will automatically move to the next question, and unanswered questions cannot be revisited.",
                     },
                     {
                       title: "System Integrity",
@@ -395,7 +395,7 @@ export default function ScholarshipTestPage() {
                     },
                     {
                       title: "Final Submission",
-                      text: "All submitted responses are final and cannot be edited after submission. By proceeding with the test, candidates agree to comply with all Eklabya scholarship policies, rules, and warnings.",
+                      text: "All submitted responses are final and cannot be edited after submission. By proceeding with the test, candidates agree to comply with all Inxyme scholarship policies, rules, and warnings.",
                     },
                   ].map((item, idx) => (
                     <div

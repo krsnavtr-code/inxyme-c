@@ -642,7 +642,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
                       icon: (
                         <FaCrown className="text-slate-700 dark:text-slate-300 w-4 h-4" />
                       ),
-                      text: "Lifetime eKlabya Membership",
+                      text: "Lifetime Inxyme Membership",
                     },
                   ].map((item, index) => (
                     <li key={index} className="flex items-center gap-3">

@@ -24,12 +24,12 @@ const Assessment = () => {
           </div>
 
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-slate-900 dark:text-white tracking-tight">
-            Unlock Your Future with the Eklabya Scholarship Exam
+            Unlock Your Future with the Inxyme Scholarship Exam
           </h2>
 
           <div className="bg-white/50 dark:bg-gray-800/40 backdrop-blur-md border border-slate-200/80 dark:border-slate-700/60 rounded-2xl p-4 md:p-6 text-left space-y-3 shadow-sm">
             <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
-              The Eklabya Scholarship Exam is a merit-based online initiative
+              The Inxyme Scholarship Exam is a merit-based online initiative
               designed to reward talented, ambitious students with real
               financial support for their education. It's a chance to prove your
               academic ability and turn that performance into tangible savings
@@ -38,7 +38,7 @@ const Assessment = () => {
             </p>
             <p className="text-sm md:text-base text-slate-700 dark:text-slate-300 leading-relaxed font-normal">
               Students who get scholarships can use it to study in any of
-              Eklabya's globally recognized online certification courses. This
+              Inxyme's globally recognized online certification courses. This
               way the students would get a chance to build job ready skills
               without worrying about the cost of certification. We aim to close
               the gap between ambition and success by providing this scholarship
@@ -142,7 +142,7 @@ const Assessment = () => {
                 Ready to prove your potential?
               </h3>
               <p className="text-indigo-100 text-xs sm:text-sm md:text-base font-normal leading-relaxed">
-                The Eklabya Scholarship Exam 2026 gives you a fair, reliable
+                The Inxyme Scholarship Exam 2026 gives you a fair, reliable
                 platform to showcase your ability and secure a brighter academic
                 future.
               </p>

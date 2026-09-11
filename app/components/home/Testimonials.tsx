@@ -8,7 +8,7 @@ const Testimonials = () => {
     {
       id: 1,
       name: "Aman Verma",
-      role: "Data Science | Eklabya",
+      role: "Data Science | Inxyme",
       content:
         "The Data Science course was practical and easy to understand. I especially liked the hands-on projects and real-world examples.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
@@ -17,7 +17,7 @@ const Testimonials = () => {
     {
       id: 2,
       name: "Priya Sharma",
-      role: "Digital Marketing | Eklabya",
+      role: "Digital Marketing | Inxyme",
       content:
         "A great course for learning SEO, Google Ads and social media marketing. The practical approach made everything easier to understand.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745036-6410.png",
@@ -26,7 +26,7 @@ const Testimonials = () => {
     {
       id: 3,
       name: "Rahul Mehta",
-      role: "Full Stack Development | Eklabya",
+      role: "Full Stack Development | Inxyme",
       content:
         "The development training helped me understand frontend and backend concepts through practical projects. Overall, a very useful learning experience.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745003-1010.png",
@@ -35,7 +35,7 @@ const Testimonials = () => {
     {
       id: 4,
       name: "Neha Gupta",
-      role: "AI & Machine Learning | Eklabya",
+      role: "AI & Machine Learning | Inxyme",
       content:
         "The AI and Machine Learning course explained complex topics in a simple way. The practical sessions were especially helpful.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745009-2116.png",
@@ -44,7 +44,7 @@ const Testimonials = () => {
     {
       id: 5,
       name: "Rohit Kumar",
-      role: "Python | Eklabya",
+      role: "Python | Inxyme",
       content:
         "I really enjoyed the Python training. The concepts were explained clearly and the practical exercises helped me build confidence.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960744997-1415.png",
@@ -53,7 +53,7 @@ const Testimonials = () => {
     {
       id: 6,
       name: "Pooja Verma",
-      role: "SAP FICO | Eklabya",
+      role: "SAP FICO | Inxyme",
       content:
         "The SAP FICO training gave me a clear understanding of accounting concepts and their practical use in SAP.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
@@ -62,7 +62,7 @@ const Testimonials = () => {
     {
       id: 7,
       name: "Arjun Singh",
-      role: "Web Development | Eklabya",
+      role: "Web Development | Inxyme",
       content:
         "A good learning experience with practical web development projects. The training helped me improve my technical skills.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745036-6410.png",
@@ -71,7 +71,7 @@ const Testimonials = () => {
     {
       id: 8,
       name: "Anjali Sharma",
-      role: "Cyber Security | Eklabya",
+      role: "Cyber Security | Inxyme",
       content:
         "The Cyber Security course covered important concepts in an easy-to-understand way. I found the practical learning very useful.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745003-1010.png",
@@ -80,7 +80,7 @@ const Testimonials = () => {
     {
       id: 9,
       name: "Vikash Gupta",
-      role: "Data Analytics | Eklabya",
+      role: "Data Analytics | Inxyme",
       content:
         "The Data Analytics training helped me understand data visualization and analysis through practical examples and projects.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745009-2116.png",
@@ -89,7 +89,7 @@ const Testimonials = () => {
     {
       id: 10,
       name: "Simran Kaur",
-      role: "Digital Marketing & SEO | Eklabya",
+      role: "Digital Marketing & SEO | Inxyme",
       content:
         "The Digital Marketing training gave me practical knowledge of SEO, paid advertising and social media marketing. A useful course for beginners.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960744997-1415.png",
@@ -98,7 +98,7 @@ const Testimonials = () => {
     {
       id: 11,
       name: "Nitin Sharma",
-      role: "React Development | Eklabya",
+      role: "React Development | Inxyme",
       content:
         "The React training was structured well and focused on practical development. I gained much more confidence after working on projects.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
@@ -107,9 +107,9 @@ const Testimonials = () => {
     {
       id: 12,
       name: "Kavya Singh",
-      role: "Overall Experience | Eklabya",
+      role: "Overall Experience | Inxyme",
       content:
-        "Eklabya offers a practical learning environment with courses covering technology, digital marketing and professional skills. I had a positive learning experience.",
+        "Inxyme offers a practical learning environment with courses covering technology, digital marketing and professional skills. I had a positive learning experience.",
       avatar: "https://www.inxyme.com/api/upload/file/1777960745036-6410.png",
       rating: 5,
     },

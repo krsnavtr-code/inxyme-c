@@ -100,9 +100,9 @@ export default function FreeCoursesPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950">
       <SEO
-        title="Free Online Courses with Certificates | Eklabya"
-        description="Explore free online courses at Eklabya. Learn in-demand skills, gain practical knowledge and earn certificates to advance your career today."
-        keywords="Free online courses, free courses with certificates, online certification courses, free skill courses, career courses, Eklabya free courses"
+        title="Free Online Courses with Certificates | Inxyme"
+        description="Explore free online courses at Inxyme. Learn in-demand skills, gain practical knowledge and earn certificates to advance your career today."
+        keywords="Free online courses, free courses with certificates, online certification courses, free skill courses, career courses, Inxyme free courses"
       />
 
       <main>

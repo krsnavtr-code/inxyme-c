@@ -97,12 +97,12 @@ const defaultEvents: NewsOrEvent[] = [
     id: "event-3",
     type: "hackathon",
     category: "upcoming",
-    title: "Eklabya National Innovation Hackathon 2026",
+    title: "Inxyme National Innovation Hackathon 2026",
     description:
       "Compete with over 3,000 developers, data scientists, and designers across India. Solve real-world industry challenges and win cash prizes worth INR 2,50,000 + placement interviews.",
     date: "2026-10-05",
     time: "48-Hour Virtual Hackathon",
-    location: "Virtual & Eklabya Tech Hub",
+    location: "Virtual & Inxyme Tech Hub",
     mode: "Hybrid",
     tag: "Hackathon",
     featured: true,
@@ -114,9 +114,9 @@ const defaultEvents: NewsOrEvent[] = [
     type: "news",
     category: "news",
     title:
-      "Eklabya Partners with NSDC & NIELIT to Fast-Track Industry Certifications",
+      "Inxyme Partners with NSDC & NIELIT to Fast-Track Industry Certifications",
     description:
-      "In a major leap for skill development, Eklabya has joined forces with government skill bodies to offer verifiable credentials that bridge the tech industry employability gap.",
+      "In a major leap for skill development, Inxyme has joined forces with government skill bodies to offer verifiable credentials that bridge the tech industry employability gap.",
     date: "2026-08-10",
     publisher: "Education Technology Today",
     tag: "Partnership & Growth",
@@ -130,7 +130,7 @@ const defaultEvents: NewsOrEvent[] = [
     title:
       "Over 98% Placement Rate Recorded for Summer 2026 Graduating Cohorts",
     description:
-      "Eklabya alumni secure high-impact roles across leading Fortune 500 tech companies and hyper-growth unicorns in full-stack, data analytics, and cloud engineering.",
+      "Inxyme alumni secure high-impact roles across leading Fortune 500 tech companies and hyper-growth unicorns in full-stack, data analytics, and cloud engineering.",
     date: "2026-07-28",
     publisher: "Tech Digest India",
     tag: "Placements",
@@ -161,7 +161,7 @@ const defaultEvents: NewsOrEvent[] = [
       "A 3-day deep dive into scalable data processing, feature engineering, and deploying machine learning models into live streaming clusters.",
     date: "2026-05-12",
     time: "Recorded Masterclass Available",
-    location: "Eklabya On-Demand Lab",
+    location: "Inxyme On-Demand Lab",
     mode: "Online / Virtual",
     tag: "Data Science",
     featured: false,
@@ -349,9 +349,9 @@ export default function NewsAndEventsPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-gray-950 text-slate-900 dark:text-white transition-colors duration-300 pb-20">
       <SEO
-        title="Latest News & Events | The Eklabya"
-        description="Explore the latest news, events, workshops, achievements and updates from The Eklabya. Stay connected with our learning and career community."
-        keywords="Eklabya news, Eklabya events, latest updates, workshops, training events, educational events, skill development, career opportunities, announcements, activities"
+        title="Latest News & Events | The Inxyme"
+        description="Explore the latest news, events, workshops, achievements and updates from The Inxyme. Stay connected with our learning and career community."
+        keywords="Inxyme news, Inxyme events, latest updates, workshops, training events, educational events, skill development, career opportunities, announcements, activities"
       />
       {/* --- HERO HEADER --- */}
       <section className="relative overflow-hidden bg-gradient-to-br from-blue-700 via-indigo-800 to-slate-950 text-white py-6 md:py-8 px-3 sm:px-4 lg:px-6">
@@ -360,7 +360,7 @@ export default function NewsAndEventsPage() {
         <div className="relative max-w-7xl mx-auto text-center space-y-3">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/20 backdrop-blur-md border border-blue-400/30 text-blue-200 text-xs sm:text-sm font-semibold tracking-wide">
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-            Eklabya Live Pulse
+            Inxyme Live Pulse
           </div>
 
           <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
@@ -369,7 +369,7 @@ export default function NewsAndEventsPage() {
 
           <p className="max-w-7xl mx-auto text-sm sm:text-base md:text-lg text-blue-100/90 font-medium leading-relaxed">
             Stay ahead with live webinars, expert masterclasses, hackathons, and
-            the latest official press announcements from Eklabya.
+            the latest official press announcements from Inxyme.
           </p>
 
           {/* Quick Metrics */}

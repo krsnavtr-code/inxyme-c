@@ -332,7 +332,7 @@ function Banner() {
 
             {/* Description */}
             <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-300 font-medium leading-relaxed max-w-xl pt-1">
-              Eklabya is an ISO certified, NSDC & NIELIT recognized online
+              Inxyme is an ISO certified, NSDC & NIELIT recognized online
               learning platform helping students and working professionals build
               in-demand skills in IT, data, business, and design, with live
               mentorship, hand-on projects, and dedicated placement support. No

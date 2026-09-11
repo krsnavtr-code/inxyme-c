@@ -7,9 +7,9 @@ export default function UnauthorizedPage() {
   return (
     <>
       <SEO
-        title="Access Denied | Eklabya"
+        title="Access Denied | Inxyme"
         description="Access denied page. You don't have permission to access this page. Please contact administrator if you believe this is a mistake."
-        keywords="access denied, unauthorized, permission, Eklabya, security"
+        keywords="access denied, unauthorized, permission, Inxyme, security"
         robots="noindex, nofollow"
       />
       <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">

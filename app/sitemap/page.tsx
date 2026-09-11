@@ -2,9 +2,9 @@ import { Metadata } from "next";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Sitemap | Eklabya",
+  title: "Sitemap | Inxyme",
   description:
-    "Browse all pages, courses, and blog posts available on Eklabya.",
+    "Browse all pages, courses, and blog posts available on Inxyme.",
   robots: "index, follow",
 };
 

@@ -24,8 +24,8 @@ interface SEOProps {
 }
 
 export default function SEO({
-  title = "Eklabya - Online Learning Platform",
-  description = "Eklabya offers professional and management courses, including short programs and degree collaborations.",
+  title = "Inxyme - Online Learning Platform",
+  description = "Inxyme offers professional and management courses, including short programs and degree collaborations.",
   keywords = "online courses, e-learning, professional courses, management courses, online education, inxyme",
   canonical,
   robots = "index, follow",

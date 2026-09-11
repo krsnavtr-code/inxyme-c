@@ -195,7 +195,7 @@ const Categories = () => {
             Explore Courses by Category
           </h2>
           <p className="text-sm sm:text-base text-slate-800 dark:text-slate-400 leading-relaxed font-normal">
-            Eklabya's course catalog is organized around the skill areas
+            Inxyme's course catalog is organized around the skill areas
             employers are hiring for right now, not a generic subject list. Pick
             a category and go straight to jobrelevant, structured learning.
           </p>

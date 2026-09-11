@@ -4,7 +4,7 @@ import PopularCourses from "./components/home/PopularCourses";
 import Categories from "./components/home/Categories";
 import Assessment from "./components/home/Assessment";
 import ScholarshipProgram from "./components/home/ScholarshipProgram";
-import WhyLearnWithEklabya from "./components/home/WhyLearnWithEklabya";
+import WhyLearnWithInxyme from "./components/home/WhyLearnWithInxyme";
 import HowWillYourTrainingWork from "./components/home/HowWillYourTrainingWork";
 import Stats from "./components/home/Stats";
 import Content from "./components/home/Content";
@@ -15,26 +15,26 @@ import FAQ from "./components/home/FAQ";
 import ContactSection from "./components/home/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Eklabya | Job-Ready Online Certification Courses in India",
+  title: "Inxyme | Job-Ready Online Certification Courses in India",
   description:
-    "Learn job-ready skills with Eklabya's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
+    "Learn job-ready skills with Inxyme's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
   keywords:
-    "online certification courses, professional certification courses, job oriented courses, online courses in India, skill development courses, career oriented courses, technical courses online, Data Science course, Artificial Intelligence course, Machine Learning course, SAP courses, SAP ABAP course, SAP FICO course, Digital Marketing course, Web Development course, Power BI course, Python course, IT certification courses, online professional courses, Eklabya courses",
+    "online certification courses, professional certification courses, job oriented courses, online courses in India, skill development courses, career oriented courses, technical courses online, Data Science course, Artificial Intelligence course, Machine Learning course, SAP courses, SAP ABAP course, SAP FICO course, Digital Marketing course, Web Development course, Power BI course, Python course, IT certification courses, online professional courses, Inxyme courses",
   alternates: {
     canonical: "https://www.inxyme.com",
   },
   openGraph: {
-    title: "Eklabya | Job-Ready Online Certification Courses in India",
+    title: "Inxyme | Job-Ready Online Certification Courses in India",
     description:
-      "Learn job-ready skills with Eklabya's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
+      "Learn job-ready skills with Inxyme's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
     url: "https://www.inxyme.com",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eklabya | Job-Ready Online Certification Courses in India",
+    title: "Inxyme | Job-Ready Online Certification Courses in India",
     description:
-      "Learn job-ready skills with Eklabya's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
+      "Learn job-ready skills with Inxyme's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
   },
 };
 
@@ -65,10 +65,10 @@ export default function Home() {
       url: "https://www.inxyme.com/logo.png",
     },
     description:
-      "Eklabya is an online learning platform offering industry-focused courses, certifications, and career-oriented training programs across Data Science, Digital Marketing, SAP, IT, Business, and emerging technologies.",
+      "Inxyme is an online learning platform offering industry-focused courses, certifications, and career-oriented training programs across Data Science, Digital Marketing, SAP, IT, Business, and emerging technologies.",
     sameAs: [
       "https://www.instagram.com/inxyme_official",
-      "https://www.facebook.com/inxymeofficial",
+      "https://www.facebook.com/eklabyaofficial",
       "https://in.pinterest.com/inxyme_official/",
       "https://x.com/inxymeofficial",
       "https://www.linkedin.com/in/anand-shekhar-71515a408/",
@@ -109,8 +109,8 @@ export default function Home() {
         {/* Scholarship Program */}
         <ScholarshipProgram />
 
-        {/* Why Learn With Eklabya */}
-        <WhyLearnWithEklabya />
+        {/* Why Learn With Inxyme */}
+        <WhyLearnWithInxyme />
 
         {/* How Will Your Training Work */}
         <HowWillYourTrainingWork />

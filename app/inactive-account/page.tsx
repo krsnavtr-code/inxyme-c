@@ -7,8 +7,8 @@ export default function InactiveAccountPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
       <SEO
-        title="Account Inactive | Eklabya"
-        description="Your Eklabya account is currently inactive. Contact support for assistance."
+        title="Account Inactive | Inxyme"
+        description="Your Inxyme account is currently inactive. Contact support for assistance."
         keywords="account inactive, support, inxyme"
       />
       <div className="max-w-md w-full space-y-8 text-center">

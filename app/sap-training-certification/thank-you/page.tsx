@@ -12,7 +12,7 @@ const WHATSAPP_URL =
   "https://wa.me/919891030303?text=Hi%2C%20I%20just%20submitted%20the%20SAP%20enquiry%20form%20and%20would%20like%20to%20know%20more.";
 
 export const metadata: Metadata = {
-  title: "Thank You | SAP Training & Certification - Eklabya",
+  title: "Thank You | SAP Training & Certification - Inxyme",
   description:
     "Thank you for your enquiry. Our SAP counsellor will contact you shortly.",
   robots: { index: false, follow: false },

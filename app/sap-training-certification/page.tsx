@@ -47,26 +47,26 @@ const WHATSAPP_URL =
   "https://wa.me/919891030303?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20SAP%20training%20and%20certification%20courses.";
 
 export const metadata: Metadata = {
-  title: "SAP Training & Certification Courses Online in India | Eklabya",
+  title: "SAP Training & Certification Courses Online in India | Inxyme",
   description:
-    "Master SAP with Eklabya's job-oriented online training and certification courses in SAP ABAP, FICO, MM, SD and PP. Live classes, real projects, certification and placement support.",
+    "Master SAP with Inxyme's job-oriented online training and certification courses in SAP ABAP, FICO, MM, SD and PP. Live classes, real projects, certification and placement support.",
   keywords:
-    "SAP training, SAP certification, SAP courses online, SAP ABAP course, SAP FICO course, SAP MM training, SAP SD course, SAP PP training, SAP online training India, SAP certification course, learn SAP, SAP career, Eklabya SAP courses",
+    "SAP training, SAP certification, SAP courses online, SAP ABAP course, SAP FICO course, SAP MM training, SAP SD course, SAP PP training, SAP online training India, SAP certification course, learn SAP, SAP career, Inxyme SAP courses",
   alternates: {
     canonical: "https://www.inxyme.com/sap-training-certification",
   },
   openGraph: {
-    title: "SAP Training & Certification Courses Online in India | Eklabya",
+    title: "SAP Training & Certification Courses Online in India | Inxyme",
     description:
-      "Master SAP with Eklabya's job-oriented online training and certification courses in SAP ABAP, FICO, MM, SD and PP. Live classes, real projects, certification and placement support.",
+      "Master SAP with Inxyme's job-oriented online training and certification courses in SAP ABAP, FICO, MM, SD and PP. Live classes, real projects, certification and placement support.",
     url: "https://www.inxyme.com/sap-training-certification",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "SAP Training & Certification Courses Online in India | Eklabya",
+    title: "SAP Training & Certification Courses Online in India | Inxyme",
     description:
-      "Master SAP with Eklabya's job-oriented online training and certification courses in SAP ABAP, FICO, MM, SD and PP. Live classes, real projects, certification and placement support.",
+      "Master SAP with Inxyme's job-oriented online training and certification courses in SAP ABAP, FICO, MM, SD and PP. Live classes, real projects, certification and placement support.",
   },
 };
 
@@ -272,7 +272,7 @@ export default function SapTrainingCertification() {
         url: `https://www.inxyme.com${course.href}`,
         provider: {
           "@type": "Organization",
-          name: "Eklabya",
+          name: "Inxyme",
           sameAs: "https://www.inxyme.com",
         },
       },
@@ -314,7 +314,7 @@ export default function SapTrainingCertification() {
         <StandaloneNavbar
           links={[
             { label: "Courses", href: "#sap-courses" },
-            { label: "Why Eklabya", href: "#why-sap" },
+            { label: "Why Inxyme", href: "#why-sap" },
             { label: "Learning Path", href: "#learning-path" },
             { label: "Careers", href: "#careers" },
             { label: "Reviews", href: "#reviews" },
@@ -352,7 +352,7 @@ export default function SapTrainingCertification() {
               </h1>
 
               <p className="text-sm md:text-base text-slate-300 mb-6 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                Build a high-paying ERP career with Eklabya&apos;s
+                Build a high-paying ERP career with Inxyme&apos;s
                 industry-focused training. Get live server access, work on
                 real-time projects, and secure your future with{" "}
                 <strong className="text-white">100% placement support.</strong>
@@ -643,7 +643,7 @@ export default function SapTrainingCertification() {
           </div>
         </section>
 
-        {/* Why Choose Eklabya for SAP */}
+        {/* Why Choose Inxyme for SAP */}
         <section
           id="why-sap"
           className="w-full px-4 sm:px-6 lg:px-8 py-8 scroll-mt-20"
@@ -651,7 +651,7 @@ export default function SapTrainingCertification() {
           <div className="max-w-7xl mx-auto">
             <div className="text-center max-w-5xl mx-auto mb-4">
               <h2 className="text-3xl md:text-4xl font-black tracking-tight mb-4">
-                Why Learn SAP with Eklabya?
+                Why Learn SAP with Inxyme?
               </h2>
               <p className="text-slate-600 dark:text-slate-400">
                 Everything you need to go from learner to SAP consultant — in
@@ -860,7 +860,7 @@ export default function SapTrainingCertification() {
                 <ul className="space-y-2">
                   {[
                     { name: "SAP Courses", to: "#sap-courses" },
-                    { name: "Why Eklabya", to: "#why-sap" },
+                    { name: "Why Inxyme", to: "#why-sap" },
                     { name: "Learning Path", to: "#learning-path" },
                     { name: "Career Opportunities", to: "#careers" },
                     { name: "Reviews", to: "#reviews" },
@@ -932,7 +932,7 @@ export default function SapTrainingCertification() {
             {/* Bottom Bar */}
             <div className="mt-8 pt-6 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
               <p className="text-xs text-slate-500">
-                &copy; {new Date().getFullYear()} eKlabya. All rights reserved.
+                &copy; {new Date().getFullYear()} Inxyme. All rights reserved.
               </p>
               <p className="text-xs text-slate-500">
                 SAP&reg; is a registered trademark of SAP SE. This is an

@@ -16,7 +16,7 @@ const ScholarshipProgram = () => {
         {/* --- Section Header --- */}
         <div className="text-center max-w-3xl mx-auto space-y-1">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 dark:text-white tracking-tight">
-            Why Learn with Eklabya?
+            Why Learn with Inxyme?
           </h2>
         </div>
 
@@ -26,9 +26,9 @@ const ScholarshipProgram = () => {
           <div className="lg:col-span-7 space-y-4">
             <div className="bg-white/50 dark:bg-gray-800/40 backdrop-blur-md rounded-2xl p-4 md:p-5 shadow-xs border border-slate-200/80 dark:border-slate-700/60 space-y-4">
               <p className="text-sm md:text-base text-gray-700 dark:text-gray-300 leading-relaxed font-normal">
-                Eklabya isn't just your run of the mill course library, it's
+                Inxyme isn't just your run of the mill course library, it's
                 built around one single purpose : making learning actually lead
-                to a job. Through the Eklabya Scholarship Exam we help deserving
+                to a job. Through the Inxyme Scholarship Exam we help deserving
                 students get some real financial backing. All we consider is
                 their talent. We've also got job-focused online courses, where
                 every learner gets a curriculum that's been tailored to the jobs
@@ -42,7 +42,7 @@ const ScholarshipProgram = () => {
                 <FaRocket className="text-amber-400" /> What Sets Us Apart
               </h3>
               <p className="text-xs md:text-sm text-blue-100 leading-relaxed font-normal">
-                The key thing that sets Eklabya apart from a normal online
+                The key thing that sets Inxyme apart from a normal online
                 course site or some free YouTube videos is plain to see : we
                 build our programs to help you get a job, not just finish a
                 course. Every program we offer will include some

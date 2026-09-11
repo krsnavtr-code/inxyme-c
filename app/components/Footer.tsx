@@ -294,7 +294,7 @@ function Footer() {
         {/* Bottom Bar */}
         <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
           <p className="text-xs text-slate-500 dark:text-slate-400">
-            &copy; {currentYear} eKlabya. All rights reserved.
+            &copy; {currentYear} Inxyme. All rights reserved.
           </p>
           <div className="flex items-center gap-2 text-xs text-slate-800 dark:text-slate-300 font-medium">
             <FaBook className="h-4 w-4 text-blue-500" />

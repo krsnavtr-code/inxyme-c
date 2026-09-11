@@ -44,7 +44,7 @@ const demoFeaturedAward: Award = {
   awardDate: "2026-03-15",
   organizationName:
     "Federation of Indian Education & Industry Councils (FICCI & WEC)",
-  recipientName: "Eklabya Institute of Technology",
+  recipientName: "Inxyme Institute of Technology",
   recipientRole: "Academic Excellence Council",
   externalLink: "https://www.inxyme.com",
 };
@@ -58,7 +58,7 @@ const demoAwards: Award[] = [
     awardCategory: "innovation",
     awardDate: "2025-11-20",
     organizationName: "Global Education Innovation Summit",
-    recipientName: "Eklabya Learning Systems",
+    recipientName: "Inxyme Learning Systems",
     recipientRole: "Curriculum Design Team",
     externalLink: "https://www.inxyme.com",
   },
@@ -70,7 +70,7 @@ const demoAwards: Award[] = [
     awardCategory: "partnership",
     awardDate: "2025-08-14",
     organizationName: "National HR & Talent Development Forum",
-    recipientName: "Eklabya Corporate Training Division",
+    recipientName: "Inxyme Corporate Training Division",
     recipientRole: "Enterprise Solutions",
     externalLink: "https://www.inxyme.com",
   },
@@ -82,7 +82,7 @@ const demoAwards: Award[] = [
     awardCategory: "achievement",
     awardDate: "2024-12-05",
     organizationName: "Indian Tech & Skill Leadership Council",
-    recipientName: "Eklabya",
+    recipientName: "Inxyme",
     recipientRole: "Founding Board",
     externalLink: "https://www.inxyme.com",
   },
@@ -106,7 +106,7 @@ const demoAwards: Award[] = [
     awardCategory: "recognition",
     awardDate: "2024-03-22",
     organizationName: "Enterprise Cloud & Software Consortium",
-    recipientName: "Eklabya Mentor Network",
+    recipientName: "Inxyme Mentor Network",
     recipientRole: "Technical Instructors",
     externalLink: "https://www.inxyme.com",
   },
@@ -252,9 +252,9 @@ export default function AwardsPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-gray-950 text-slate-900 dark:text-white transition-colors duration-300 pb-20">
       <SEO
-        title="Awards & Recognition | Eklabya Learning Achievements"
-        description="Discover Eklabya awards and recognition, celebrating excellence, achievements and our commitment to quality education and learner success."
-        keywords="Eklabya awards, Eklabya recognition, education awards, learning achievements, excellence in education, student success, Eklabya achievements"
+        title="Awards & Recognition | Inxyme Learning Achievements"
+        description="Discover Inxyme awards and recognition, celebrating excellence, achievements and our commitment to quality education and learner success."
+        keywords="Inxyme awards, Inxyme recognition, education awards, learning achievements, excellence in education, student success, Inxyme achievements"
       />
       {/* --- LUXURY HERO HEADER --- */}
       <section className="relative overflow-hidden bg-gradient-to-br from-amber-700 via-yellow-800 to-slate-950 text-white py-6 sm:py-8 px-4 sm:px-6 lg:px-8">

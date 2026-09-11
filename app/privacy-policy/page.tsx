@@ -13,13 +13,13 @@ const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen mt-10 bg-gray-50 dark:bg-slate-900">
       <SEO
-        title="Privacy Policy | Eklabya Online Learning Platform"
-        description="Read Eklabya Privacy Policy to learn how we collect, use, protect and manage your personal data, privacy rights and online information."
-        keywords="Eklabya privacy policy, Eklabya data privacy, online learning privacy policy, personal data protection, privacy rights, user data security, Eklabya"
+        title="Privacy Policy | Inxyme Online Learning Platform"
+        description="Read Inxyme Privacy Policy to learn how we collect, use, protect and manage your personal data, privacy rights and online information."
+        keywords="Inxyme privacy policy, Inxyme data privacy, online learning privacy policy, personal data protection, privacy rights, user data security, Inxyme"
         og={{
-          title: "Privacy Policy | Eklabya Online Learning Platform",
+          title: "Privacy Policy | Inxyme Online Learning Platform",
           description:
-            "Read Eklabya Privacy Policy to learn how we collect, use, protect and manage your personal data, privacy rights and online information.",
+            "Read Inxyme Privacy Policy to learn how we collect, use, protect and manage your personal data, privacy rights and online information.",
           type: "article",
         }}
       />
@@ -34,7 +34,7 @@ const PrivacyPolicy = () => {
 
           <div className="prose dark:prose-invert max-w-none space-y-6 text-black dark:text-white">
             <p>
-              This Privacy Notice for Eklabya ("we," "us," or "our") describes
+              This Privacy Notice for Inxyme ("we," "us," or "our") describes
               how and why we might access, collect, store, use, and/or share
               ("process") your personal information when you use our services
               ("Services"), including when you:
@@ -45,7 +45,7 @@ const PrivacyPolicy = () => {
                 Privacy Notice.
               </li>
               <li>
-                Use our Products and Services. Eklabya provides online and
+                Use our Products and Services. Inxyme provides online and
                 professional learning programs, certification courses,
                 career-oriented training, and related educational services.
                 These may include programs in areas such as Data Science,
@@ -425,7 +425,7 @@ const PrivacyPolicy = () => {
               <li>
                 <strong>Protection of Rights and Safety.</strong> We may
                 disclose information where reasonably necessary to protect the
-                rights, property, safety, or security of Eklabya, our users, or
+                rights, property, safety, or security of Inxyme, our users, or
                 others.
               </li>
               <li>
@@ -495,7 +495,7 @@ const PrivacyPolicy = () => {
               use.
             </p>
             <p className="mb-4">
-              Personal information may be processed by Eklabya or by third-party
+              Personal information may be processed by Inxyme or by third-party
               service providers in locations outside your country. Where
               personal information is transferred internationally, we will take
               appropriate measures to protect such information in accordance
@@ -700,7 +700,7 @@ const PrivacyPolicy = () => {
               Notice or our privacy practices, you may contact us at:
             </p>
             <address className="not-italic mb-4">
-              Eklabya
+              Inxyme
               <br />
               G-25, Block G, Sector 3, Noida
               <br />
