@@ -10,9 +10,9 @@ import {
   FaSearch,
   FaBook,
 } from "react-icons/fa";
-import { getImageUrl } from "../utils/imageUtils";
-import { getBlogPosts, searchBlogPosts } from "../api/blogApi";
-import SEO from "../components/SEO";
+import { getImageUrl } from "../../utils/imageUtils";
+import { getBlogPosts, searchBlogPosts } from "../../api/blogApi";
+import SEO from "../../components/SEO";
 
 interface Category {
   _id: string;

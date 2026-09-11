@@ -14,9 +14,9 @@ import {
   FaCheckCircle,
   FaGift,
 } from "react-icons/fa";
-import api from "../utils/api";
-import { getImageUrl } from "../utils/imageUtils";
-import SEO from "../components/SEO";
+import api from "../../utils/api";
+import { getImageUrl } from "../../utils/imageUtils";
+import SEO from "../../components/SEO";
 
 interface Course {
   _id: string;
