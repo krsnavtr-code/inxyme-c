@@ -178,11 +178,25 @@ export interface BlogPost {
   excerpt?: string;
   featuredImage?: string;
   imageUrl?: string;
-  author?: { name?: string; bio?: string };
+  author?: {
+    _id?: string;
+    name?: string;
+    fullname?: string;
+    email?: string;
+    bio?: string;
+  };
   createdAt: string;
+  updatedAt?: string;
+  publishedAt?: string;
   categories?: BlogCategory[];
   tags?: string[];
   readingTime?: number;
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    metaKeywords?: string[];
+  };
+  status?: string;
 }
 
 export async function fetchBlogPostBySlug(
@@ -195,7 +209,8 @@ export async function fetchBlogPostBySlug(
     return post as BlogPost | null;
   } catch (err: any) {
     if (err.status === 404) return null;
-    throw err;
+    console.error("fetchBlogPostBySlug error:", err);
+    return null;
   }
 }
 
@@ -205,11 +220,16 @@ export async function fetchRelatedPosts(
   limit: number = 3,
 ): Promise<BlogPost[]> {
   const base = getApiBase();
-  const json = await fetchJson(
-    `${base}/blog/categories/${categoryId}?status=published&exclude=${excludePostId}&limit=${limit}`,
-  );
-  const list = extractList<BlogPost>(json);
-  return list || [];
+  try {
+    const json = await fetchJson(
+      `${base}/blog/categories/${categoryId}?status=published&exclude=${excludePostId}&limit=${limit}`,
+    );
+    const list = extractList<BlogPost>(json);
+    return (list || []).filter((p) => p._id !== excludePostId).slice(0, limit);
+  } catch (err) {
+    console.error("fetchRelatedPosts error:", err);
+    return [];
+  }
 }
 
 export async function fetchNextBlogs(
@@ -217,14 +237,25 @@ export async function fetchNextBlogs(
   limit: number = 4,
 ): Promise<BlogPost[]> {
   const base = getApiBase();
-  const json = await fetchJson(
-    `${base}/blog/posts?status=published&limit=1000&fields=title,slug,featuredImage,createdAt,readingTime,_id`,
-  );
-  const list = extractList<BlogPost>(json);
-  if (!list) return [];
-  const currentIndex = list.findIndex((p) => p.slug === currentSlug);
-  if (currentIndex === -1) return [];
-  return list.slice(currentIndex + 1, currentIndex + 1 + limit);
+  try {
+    const json = await fetchJson(
+      `${base}/blog/posts?status=published&limit=100&fields=title,slug,featuredImage,createdAt,readingTime,_id,excerpt`,
+    );
+    const list = extractList<BlogPost>(json);
+    if (!list || list.length === 0) return [];
+    const filtered = list.filter((p) => p.slug !== currentSlug);
+    const currentIndex = list.findIndex((p) => p.slug === currentSlug);
+    if (currentIndex !== -1 && currentIndex + 1 < list.length) {
+      const nextSlice = list.slice(currentIndex + 1, currentIndex + 1 + limit);
+      if (nextSlice.length >= limit) return nextSlice;
+      const remaining = limit - nextSlice.length;
+      return [...nextSlice, ...filtered.filter((p) => !nextSlice.some((s) => s.slug === p.slug)).slice(0, remaining)];
+    }
+    return filtered.slice(0, limit);
+  } catch (err) {
+    console.error("fetchNextBlogs error:", err);
+    return [];
+  }
 }
 
 export interface CategoryData {
