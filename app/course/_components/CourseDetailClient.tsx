@@ -97,8 +97,8 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
   const discountPercentage =
     course.originalPrice && course.originalPrice > course.price
       ? Math.round(
-          ((course.originalPrice - course.price) / course.originalPrice) * 100,
-        )
+        ((course.originalPrice - course.price) / course.originalPrice) * 100,
+      )
       : 0;
 
   const handleContactTeam = () => {
@@ -134,7 +134,7 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
         } else {
           toast.error(
             enrollmentResponse.message ||
-              "Failed to process enrollment. Please try again.",
+            "Failed to process enrollment. Please try again.",
           );
         }
       }
@@ -399,7 +399,7 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   className="certificate-image-container"
                   style={{
                     backgroundImage:
-                      "url('http://www.eklabya.com/api/upload/file/inxyme-certificate-4563.png')",
+                      "url('http://www.inxyme.com/api/upload/file/inxyme-certificate-4563.png')",
                     backgroundSize: "contain",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
@@ -460,11 +460,10 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   .getElementById("overview")
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
-              className={`py-2 px-3 md:px-6 text-center border-b-2 font-medium text-sm transition-colors ${
-                activeTab === "overview"
+              className={`py-2 px-3 md:px-6 text-center border-b-2 font-medium text-sm transition-colors ${activeTab === "overview"
                   ? "border-blue-500 text-blue-600 dark:text-blue-400"
                   : "border-transparent text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
-              }`}
+                }`}
             >
               Overview
             </button>
@@ -475,11 +474,10 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   .getElementById("curriculum")
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
-              className={`py-2 px-3 md:px-6 text-center border-b-2 font-medium text-sm transition-colors ${
-                activeTab === "curriculum"
+              className={`py-2 px-3 md:px-6 text-center border-b-2 font-medium text-sm transition-colors ${activeTab === "curriculum"
                   ? "border-blue-500 text-blue-600 dark:text-blue-400"
                   : "border-transparent text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
-              }`}
+                }`}
             >
               Curriculum
             </button>
@@ -490,11 +488,10 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   .getElementById("skills")
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
-              className={`py-2 px-3 md:px-6 text-center border-b-2 font-medium text-sm transition-colors ${
-                activeTab === "skills"
+              className={`py-2 px-3 md:px-6 text-center border-b-2 font-medium text-sm transition-colors ${activeTab === "skills"
                   ? "border-blue-500 text-blue-600 dark:text-blue-400"
                   : "border-transparent text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
-              }`}
+                }`}
             >
               Skills
             </button>
@@ -505,11 +502,10 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   .getElementById("faq")
                   ?.scrollIntoView({ behavior: "smooth" });
               }}
-              className={`py-2 px-3 md:px-6 text-center border-b-2 font-medium text-sm transition-colors ${
-                activeTab === "faq"
+              className={`py-2 px-3 md:px-6 text-center border-b-2 font-medium text-sm transition-colors ${activeTab === "faq"
                   ? "border-blue-500 text-blue-600 dark:text-blue-400"
                   : "border-transparent text-gray-700 hover:text-blue-600 dark:text-gray-300 dark:hover:text-blue-400"
-              }`}
+                }`}
             >
               FAQ
             </button>
@@ -601,20 +597,18 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                         className="border border-gray-200 dark:border-slate-700 rounded-xl overflow-hidden transition-all duration-200"
                       >
                         <div
-                          className={`px-5 py-4 font-medium flex justify-between items-center cursor-pointer transition-colors ${
-                            expandedSections[sectionIndex]
+                          className={`px-5 py-4 font-medium flex justify-between items-center cursor-pointer transition-colors ${expandedSections[sectionIndex]
                               ? "bg-blue-50 dark:bg-slate-800/50"
                               : "bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700/50"
-                          }`}
+                            }`}
                           onClick={() => toggleSection(sectionIndex)}
                         >
                           <div className="flex items-center">
                             <div
-                              className={`w-2 h-2 rounded-full mr-3 ${
-                                expandedSections[sectionIndex]
+                              className={`w-2 h-2 rounded-full mr-3 ${expandedSections[sectionIndex]
                                   ? "bg-blue-500"
                                   : "bg-gray-400"
-                              }`}
+                                }`}
                             ></div>
                             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
                               <p className="text-black dark:text-white font-semibold text-sm sm:text-base">
@@ -633,11 +627,10 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                             </div>
                           </div>
                           <svg
-                            className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${
-                              expandedSections[sectionIndex]
+                            className={`h-5 w-5 text-gray-400 transition-transform duration-200 ${expandedSections[sectionIndex]
                                 ? "transform rotate-180"
                                 : ""
-                            }`}
+                              }`}
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -747,7 +740,7 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   {customHeadings.topics}
                 </h3>
                 {course.whatYouWillLearn &&
-                course.whatYouWillLearn.length > 0 ? (
+                  course.whatYouWillLearn.length > 0 ? (
                   <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                     {course.whatYouWillLearn.map((skill, index) => (
                       <li key={index} className="flex items-start">
@@ -842,11 +835,10 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                             Q{index + 1}: {faq.question}
                           </h4>
                           <svg
-                            className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${
-                              openFaqIndex === index
+                            className={`w-5 h-5 text-gray-500 transition-transform duration-200 ${openFaqIndex === index
                                 ? "transform rotate-180"
                                 : ""
-                            }`}
+                              }`}
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -862,11 +854,10 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                       </button>
                       <div
                         id={`faq-${index}`}
-                        className={`px-6 overflow-hidden transition-all duration-200 ${
-                          openFaqIndex === index
+                        className={`px-6 overflow-hidden transition-all duration-200 ${openFaqIndex === index
                             ? "max-h-96 py-4"
                             : "max-h-0 py-0"
-                        }`}
+                          }`}
                       >
                         <p className="text-black dark:text-white">
                           {faq.answer}
@@ -988,11 +979,10 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   <button
                     onClick={handleEnroll}
                     disabled={isSubmitting}
-                    className={`w-full flex items-center justify-center px-2 py-2 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ${
-                      isSubmitting
+                    className={`w-full flex items-center justify-center px-2 py-2 rounded-lg font-medium text-white bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all duration-200 ${isSubmitting
                         ? "opacity-80 cursor-not-allowed"
                         : "shadow-md hover:shadow-lg"
-                    }`}
+                      }`}
                   >
                     {isSubmitting ? (
                       <>
@@ -1073,9 +1063,8 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                     value={formData.email}
                     onChange={handleInputChange}
                     required
-                    className={`w-full px-3 py-1 border ${
-                      currentUser ? "cursor-not-allowed" : ""
-                    } border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 text-white`}
+                    className={`w-full px-3 py-1 border ${currentUser ? "cursor-not-allowed" : ""
+                      } border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 text-white`}
                     placeholder="your@email.com"
                   />
                 </div>
@@ -1237,7 +1226,7 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   <source
                     src={
                       course.previewVideo ||
-                      "http://www.eklabya.com/api/upload/file/DemoVideo-1781.mp4"
+                      "http://www.inxyme.com/api/upload/file/DemoVideo-1781.mp4"
                     }
                     type="video/mp4"
                   />

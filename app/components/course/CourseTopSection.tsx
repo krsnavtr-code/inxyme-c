@@ -180,9 +180,8 @@ const MarqueeRow = ({
         <div className="absolute top-0 right-0 bottom-0 w-6 bg-gradient-to-l from-white dark:from-slate-900 to-transparent z-10 pointer-events-none"></div>
 
         <div
-          className={`flex w-max ${
-            direction === "rtl" ? "animate-marquee-rtl" : "animate-marquee-ltr"
-          } gap-6 py-2 hover:[animation-play-state:paused]`}
+          className={`flex w-max ${direction === "rtl" ? "animate-marquee-rtl" : "animate-marquee-ltr"
+            } gap-6 py-2 hover:[animation-play-state:paused]`}
         >
           {trackItems.map((item, index) => (
             <div
@@ -360,7 +359,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
       } else {
         toast.error(
           error.response?.data?.message ||
-            "Failed to submit your enquiry. Please try again.",
+          "Failed to submit your enquiry. Please try again.",
           {
             duration: 5000,
           },
@@ -525,7 +524,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
 
               <div className="relative cursor-pointer group rounded-2xl overflow-hidden border border-emerald-100 dark:border-emerald-500/50 shadow-lg shadow-slate-200/50 dark:shadow-emerald-900/30 bg-white dark:bg-slate-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/40 dark:to-green-900/20">
                 <img
-                  src="http://www.eklabya.com/api/upload/file/inxyme-certificate-4563.png"
+                  src="http://www.inxyme.com/api/upload/file/eklabya-certificate-4563.png"
                   alt="Certificate of Completion"
                   className="w-full h-auto p-10 object-contain transition-transform duration-700 group-hover:scale-105"
                   onError={(e: any) => {
@@ -544,7 +543,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
             {/* Thumbnail Header */}
             <div
               className="relative group cursor-pointer"
-              // onClick={onVideoPreview}
+            // onClick={onVideoPreview}
             >
               <div className="absolute inset-0 group-hover:bg-slate-900/20 transition-colors z-10"></div>
               <img

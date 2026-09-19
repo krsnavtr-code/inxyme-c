@@ -48,7 +48,7 @@ function Navbar() {
   const pathname = usePathname();
   const { currentUser, isAuthenticated, isAdmin, logout } = useAuth();
   const logoImg =
-    "https://www.eklabya.com/api/upload/file/final-logo-png-6483.png";
+    "https://www.inxyme.com/api/upload/file/final-logo-png-6483.png";
 
   // --- State ---
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -688,11 +688,10 @@ function Navbar() {
                       <Link
                         key={link.to!}
                         href={link.to!}
-                        className={`text-sm font-semibold transition-all duration-300 relative ${
-                          isActive
+                        className={`text-sm font-semibold transition-all duration-300 relative ${isActive
                             ? "text-blue-600 dark:text-blue-400 font-bold"
                             : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
-                        }`}
+                          }`}
                       >
                         {link.label}
                         {isActive && (
@@ -895,18 +894,16 @@ function Navbar() {
           Combines Top Bar and Bottom Bar items for mobile users
       ================================================================== */}
       <div
-        className={`md:hidden fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 ${
-          isMobileMenuOpen
+        className={`md:hidden fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 ${isMobileMenuOpen
             ? "opacity-100 visible"
             : "opacity-0 invisible pointer-events-none"
-        }`}
+          }`}
         onClick={() => setIsMobileMenuOpen(false)}
       ></div>
 
       <div
-        className={`md:hidden fixed top-0 left-0 bottom-0 w-[85%] max-w-[350px] bg-white dark:bg-gray-900 z-50 shadow-2xl transform transition-transform duration-300 ease-in-out overflow-y-auto ${
-          isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
+        className={`md:hidden fixed top-0 left-0 bottom-0 w-[85%] max-w-[350px] bg-white dark:bg-gray-900 z-50 shadow-2xl transform transition-transform duration-300 ease-in-out overflow-y-auto ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+          }`}
       >
         <div className="pt-1 pb-5 px-3">
           {/* Mobile Header */}

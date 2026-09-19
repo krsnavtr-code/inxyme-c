@@ -25,8 +25,8 @@ import ContactFormModal from "../common/ContactFormModal";
 import BrochureSelectorModal from "../common/BrochureSelectorModal";
 
 const bannerImg =
-  "https://www.eklabya.com/api/upload/file/Home-Page-Image-9212.png";
-const logoImg = "https://www.eklabya.com/api/upload/file/eKlabya-0644.png";
+  "https://www.inxyme.com/api/upload/file/Home-Page-Image-9212.png";
+const logoImg = "https://www.inxyme.com/api/upload/file/eKlabya-0644.png";
 
 interface Course {
   _id: string;
@@ -85,7 +85,7 @@ const CertificateModal = ({
               className="certificate-image-container"
               style={{
                 backgroundImage:
-                  "url('http://eklabya.com/api/upload/file/inxyme-certificate-4563.png')",
+                  "url('http://inxyme.com/api/upload/file/eklabya-certificate-4563.png')",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",
@@ -223,7 +223,7 @@ function Banner() {
         setIsSubmitted(true);
         toast.success(
           result.message ||
-            "Thank you! Our career expert will contact you soon.",
+          "Thank you! Our career expert will contact you soon.",
         );
         setFormData({
           name: "",
@@ -246,8 +246,8 @@ function Banner() {
       console.error("Error submitting lead form:", error);
       toast.error(
         error?.message ||
-          error?.response?.data?.message ||
-          "Failed to submit. Please try again later.",
+        error?.response?.data?.message ||
+        "Failed to submit. Please try again later.",
       );
     } finally {
       setIsSubmitting(false);
@@ -346,11 +346,10 @@ function Banner() {
                 <div
                   key={index}
                   onClick={feature.onClick}
-                  className={`flex flex-col p-2.5 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl shadow-xs border border-gray-200 dark:border-slate-700/60 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${
-                    feature.onClick
+                  className={`flex flex-col p-2.5 bg-white/70 dark:bg-gray-800/70 backdrop-blur-md rounded-2xl shadow-xs border border-gray-200 dark:border-slate-700/60 transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md ${feature.onClick
                       ? "cursor-pointer hover:border-blue-400 dark:hover:border-blue-500 shadow-sm"
                       : ""
-                  }`}
+                    }`}
                 >
                   <div className="mb-1.5">{feature.icon}</div>
                   <h4 className="font-bold text-slate-900 dark:text-white text-xs leading-tight">

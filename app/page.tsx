@@ -62,13 +62,13 @@ export default function Home() {
     url: "https://www.inxyme.com",
     logo: {
       "@type": "ImageObject",
-      url: "https://www.eklabya.com/logo.png",
+      url: "https://www.inxyme.com/logo.png",
     },
     description:
       "Inxyme is an online learning platform offering industry-focused courses, certifications, and career-oriented training programs across Data Science, Digital Marketing, SAP, IT, Business, and emerging technologies.",
     sameAs: [
       "https://www.instagram.com/inxyme_official",
-      "https://www.facebook.com/eklabyaofficial",
+      "https://www.facebook.com/inxymeofficial",
       "https://in.pinterest.com/inxyme_official/",
       "https://x.com/inxymeofficial",
       "https://www.linkedin.com/in/anand-shekhar-71515a408/",

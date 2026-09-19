@@ -21,11 +21,11 @@ interface Testimonial {
   company?: string;
   course: string;
   category:
-    | "Career Switch"
-    | "Upskilling"
-    | "College Graduates"
-    | "SAP Enterprise"
-    | "AI & Data";
+  | "Career Switch"
+  | "Upskilling"
+  | "College Graduates"
+  | "SAP Enterprise"
+  | "AI & Data";
   image?: string;
   hike?: string;
   content: string;
@@ -42,7 +42,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "LLMOps & Machine Learning Operations",
     category: "Career Switch",
     hike: "140% Hike",
-    image: "https://www.eklabya.com/api/upload/file/Krishna-4629.png",
+    image: "https://www.inxyme.com/api/upload/file/Krishna-4629.png",
     content:
       "Before joining Inxyme, I had very little knowledge of Data Science and Machine Learning pipelines, and was unsure about transitioning into AI. After joining Inxyme Centre of Excellence, I gained deep practical mastery in containerized ML deployments, Docker, and real-world LLM pipelines. The step-by-step mentoring and placement assistance helped me land my dream role as an MLOps Engineer.",
     rating: 5,
@@ -56,7 +56,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "SAP MM Materials Management",
     category: "SAP Enterprise",
     hike: "95% Hike",
-    image: "https://www.eklabya.com/api/upload/file/wo-4953.png",
+    image: "https://www.inxyme.com/api/upload/file/wo-4953.png",
     content:
       "I enrolled in the SAP MM training program after a friend's recommendation. What I loved most was the live server access, real-time enterprise scenarios, and procurement lifecycle workflows. Whenever I had doubts, the certified trainer was available to guide me. It gave me tremendous confidence during client interviews.",
     rating: 5,
@@ -70,7 +70,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "GenAI & Database Management Mastery",
     category: "College Graduates",
     hike: "Campus Placed",
-    image: "https://www.eklabya.com/api/upload/file/Adarsh-3832.png",
+    image: "https://www.inxyme.com/api/upload/file/Adarsh-3832.png",
     content:
       "As a final year student, I needed real project experience to stand out. The Database Management & GenAI course at Inxyme covered both core architectural principles and hands-on vector database projects. The portfolio of assignments I built directly helped me clear technical rounds and receive multiple offers before graduation.",
     rating: 5,
@@ -84,7 +84,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "SAP PP Production Planning",
     category: "SAP Enterprise",
     hike: "110% Hike",
-    image: "https://www.eklabya.com/api/upload/file/dar-0262.png",
+    image: "https://www.inxyme.com/api/upload/file/dar-0262.png",
     content:
       "The SAP PP course exceeded my highest expectations. Coming from a non-SAP manufacturing background, I was initially nervous, but the mentor broke down BOM, routing, and MRP execution into intuitive concepts with live sandbox practice. The career guidance was world-class.",
     rating: 5,
@@ -98,7 +98,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "Data Science, Analytics & Python",
     category: "Career Switch",
     hike: "125% Hike",
-    image: "https://www.eklabya.com/api/upload/file/df-3710.png",
+    image: "https://www.inxyme.com/api/upload/file/df-3710.png",
     content:
       "I was working in a non-technical support role and desperately wanted to transition into Data Science. The instructors at Inxyme explained statistical modelling and predictive algorithms from the ground up. Building my first end-to-end predictive project gave me the technical edge to switch my career path successfully.",
     rating: 5,
@@ -112,7 +112,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "MySQL & Database Architecture",
     category: "Upskilling",
     hike: "85% Hike",
-    image: "https://www.eklabya.com/api/upload/file/1777960745027-1855.png",
+    image: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
     content:
       "I already had basic SQL understanding, but the MySQL Database Architecture course took me to an advanced level. Query optimization, index tuning, and stored procedures were taught with industrial clarity. Now I handle heavy transaction databases in production with zero hesitation.",
     rating: 5,
@@ -126,7 +126,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "SAP FICO Financial Accounting",
     category: "SAP Enterprise",
     hike: "115% Hike",
-    image: "https://www.eklabya.com/api/upload/file/1777960745027-1855.png",
+    image: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
     content:
       "The SAP FICO training bridged the gap between academic accounting and live enterprise ERP financial management. General Ledger, Accounts Payable, and Asset Accounting were explained with live case studies. Truly invaluable for finance professionals looking to switch to SAP.",
     rating: 5,
@@ -140,7 +140,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "Full Stack MERN Architecture",
     category: "Upskilling",
     hike: "105% Hike",
-    image: "https://www.eklabya.com/api/upload/file/1777960745003-1010.png",
+    image: "https://www.inxyme.com/api/upload/file/1777960745003-1010.png",
     content:
       "The MERN Stack course helped me transition from simple frontend UI to architecting robust microservices and real-time WebSocket applications. The code reviews by senior mentors simulated a real software engineering sprint environment.",
     rating: 5,
@@ -154,7 +154,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     course: "Machine Learning & AI Certification",
     category: "AI & Data",
     hike: "130% Hike",
-    image: "https://www.eklabya.com/api/upload/file/1777960745009-2116.png",
+    image: "https://www.inxyme.com/api/upload/file/1777960745009-2116.png",
     content:
       "The balance between mathematical intuition and Python code implementation in this course is unmatched. Working on real-world datasets for fraud detection and recommendation engines prepared me thoroughly for senior data science interviews.",
     rating: 5,
@@ -371,11 +371,10 @@ export default function TestimonialsPage() {
                   <button
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
-                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 ${
-                      isActive
+                    className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 ${isActive
                         ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
                         : "bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-gray-700 border border-slate-200/80 dark:border-slate-800"
-                    }`}
+                      }`}
                   >
                     {cat}
                   </button>
