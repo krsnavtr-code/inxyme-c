@@ -26,6 +26,9 @@ export const metadata: Metadata = {
       url: "/images/only-final-logo-png.jpg",
     },
   },
+  verification: {
+    google: "CknxLEi-2fHtHDEyeKydZvqLUFbx5eRVDUNT7UM_ueo",
+  },
 };
 
 export default function RootLayout({
