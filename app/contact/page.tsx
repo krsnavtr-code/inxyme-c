@@ -157,7 +157,7 @@ export default function Contact() {
                 <li className="flex items-start gap-3">
                   <FaMapMarkerAlt className="text-blue-500 mt-1" />
                   <span>
-                    G-25, Block G, Sector 3, Noida, Uttar Pradesh 201301
+                    B-127, B Block, Sector 2, Noida, Uttar Pradesh 201301
                   </span>
                 </li>
                 <li className="flex items-center gap-3">

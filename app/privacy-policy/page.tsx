@@ -702,7 +702,7 @@ const PrivacyPolicy = () => {
             <address className="not-italic mb-4">
               Inxyme
               <br />
-              G-25, Block G, Sector 3, Noida
+              B-127, B Block, Sector 2, Noida
               <br />
               Uttar Pradesh 201301
               <br />

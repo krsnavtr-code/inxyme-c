@@ -35,8 +35,7 @@ const TermsOfService = () => {
               "our"). We operate https://www.inxyme.com/, as well as any other
               related products and services that refer or link to these legal
               terms (the "Legal Terms") (collectively, the "Services"). You can
-              contact us by email at info@inxyme.com or by mail to G-25, Block
-              G, Sector 3, Noida, Uttar Pradesh, 201301.
+              contact us by email at info@inxyme.com or by mail to B-127, B Block, Sector 2, Noida, Uttar Pradesh 201301.
             </p>
             <p className="mb-4">
               These Legal Terms constitute a legally binding agreement made
@@ -873,7 +872,7 @@ const TermsOfService = () => {
             <address className="not-italic text-black dark:text-white mb-4">
               Inxyme Centre of Excellence
               <br />
-              G-25, Block G, Sector 3
+              B-127, B Block, Sector 2
               <br />
               Noida, Uttar Pradesh 201301
               <br />

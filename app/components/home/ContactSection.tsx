@@ -82,7 +82,7 @@ const ContactSection = () => {
         <FaMapMarkerAlt className="text-xl text-blue-600 dark:text-blue-400" />
       ),
       title: "Our Location",
-      description: "G-25, Block G, Sector 3, Noida, Uttar Pradesh 201301",
+      description: "B-127, B Block, Sector 2, Noida, Uttar Pradesh 201301",
       link: "https://maps.app.goo.gl/2q1X99HQBRMHJpBDA",
       linkText: "View on map",
     },
