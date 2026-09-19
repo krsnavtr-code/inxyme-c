@@ -645,7 +645,7 @@ function Navbar() {
                   <img
                     src={logoImg}
                     alt="inxyme – Your Online Learning Partner"
-                    className="h-20 rounded"
+                    className="h-[68px] rounded"
                   />
                 </Link>
               </div>
@@ -689,8 +689,8 @@ function Navbar() {
                         key={link.to!}
                         href={link.to!}
                         className={`text-sm font-semibold transition-all duration-300 relative ${isActive
-                            ? "text-blue-600 dark:text-blue-400 font-bold"
-                            : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
+                          ? "text-blue-600 dark:text-blue-400 font-bold"
+                          : "text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
                           }`}
                       >
                         {link.label}
@@ -895,8 +895,8 @@ function Navbar() {
       ================================================================== */}
       <div
         className={`md:hidden fixed inset-0 z-40 bg-black/50 transition-opacity duration-300 ${isMobileMenuOpen
-            ? "opacity-100 visible"
-            : "opacity-0 invisible pointer-events-none"
+          ? "opacity-100 visible"
+          : "opacity-0 invisible pointer-events-none"
           }`}
         onClick={() => setIsMobileMenuOpen(false)}
       ></div>
