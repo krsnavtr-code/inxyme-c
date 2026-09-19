@@ -14,7 +14,7 @@ const Content = () => {
             <FaGraduationCap className="text-xs" /> About Inxyme
           </div>
           <h2 className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white tracking-tight">
-            Inxyme Centre of Excellence – Your Online Learning Partner
+            Inxyme – Your Online Learning Partner
           </h2>
           <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-400 leading-relaxed font-normal">
             Inxyme is an ISO-certified, NSDC and NIELIT-recognized online

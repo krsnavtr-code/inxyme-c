@@ -31,7 +31,7 @@ const TermsOfService = () => {
               AGREEMENT TO OUR LEGAL TERMS
             </h2>
             <p className="mb-4">
-              We are Inxyme Centre of Excellence ("Company," "we," "us,"
+              We are Inxyme ("Company," "we," "us,"
               "our"). We operate https://www.inxyme.com/, as well as any other
               related products and services that refer or link to these legal
               terms (the "Legal Terms") (collectively, the "Services"). You can
@@ -40,7 +40,7 @@ const TermsOfService = () => {
             <p className="mb-4">
               These Legal Terms constitute a legally binding agreement made
               between you, whether personally or on behalf of an entity ("you"),
-              and Inxyme Centre of Excellence, concerning your access to and
+              and Inxyme, concerning your access to and
               use of the Services. You agree that by accessing the Services, you
               have read, understood, and agreed to be bound by all of these
               Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS,
@@ -622,7 +622,7 @@ const TermsOfService = () => {
             </h2>
             <p className="mb-4">
               These Legal Terms shall be governed by and defined following the
-              laws of India. Inxyme Centre of Excellence and yourself
+              laws of India. Inxyme and yourself
               irrevocably consent that the courts of Noida, Uttar Pradesh shall
               have exclusive jurisdiction to resolve any dispute which may arise
               in connection with these Legal Terms.
@@ -870,7 +870,7 @@ const TermsOfService = () => {
               contact us at:
             </p>
             <address className="not-italic text-black dark:text-white mb-4">
-              Inxyme Centre of Excellence
+              Inxyme
               <br />
               B-127, B Block, Sector 2
               <br />

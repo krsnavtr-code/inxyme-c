@@ -325,14 +325,14 @@ export default function ScholarshipTestPage() {
     return (
       <div className="min-h-screen bg-gradient-to-br from-gray-50 to-blue-50 flex items-center justify-center p-5">
         <SEO
-          title="Scholarship Test | Inxyme Centre of Excellence"
-          description="Apply for the Inxyme Centre of Excellence Scholarship Test and unlock academic excellence with merit-based rewards, career guidance, and expert mentoring."
+          title="Scholarship Test | Inxyme"
+          description="Apply for the Inxyme Scholarship Test and unlock academic excellence with merit-based rewards, career guidance, and expert mentoring."
           keywords="scholarship test, scholarship evaluation, online test, Inxyme scholarship, student scholarship"
           robots="index, follow"
           og={{
-            title: "Scholarship Test | Inxyme Centre of Excellence",
+            title: "Scholarship Test | Inxyme",
             description:
-              "Apply for the Inxyme Centre of Excellence Scholarship Test and unlock academic excellence with merit-based rewards, career guidance, and expert mentoring.",
+              "Apply for the Inxyme Scholarship Test and unlock academic excellence with merit-based rewards, career guidance, and expert mentoring.",
             type: "article",
           }}
         />

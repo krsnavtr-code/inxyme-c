@@ -44,7 +44,7 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     hike: "140% Hike",
     image: "https://www.inxyme.com/api/upload/file/Krishna-4629.png",
     content:
-      "Before joining Inxyme, I had very little knowledge of Data Science and Machine Learning pipelines, and was unsure about transitioning into AI. After joining Inxyme Centre of Excellence, I gained deep practical mastery in containerized ML deployments, Docker, and real-world LLM pipelines. The step-by-step mentoring and placement assistance helped me land my dream role as an MLOps Engineer.",
+      "Before joining Inxyme, I had very little knowledge of Data Science and Machine Learning pipelines, and was unsure about transitioning into AI. After joining Inxyme, I gained deep practical mastery in containerized ML deployments, Docker, and real-world LLM pipelines. The step-by-step mentoring and placement assistance helped me land my dream role as an MLOps Engineer.",
     rating: 5,
     featured: true,
   },
