@@ -524,7 +524,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
 
               <div className="relative cursor-pointer group rounded-2xl overflow-hidden border border-emerald-100 dark:border-emerald-500/50 shadow-lg shadow-slate-200/50 dark:shadow-emerald-900/30 bg-white dark:bg-slate-800 bg-gradient-to-br from-emerald-50 to-green-50 dark:from-emerald-900/40 dark:to-green-900/20">
                 <img
-                  src="http://www.inxyme.com/api/upload/file/eklabya-certificate-4563.png"
+                  src="https://www.inxyme.com/api/upload/file/inxyme-certificate-6109.jpeg"
                   alt="Certificate of Completion"
                   className="w-full h-auto p-10 object-contain transition-transform duration-700 group-hover:scale-105"
                   onError={(e: any) => {
