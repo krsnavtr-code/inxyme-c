@@ -34,6 +34,7 @@ import {
   FaFacebook,
   FaInstagram,
   FaPinterest,
+  FaYoutube,
   FaMapMarkerAlt,
   FaPhone,
   FaEnvelope,
@@ -821,22 +822,26 @@ export default function SapTrainingCertification() {
                 <div className="flex flex-wrap gap-2 pt-1">
                   {[
                     { icon: FaWhatsapp, href: WHATSAPP_URL },
-                    { icon: FaTwitter, href: "https://x.com/inxymeofficial" },
+                    { icon: FaTwitter, href: "https://x.com/inxyme" },
                     {
                       icon: FaLinkedin,
                       href: "https://www.linkedin.com/company/inxyme-centre-of-excellence/",
                     },
                     {
                       icon: FaFacebook,
-                      href: "https://www.facebook.com/profile.php?id=61589473389916",
+                      href: "https://www.facebook.com/inxyme",
                     },
                     {
                       icon: FaInstagram,
-                      href: "https://www.instagram.com/inxyme_official",
+                      href: "https://www.instagram.com/inxyme",
                     },
                     {
                       icon: FaPinterest,
-                      href: "https://in.pinterest.com/inxymeofficial",
+                      href: "https://in.pinterest.com/inxyme",
+                    },
+                    {
+                      icon: FaYoutube,
+                      href: "https://www.youtube.com/@inxyme-official",
                     },
                   ].map((social, idx) => (
                     <a

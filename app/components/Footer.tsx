@@ -8,6 +8,7 @@ import {
   FaFacebook,
   FaInstagram,
   FaPinterest,
+  FaYoutube,
   FaMapMarkerAlt,
   FaPhone,
   FaEnvelope,
@@ -164,22 +165,26 @@ function Footer() {
                   icon: FaWhatsapp,
                   href: "https://wa.me/919891030303?text=Hi%2C%20I%20am%20interested%20in%20learning%20more%20about%20your%20courses.",
                 },
-                { icon: FaTwitter, href: "https://x.com/inxymeofficial" },
+                { icon: FaTwitter, href: "https://x.com/inxyme" },
                 {
                   icon: FaLinkedin,
                   href: "https://www.linkedin.com/company/inxyme-centre-of-excellence/",
                 },
                 {
                   icon: FaFacebook,
-                  href: "https://www.facebook.com/profile.php?id=61589473389916",
+                  href: "https://www.facebook.com/inxyme",
                 },
                 {
                   icon: FaInstagram,
-                  href: "https://www.instagram.com/inxyme_official",
+                  href: "https://www.instagram.com/inxyme",
                 },
                 {
                   icon: FaPinterest,
-                  href: "https://in.pinterest.com/inxymeofficial",
+                  href: "https://in.pinterest.com/inxyme",
+                },
+                {
+                  icon: FaYoutube,
+                  href: "https://www.youtube.com/@inxyme-official",
                 },
               ].map((social, idx) => (
                 <a

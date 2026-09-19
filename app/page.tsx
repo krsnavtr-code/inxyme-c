@@ -67,12 +67,12 @@ export default function Home() {
     description:
       "Inxyme is an online learning platform offering industry-focused courses, certifications, and career-oriented training programs across Data Science, Digital Marketing, SAP, IT, Business, and emerging technologies.",
     sameAs: [
-      "https://www.instagram.com/inxyme_official",
-      "https://www.facebook.com/inxymeofficial",
-      "https://in.pinterest.com/inxyme_official/",
-      "https://x.com/inxymeofficial",
-      "https://www.linkedin.com/in/anand-shekhar-71515a408/",
-      "https://www.youtube.com/@inxyme_official",
+      "https://www.instagram.com/inxyme",
+      "https://www.facebook.com/inxyme",
+      "https://in.pinterest.com/inxyme",
+      "https://x.com/inxyme",
+      "https://www.linkedin.com/company/inxyme-centre-of-excellence/",
+      "https://www.youtube.com/@inxyme-official",
     ],
     contactPoint: {
       "@type": "ContactPoint",
