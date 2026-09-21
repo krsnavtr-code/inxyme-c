@@ -256,7 +256,7 @@ export default function BlogDetailClient({
     post.author?.fullname || post.author?.name || "Inxyme Editorial Team";
 
   return (
-    <div className="min-h-screen bg-gray-50/50 text-gray-800 selection:bg-blue-500 selection:text-white pb-20 [color-scheme:light]">
+    <div className="min-h-screen bg-gray-50/50  dark:bg-white  text-gray-800 selection:bg-blue-500 selection:text-white pb-20 [color-scheme:light]">
       {/* Scroll Reading Progress Bar */}
       <div
         className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-sky-400 z-50 transition-all duration-150"
@@ -398,24 +398,26 @@ export default function BlogDetailClient({
           {/* Main Content Column */}
           <article className="lg:col-span-8 min-w-0 space-y-10">
             {/* Featured Image with Cool Interactive Features */}
-            {post.featuredImage && (
+            {(post.featuredImage || post.imageUrl) && (
               <figure className="mb-8 space-y-2">
                 <div
                   onClick={() => setIsImageModalOpen(true)}
-                  className="group relative max-h-[520px] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/80 bg-gray-900 cursor-zoom-in"
+                  className="group relative max-h-[520px] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/80 bg-gray-100 cursor-zoom-in min-h-[240px] sm:min-h-[360px]"
                 >
-                  {/* Loading placeholder skeleton */}
-                  {!isImageLoaded && (
-                    <div className="absolute inset-0 bg-gray-200 animate-pulse min-h-[300px]" />
-                  )}
-
                   {/* Main Image with Hover Zoom */}
                   <img
-                    src={getImageUrl(post.featuredImage)}
+                    ref={(img) => {
+                      if (img && img.complete) {
+                        setIsImageLoaded(true);
+                      }
+                    }}
+                    src={getImageUrl(post.featuredImage || post.imageUrl)}
                     alt={post.title}
+                    loading="eager"
+                    decoding="async"
                     onLoad={() => setIsImageLoaded(true)}
-                    className={`w-full h-full object-cover max-h-[520px] transform group-hover:scale-105 transition-transform duration-700 ease-out ${isImageLoaded ? "opacity-100" : "opacity-0"
-                      }`}
+                    onError={() => setIsImageLoaded(true)}
+                    className="w-full h-full object-cover max-h-[520px] transform group-hover:scale-105 transition-transform duration-700 ease-out"
                   />
 
                   {/* Subtle Gradient Scrim */}
@@ -471,7 +473,7 @@ export default function BlogDetailClient({
             )}
 
             {/* Fullscreen Lightbox Modal */}
-            {isImageModalOpen && post.featuredImage && (
+            {isImageModalOpen && (post.featuredImage || post.imageUrl) && (
               <div
                 className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/90 backdrop-blur-xl p-4 sm:p-6 animate-fade-in"
                 onClick={() => {
@@ -502,7 +504,7 @@ export default function BlogDetailClient({
 
                     {/* Open Original */}
                     <a
-                      href={getImageUrl(post.featuredImage)}
+                      href={getImageUrl(post.featuredImage || post.imageUrl)}
                       target="_blank"
                       rel="noopener noreferrer"
                       title="Open full resolution image in new tab"
@@ -533,7 +535,7 @@ export default function BlogDetailClient({
                   onClick={(e) => e.stopPropagation()}
                 >
                   <img
-                    src={getImageUrl(post.featuredImage)}
+                    src={getImageUrl(post.featuredImage || post.imageUrl)}
                     alt={post.title}
                     className={`rounded-2xl transition-all duration-300 select-none ${isImageZoomed
                       ? "scale-150 cursor-zoom-out max-w-none"
