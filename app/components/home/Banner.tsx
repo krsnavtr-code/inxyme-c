@@ -200,14 +200,16 @@ function Banner() {
       );
 
       const courseTitle = isOther
-        ? formData.otherCourse.trim() || "Other / Not Listed"
+        ? (formData.otherCourse || "").trim() || "Other / Not Listed"
         : matchedCourse?.title || matchedCourse?.name || "";
 
       const submissionData: Record<string, any> = {
-        name: formData.name,
-        email: formData.email,
-        phone: formData.phone,
+        name: (formData.name || "").trim(),
+        email: (formData.email || "").trim(),
+        phone: (formData.phone || "").trim(),
         courseTitle: courseTitle,
+        subject: `Course Consultation: ${courseTitle || "General Enquiry"}`,
+        message: `Book a Free Course Consultation callback request${courseTitle ? ` for ${courseTitle}` : ""}.`,
         agreedToTerms: formData.agreedToTerms,
         ...(formData.courseInterest && !isOther
           ? { courseId: formData.courseInterest }
