@@ -191,7 +191,7 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
         <div>
           <label
             htmlFor="otp"
-            className="block text-sm font-medium text-black"
+            className="block text-sm font-semibold text-gray-800 dark:text-gray-800 mb-1"
           >
             Enter OTP
           </label>
@@ -204,7 +204,7 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
               setOtp(value);
             }}
             maxLength={6}
-            className="block w-full px-3 py-2 border bg-gray-50 border-gray-800 text-black rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm text-center text-2xl tracking-widest"
+            className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-xs bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-center text-2xl font-bold tracking-widest"
             placeholder="------"
           />
         </div>
@@ -248,7 +248,7 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
   return (
     <form onSubmit={handleSubmit} className="space-y-1">
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
-        <p className="text-center text-3xl font-extrabold text-gray-900">
+        <p className="text-center text-3xl font-extrabold text-gray-900 dark:text-gray-900 mb-2">
           Create your account
         </p>
       </div>
@@ -283,7 +283,7 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
       <div>
         <label
           htmlFor="fullname"
-          className="block text-sm font-medium text-black"
+          className="block text-sm font-semibold text-gray-800 dark:text-gray-800 mb-1"
         >
           Full Name
         </label>
@@ -291,55 +291,68 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
           id="fullname"
           name="fullname"
           type="text"
+          placeholder="Enter your full name"
           value={formData.fullname}
           onChange={handleChange}
-          className={`block w-full px-3 py-1 border bg-gray-50 border-gray-800 text-black ${
+          className={`block w-full px-3 py-2 border rounded-md shadow-xs bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
             errors.fullname ? "border-red-500" : "border-gray-300"
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+          }`}
         />
         {errors.fullname && (
-          <p className="text-sm text-red-600">{errors.fullname}</p>
+          <p className="text-xs text-red-600 mt-1">{errors.fullname}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="email" className="block text-sm font-medium text-black">
+        <label
+          htmlFor="email"
+          className="block text-sm font-semibold text-gray-800 dark:text-gray-800 mb-1"
+        >
           Email address
         </label>
         <input
           id="email"
           name="email"
           type="email"
+          placeholder="name@example.com"
           value={formData.email}
           onChange={handleChange}
-          className={`block w-full px-3 py-1 border bg-gray-50 border-gray-800 text-black ${
+          className={`block w-full px-3 py-2 border rounded-md shadow-xs bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
             errors.email ? "border-red-500" : "border-gray-300"
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+          }`}
         />
-        {errors.email && <p className="text-sm text-red-600">{errors.email}</p>}
+        {errors.email && (
+          <p className="text-xs text-red-600 mt-1">{errors.email}</p>
+        )}
       </div>
 
       <div>
-        <label htmlFor="phone" className="block text-sm font-medium text-black">
+        <label
+          htmlFor="phone"
+          className="block text-sm font-semibold text-gray-800 dark:text-gray-800 mb-1"
+        >
           Phone Number
         </label>
         <input
           id="phone"
           name="phone"
           type="tel"
+          placeholder="Enter 10-digit mobile number"
           value={formData.phone}
           onChange={handleChange}
-          className={`block w-full px-3 py-1 border bg-gray-50 border-gray-800 text-black ${
+          className={`block w-full px-3 py-2 border rounded-md shadow-xs bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
             errors.phone ? "border-red-500" : "border-gray-300"
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+          }`}
         />
-        {errors.phone && <p className="text-sm text-red-600">{errors.phone}</p>}
+        {errors.phone && (
+          <p className="text-xs text-red-600 mt-1">{errors.phone}</p>
+        )}
       </div>
 
       <div>
         <label
           htmlFor="password"
-          className="block text-sm font-medium text-black"
+          className="block text-sm font-semibold text-gray-800 dark:text-gray-800 mb-1"
         >
           Password
         </label>
@@ -347,21 +360,22 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
           id="password"
           name="password"
           type="password"
+          placeholder="Create a password (min 6 characters)"
           value={formData.password}
           onChange={handleChange}
-          className={`block w-full px-3 py-1 border bg-gray-50 border-gray-800 text-black ${
+          className={`block w-full px-3 py-2 border rounded-md shadow-xs bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
             errors.password ? "border-red-500" : "border-gray-300"
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+          }`}
         />
         {errors.password && (
-          <p className="text-sm text-red-600">{errors.password}</p>
+          <p className="text-xs text-red-600 mt-1">{errors.password}</p>
         )}
       </div>
 
       <div>
         <label
           htmlFor="confirmPassword"
-          className="block text-sm font-medium text-black"
+          className="block text-sm font-semibold text-gray-800 dark:text-gray-800 mb-1"
         >
           Confirm Password
         </label>
@@ -369,19 +383,23 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
           id="confirmPassword"
           name="confirmPassword"
           type="password"
+          placeholder="Re-enter your password"
           value={formData.confirmPassword}
           onChange={handleChange}
-          className={`block w-full px-3 py-1 border bg-gray-50 border-gray-800 text-black ${
+          className={`block w-full px-3 py-2 border rounded-md shadow-xs bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
             errors.confirmPassword ? "border-red-500" : "border-gray-300"
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+          }`}
         />
         {errors.confirmPassword && (
-          <p className="text-sm text-red-600">{errors.confirmPassword}</p>
+          <p className="text-xs text-red-600 mt-1">{errors.confirmPassword}</p>
         )}
       </div>
 
       <div>
-        <label htmlFor="role" className="block text-sm font-medium text-black">
+        <label
+          htmlFor="role"
+          className="block text-sm font-semibold text-gray-800 dark:text-gray-800 mb-1"
+        >
           I am a
         </label>
         <select
@@ -389,18 +407,24 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
           name="role"
           value={formData.role}
           onChange={handleChange}
-          className="mt-1 w-full border-gray-800 py-2 sm:text-sm rounded-md bg-gray-50 text-black"
+          className="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-xs bg-white dark:bg-white text-gray-900 dark:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm cursor-pointer"
         >
-          <option value="student">Student</option>
-          <option value="teacher">Teacher</option>
+          <option value="student" className="text-gray-900 bg-white">
+            Student
+          </option>
+          <option value="teacher" className="text-gray-900 bg-white">
+            Teacher
+          </option>
         </select>
-        {errors.role && <p className="text-sm text-red-600">{errors.role}</p>}
+        {errors.role && (
+          <p className="text-xs text-red-600 mt-1">{errors.role}</p>
+        )}
       </div>
 
       <div>
         <label
           htmlFor="department"
-          className="block text-sm font-medium text-black"
+          className="block text-sm font-semibold text-gray-800 dark:text-gray-800 mb-1"
         >
           Department
         </label>
@@ -408,29 +432,32 @@ export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps)
           id="department"
           name="department"
           type="text"
+          placeholder="e.g. Computer Science, IT, Management"
           value={formData.department}
           onChange={handleChange}
-          className={`block w-full px-3 py-1 border bg-gray-50 border-gray-800 text-black ${
+          className={`block w-full px-3 py-2 border rounded-md shadow-xs bg-white dark:bg-white text-gray-900 dark:text-gray-900 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 sm:text-sm ${
             errors.department ? "border-red-500" : "border-gray-300"
-          } rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm`}
+          }`}
         />
         {errors.department && (
-          <p className="text-sm text-red-600">{errors.department}</p>
+          <p className="text-xs text-red-600 mt-1">{errors.department}</p>
         )}
       </div>
 
-      <div>
+      <div className="pt-2">
         <button
           type="submit"
           disabled={isSubmitting}
-          className="w-full flex justify-center py-1 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50"
+          className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 disabled:opacity-50 transition-colors"
         >
           {isSubmitting ? "Registering..." : "Register"}
         </button>
       </div>
 
-      <div className="text-sm text-center">
-        <span className="text-black">Already have an account? </span>
+      <div className="text-sm text-center pt-2">
+        <span className="text-gray-600 dark:text-gray-700">
+          Already have an account?{" "}
+        </span>
         <button
           type="button"
           onClick={() => {

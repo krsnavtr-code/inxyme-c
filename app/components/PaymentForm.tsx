@@ -1,10 +1,11 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, useEffect, useRef, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { createPortal } from "react-dom";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
+import { FaSearch, FaChevronDown, FaTimes } from "react-icons/fa";
 import api from "../utils/api";
 import { loadRazorpay, initRazorpayPayment } from "../utils/razorpay";
 import { useAuth } from "../context/AuthContext";
@@ -58,6 +59,16 @@ export default function PaymentForm({
   const [isRazorpayLoaded, setIsRazorpayLoaded] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Courses state for searchable dropdown
+  const [coursesList, setCoursesList] = useState<any[]>([]);
+  const [isLoadingCourses, setIsLoadingCourses] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [courseSearch, setCourseSearch] = useState(courseName || initialData?.course || "");
+  const [selectedCoursePrice, setSelectedCoursePrice] = useState<number | null>(
+    price !== undefined && price !== null ? Number(price) : null,
+  );
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
   const [formData, setFormData] = useState<PaymentFormData>(() => {
     const data = initialData || {};
     return {
@@ -84,6 +95,57 @@ export default function PaymentForm({
     };
   });
 
+  const effectivePrice =
+    price !== undefined && price !== null
+      ? Number(price)
+      : selectedCoursePrice;
+
+  // Fetch courses list if courseName wasn't pre-provided
+  useEffect(() => {
+    if (!courseName) {
+      const fetchCourses = async () => {
+        setIsLoadingCourses(true);
+        try {
+          const response = await api.get("/courses", {
+            params: {
+              limit: 300,
+              isPublished: "true",
+              status: "published",
+              fields: "_id,title,price,originalPrice,isFree,category",
+            },
+          });
+          const list = response?.data?.data || response?.data || [];
+          if (Array.isArray(list)) {
+            const sorted = [...list].sort((a: any, b: any) =>
+              (a.title || "").localeCompare(b.title || ""),
+            );
+            setCoursesList(sorted);
+          }
+        } catch (err) {
+          console.error("Failed to load courses list for payment form", err);
+        } finally {
+          setIsLoadingCourses(false);
+        }
+      };
+      fetchCourses();
+    }
+  }, [courseName]);
+
+  // Handle click outside to close dropdown
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setIsDropdownOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () =>
+      document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   useEffect(() => {
     loadRazorpay().then((success) => {
       if (!success) toast.error("Failed to load payment gateway.");
@@ -109,8 +171,8 @@ export default function PaymentForm({
       const fee = 2000;
       const gst = Math.round(fee * 0.18);
       setFormData((prev) => ({ ...prev, paymentAmount: String(fee + gst) }));
-    } else if (paymentType === "full" && price) {
-      const base = Number(price);
+    } else if (paymentType === "full" && effectivePrice !== null && effectivePrice > 0) {
+      const base = Number(effectivePrice);
       const gst = Math.round(base * 0.18);
       const total = base + gst;
       if (discountApplied && currentUser?.discount) {
@@ -123,7 +185,59 @@ export default function PaymentForm({
         setFormData((prev) => ({ ...prev, paymentAmount: String(total) }));
       }
     }
-  }, [paymentType, price, discountApplied, currentUser?.discount]);
+  }, [paymentType, effectivePrice, discountApplied, currentUser?.discount]);
+
+  const handleSelectCourse = (courseItem: any) => {
+    const cPrice = courseItem.price ?? courseItem.originalPrice ?? 0;
+    const numericPrice = Number(cPrice);
+    setSelectedCoursePrice(numericPrice);
+    setCourseSearch(courseItem.title);
+    setIsDropdownOpen(false);
+
+    let newAmount = "";
+    if (paymentType === "registration") {
+      newAmount = "2360";
+    } else if (numericPrice > 0) {
+      const base = numericPrice;
+      const gst = Math.round(base * 0.18);
+      let total = base + gst;
+      if (discountApplied && currentUser?.discount) {
+        total -= Math.round(total * (currentUser.discount / 100));
+      }
+      newAmount = String(total);
+    } else {
+      newAmount = "0";
+    }
+
+    setFormData((prev) => ({
+      ...prev,
+      course: courseItem.title,
+      coursePrice: String(Math.round(numericPrice * 1.18)),
+      paymentAmount: newAmount,
+    }));
+  };
+
+  const handleCourseInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const val = e.target.value;
+    setCourseSearch(val);
+    setFormData((prev) => ({ ...prev, course: val }));
+    setIsDropdownOpen(true);
+  };
+
+  const handleClearCourse = () => {
+    setCourseSearch("");
+    setSelectedCoursePrice(null);
+    setFormData((prev) => ({
+      ...prev,
+      course: "",
+      coursePrice: "",
+      paymentAmount: "",
+    }));
+  };
+
+  const filteredCourses = coursesList.filter((c: any) =>
+    (c.title || "").toLowerCase().includes(courseSearch.toLowerCase()),
+  );
 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
@@ -301,7 +415,7 @@ export default function PaymentForm({
 
   return createPortal(
     <div className="z-[99999] fixed inset-0 bg-black/50 flex items-center justify-center p-2 md:p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md">
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md max-h-[92vh] overflow-y-auto">
         <div className="p-4">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-xl font-bold text-gray-900 dark:text-white">
@@ -452,18 +566,136 @@ export default function PaymentForm({
                 </div>
               </>
             ) : (
-              <div>
-                <label className="block text-sm font-medium text-gray-900 dark:text-white">
+              <div className="relative" ref={dropdownRef}>
+                <label className="block text-sm font-medium text-gray-900 dark:text-white mb-1">
                   Program Name
                 </label>
-                <input
-                  type="text"
-                  name="course"
-                  value={formData.course}
-                  onChange={handleChange}
-                  className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
-                  required
-                />
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="course"
+                    value={courseSearch}
+                    onChange={handleCourseInputChange}
+                    onFocus={() => setIsDropdownOpen(true)}
+                    placeholder="Search or select a program..."
+                    autoComplete="off"
+                    className="w-full px-3 py-2 pl-9 pr-14 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition-all"
+                    required
+                  />
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+                    <FaSearch size={13} />
+                  </div>
+                  <div className="absolute right-2.5 top-1/2 -translate-y-1/2 flex items-center gap-1.5">
+                    {courseSearch && (
+                      <button
+                        type="button"
+                        onClick={handleClearCourse}
+                        className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-0.5"
+                        title="Clear selection"
+                      >
+                        <FaTimes size={11} />
+                      </button>
+                    )}
+                    <button
+                      type="button"
+                      onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                      className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-0.5"
+                    >
+                      <FaChevronDown
+                        size={10}
+                        className={`transition-transform duration-200 ${
+                          isDropdownOpen ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Dropdown Menu */}
+                {isDropdownOpen && (
+                  <div className="absolute left-0 right-0 top-full mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-2xl max-h-56 overflow-y-auto z-[100000] py-1 text-sm divide-y divide-gray-100 dark:divide-gray-700/50">
+                    {isLoadingCourses ? (
+                      <div className="p-4 text-center text-gray-500 dark:text-gray-400 text-xs">
+                        Loading programs...
+                      </div>
+                    ) : filteredCourses.length > 0 ? (
+                      filteredCourses.map((c: any) => {
+                        const itemPrice = c.price ?? c.originalPrice ?? 0;
+                        const isSelected = formData.course === c.title;
+                        return (
+                          <div
+                            key={c._id || c.title}
+                            onClick={() => handleSelectCourse(c)}
+                            className={`px-3 py-2.5 flex items-center justify-between cursor-pointer hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-colors ${
+                              isSelected
+                                ? "bg-blue-50 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 font-semibold"
+                                : "text-gray-800 dark:text-gray-200"
+                            }`}
+                          >
+                            <span className="truncate pr-2 font-medium text-xs sm:text-sm">
+                              {c.title}
+                            </span>
+                            <span className="shrink-0 text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400 font-bold">
+                              {itemPrice > 0
+                                ? `₹${Number(itemPrice).toLocaleString()}`
+                                : "Free"}
+                            </span>
+                          </div>
+                        );
+                      })
+                    ) : (
+                      <div className="p-3 text-center text-gray-500 dark:text-gray-400 text-xs">
+                        No courses found matching &quot;{courseSearch}&quot;
+                      </div>
+                    )}
+                  </div>
+                )}
+
+                {/* If course has been selected from dropdown, also show payment type selector */}
+                {effectivePrice !== null && effectivePrice > 0 && (
+                  <div className="mt-3">
+                    <label className="block text-sm font-medium text-gray-900 dark:text-white">
+                      Payment Type
+                    </label>
+                    <div className="flex flex-col gap-2 mt-1">
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="paymentType"
+                          value="registration"
+                          checked={paymentType === "registration"}
+                          onChange={(e) =>
+                            setPaymentType(
+                              e.target.value as "full" | "registration",
+                            )
+                          }
+                          className="text-indigo-600 focus:ring-indigo-500"
+                        />
+                        <span className="text-sm text-gray-900 dark:text-white">
+                          Registration Fee (₹2,000 + GST)
+                        </span>
+                      </label>
+                      <label className="flex items-center space-x-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name="paymentType"
+                          value="full"
+                          checked={paymentType === "full"}
+                          onChange={(e) =>
+                            setPaymentType(
+                              e.target.value as "full" | "registration",
+                            )
+                          }
+                          className="text-indigo-600 focus:ring-indigo-500"
+                        />
+                        <span className="text-sm text-gray-900 dark:text-white">
+                          Full Payment (₹
+                          {Number(effectivePrice).toLocaleString()} + GST)
+                        </span>
+                      </label>
+                    </div>
+                  </div>
+                )}
               </div>
             )}
 
@@ -481,7 +713,7 @@ export default function PaymentForm({
                 className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
                 required
               />
-              {courseName && (
+              {(courseName || (effectivePrice !== null && effectivePrice > 0)) && (
                 <div className="mt-2 text-xs text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-gray-900 p-2 rounded">
                   {paymentType === "registration" ? (
                     <div className="space-y-1">
@@ -503,15 +735,15 @@ export default function PaymentForm({
                       <div className="flex justify-between">
                         <span>Base Price:</span>
                         <span>
-                          ₹{price ? Number(price).toLocaleString() : 0}
+                          ₹{effectivePrice ? Number(effectivePrice).toLocaleString() : 0}
                         </span>
                       </div>
                       <div className="flex justify-between">
                         <span>GST (18%):</span>
                         <span>
                           ₹
-                          {price
-                            ? Math.round(Number(price) * 0.18).toLocaleString()
+                          {effectivePrice
+                            ? Math.round(Number(effectivePrice) * 0.18).toLocaleString()
                             : 0}
                         </span>
                       </div>
@@ -521,7 +753,7 @@ export default function PaymentForm({
                           <span>
                             -₹
                             {Math.round(
-                              Number(price || 0) *
+                              Number(effectivePrice || 0) *
                                 1.18 *
                                 (currentUser.discount / 100),
                             ).toLocaleString()}
