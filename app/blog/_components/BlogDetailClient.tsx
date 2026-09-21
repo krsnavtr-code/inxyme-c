@@ -203,16 +203,16 @@ export default function BlogDetailClient({
   // Loading skeleton state
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 [color-scheme:light]">
         <div className="max-w-4xl mx-auto space-y-8 animate-pulse">
-          <div className="h-6 w-36 bg-gray-200 dark:bg-gray-800 rounded-lg"></div>
-          <div className="h-12 w-3/4 bg-gray-200 dark:bg-gray-800 rounded-2xl"></div>
-          <div className="h-6 w-1/2 bg-gray-200 dark:bg-gray-800 rounded-lg"></div>
-          <div className="h-96 w-full bg-gray-200 dark:bg-gray-800 rounded-3xl"></div>
+          <div className="h-6 w-36 bg-gray-200 rounded-lg"></div>
+          <div className="h-12 w-3/4 bg-gray-200 rounded-2xl"></div>
+          <div className="h-6 w-1/2 bg-gray-200 rounded-lg"></div>
+          <div className="h-96 w-full bg-gray-200 rounded-3xl"></div>
           <div className="space-y-4">
-            <div className="h-5 w-full bg-gray-200 dark:bg-gray-800 rounded"></div>
-            <div className="h-5 w-5/6 bg-gray-200 dark:bg-gray-800 rounded"></div>
-            <div className="h-5 w-4/6 bg-gray-200 dark:bg-gray-800 rounded"></div>
+            <div className="h-5 w-full bg-gray-200 rounded"></div>
+            <div className="h-5 w-5/6 bg-gray-200 rounded"></div>
+            <div className="h-5 w-4/6 bg-gray-200 rounded"></div>
           </div>
         </div>
       </div>
@@ -222,15 +222,15 @@ export default function BlogDetailClient({
   // Not found fallback state
   if (!post) {
     return (
-      <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center px-4 py-16">
-        <div className="max-w-md w-full text-center bg-white dark:bg-gray-800 p-8 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 space-y-6">
-          <div className="w-16 h-16 mx-auto bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400 rounded-2xl flex items-center justify-center text-2xl">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4 py-16 [color-scheme:light]">
+        <div className="max-w-md w-full text-center bg-white p-8 rounded-3xl shadow-xl border border-gray-100 space-y-6">
+          <div className="w-16 h-16 mx-auto bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center text-2xl">
             <FaBookOpen />
           </div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-2xl font-bold text-gray-900">
             Article Not Found
           </h1>
-          <p className="text-sm text-gray-600 dark:text-gray-300">
+          <p className="text-sm text-gray-600">
             The blog article you are looking for may have been moved, updated, or
             is temporarily unavailable.
           </p>
@@ -256,7 +256,7 @@ export default function BlogDetailClient({
     post.author?.fullname || post.author?.name || "Inxyme Editorial Team";
 
   return (
-    <div className="min-h-screen bg-gray-50/50 dark:bg-gray-950 text-gray-800 dark:text-gray-100 selection:bg-blue-500 selection:text-white pb-20">
+    <div className="min-h-screen bg-gray-50/50 text-gray-800 selection:bg-blue-500 selection:text-white pb-20 [color-scheme:light]">
       {/* Scroll Reading Progress Bar */}
       <div
         className="fixed top-0 left-0 h-1 bg-gradient-to-r from-blue-600 via-indigo-500 to-sky-400 z-50 transition-all duration-150"
@@ -264,7 +264,7 @@ export default function BlogDetailClient({
       />
 
       {/* ===== HERO / HEADER SECTION ===== */}
-      <header className="pt-4 pb-8 sm:pt-6 sm:pb-10 border-b border-gray-200/70 dark:border-gray-800/80 bg-white/70 dark:bg-gray-900/70 backdrop-blur-md">
+      <header className="pt-4 pb-8 sm:pt-6 sm:pb-10 border-b border-gray-200/70 bg-white/70 backdrop-blur-md">
         <div className="max-w-7xl mx-auto space-y-2">
 
           {/* Categories badges */}
@@ -274,7 +274,7 @@ export default function BlogDetailClient({
                 <Link
                   key={cat._id || cat.slug || cat.name}
                   href={`/blog?category=${cat.slug || cat.name}`}
-                  className="px-3 py-1 bg-blue-100/80 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 hover:bg-blue-200 dark:hover:bg-blue-900 rounded-full text-xs font-bold tracking-wide uppercase transition-colors"
+                  className="px-3 py-1 bg-blue-100/80 text-blue-700 hover:bg-blue-200 rounded-full text-xs font-bold tracking-wide uppercase transition-colors"
                 >
                   {cat.name}
                 </Link>
@@ -283,19 +283,19 @@ export default function BlogDetailClient({
           )}
 
           {/* Main Title */}
-          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 dark:text-white tracking-tight leading-tight md:leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-4xl font-black text-gray-900 tracking-tight leading-tight md:leading-tight">
             {post.title}
           </h1>
 
           {/* Excerpt if present */}
           {post.excerpt && (
-            <p className="text-base sm:text-lg text-gray-600 dark:text-gray-300 font-normal leading-relaxed">
+            <p className="text-base sm:text-lg text-gray-600 font-normal leading-relaxed">
               {post.excerpt}
             </p>
           )}
 
           {/* Meta bar: Author, Date, Reading time, and Share */}
-          <div className="pt-2 flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 dark:border-gray-800 text-xs sm:text-sm">
+          <div className="pt-2 flex flex-wrap items-center justify-between gap-4 border-t border-gray-100 text-xs sm:text-sm">
             <div className="flex items-center gap-4 flex-wrap">
               {/* Author */}
               <div className="flex items-center gap-2.5">
@@ -303,42 +303,42 @@ export default function BlogDetailClient({
                   Inxyme
                 </div> */}
                 <div>
-                  <p className="font-semibold text-gray-900 dark:text-white">
+                  <p className="font-semibold text-gray-900">
                     Inxyme
                   </p>
-                  <p className="text-[11px] text-gray-500 dark:text-gray-400">
+                  <p className="text-[11px] text-gray-500">
                     Author &amp; Insights
                   </p>
                 </div>
               </div>
 
-              <div className="h-4 w-px bg-gray-300 dark:bg-gray-700 hidden sm:block" />
+              <div className="h-4 w-px bg-gray-300 hidden sm:block" />
 
               {/* Date */}
-              <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                <FaCalendarAlt className="text-gray-400 dark:text-gray-500" />
+              <div className="flex items-center gap-1.5 text-gray-600">
+                <FaCalendarAlt className="text-gray-400" />
                 <span>{formatDate(post.publishedAt || post.createdAt)}</span>
               </div>
 
-              <div className="h-4 w-px bg-gray-300 dark:bg-gray-700 hidden sm:block" />
+              <div className="h-4 w-px bg-gray-300 hidden sm:block" />
 
               {/* Reading time */}
-              <div className="flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                <FaClock className="text-gray-400 dark:text-gray-500" />
+              <div className="flex items-center gap-1.5 text-gray-600">
+                <FaClock className="text-gray-400" />
                 <span>{readingTimeEstimate} min read</span>
               </div>
             </div>
 
             {/* Quick social share icons */}
             <div className="flex items-center gap-1.5">
-              <span className="text-xs text-gray-500 dark:text-gray-400 mr-1 hidden sm:inline">
+              <span className="text-xs text-gray-500 mr-1 hidden sm:inline">
                 Share:
               </span>
               <button
                 type="button"
                 onClick={handleCopyLink}
                 title="Copy link"
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 flex items-center justify-center transition-colors relative"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-700 flex items-center justify-center transition-colors relative"
               >
                 {copied ? (
                   <FaCheck className="text-emerald-500 text-xs" />
@@ -356,7 +356,7 @@ export default function BlogDetailClient({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Share on X"
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-sky-500 hover:text-white text-gray-700 dark:text-gray-200 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-sky-500 hover:text-white text-gray-700 flex items-center justify-center transition-colors"
               >
                 <FaTwitter className="text-xs" />
               </a>
@@ -365,7 +365,7 @@ export default function BlogDetailClient({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Share on LinkedIn"
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-600 hover:text-white text-gray-700 dark:text-gray-200 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-blue-600 hover:text-white text-gray-700 flex items-center justify-center transition-colors"
               >
                 <FaLinkedinIn className="text-xs" />
               </a>
@@ -374,7 +374,7 @@ export default function BlogDetailClient({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Share on WhatsApp"
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-emerald-600 hover:text-white text-gray-700 dark:text-gray-200 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-emerald-600 hover:text-white text-gray-700 flex items-center justify-center transition-colors"
               >
                 <FaWhatsapp className="text-xs" />
               </a>
@@ -383,7 +383,7 @@ export default function BlogDetailClient({
                 target="_blank"
                 rel="noopener noreferrer"
                 title="Share on Facebook"
-                className="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-800 hover:bg-blue-700 hover:text-white text-gray-700 dark:text-gray-200 flex items-center justify-center transition-colors"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-blue-700 hover:text-white text-gray-700 flex items-center justify-center transition-colors"
               >
                 <FaFacebookF className="text-xs" />
               </a>
@@ -402,11 +402,11 @@ export default function BlogDetailClient({
               <figure className="mb-8 space-y-2">
                 <div
                   onClick={() => setIsImageModalOpen(true)}
-                  className="group relative max-h-[520px] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/80 dark:border-gray-800 bg-gray-900 cursor-zoom-in"
+                  className="group relative max-h-[520px] rounded-3xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-200/80 bg-gray-900 cursor-zoom-in"
                 >
                   {/* Loading placeholder skeleton */}
                   {!isImageLoaded && (
-                    <div className="absolute inset-0 bg-gray-200 dark:bg-gray-800 animate-pulse min-h-[300px]" />
+                    <div className="absolute inset-0 bg-gray-200 animate-pulse min-h-[300px]" />
                   )}
 
                   {/* Main Image with Hover Zoom */}
@@ -464,7 +464,7 @@ export default function BlogDetailClient({
                 </div>
 
                 {/* Subtle Caption */}
-                <figcaption className="text-center text-xs text-gray-500 dark:text-gray-400 italic pt-1">
+                <figcaption className="text-center text-xs text-gray-500 italic pt-1">
                   Featured illustration: {post.title}
                 </figcaption>
               </figure>
@@ -552,37 +552,37 @@ export default function BlogDetailClient({
 
             {/* Rich HTML Content */}
             <div
-              className="blog-content text-gray-800 dark:text-gray-200 text-base sm:text-lg leading-relaxed space-y-1.5 break-words
-                [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-bold [&_h2]:text-gray-900 [&_h2]:dark:text-white [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:pt-4 [&_h2]:border-t [&_h2]:border-gray-100 [&_h2]:dark:border-gray-800 [&_h2]:scroll-mt-24
-                [&_h3]:text-xl [&_h3]:sm:text-2xl [&_h3]:font-bold [&_h3]:text-gray-900 [&_h3]:dark:text-white [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:scroll-mt-24
-                [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:dark:text-white [&_h4]:mt-6 [&_h4]:mb-2
-                [&_p]:leading-relaxed [&_p]:mb-5 [&_p]:text-gray-700 [&_p]:dark:text-gray-300
+              className="blog-content text-gray-800 text-base sm:text-lg leading-relaxed space-y-1.5 break-words
+                [&_h2]:text-2xl [&_h2]:sm:text-3xl [&_h2]:font-bold [&_h2]:text-gray-900 [&_h2]:mt-10 [&_h2]:mb-4 [&_h2]:pt-4 [&_h2]:border-t [&_h2]:border-gray-100 [&_h2]:scroll-mt-24
+                [&_h3]:text-xl [&_h3]:sm:text-2xl [&_h3]:font-bold [&_h3]:text-gray-900 [&_h3]:mt-8 [&_h3]:mb-3 [&_h3]:scroll-mt-24
+                [&_h4]:text-lg [&_h4]:font-semibold [&_h4]:text-gray-900 [&_h4]:mt-6 [&_h4]:mb-2
+                [&_p]:leading-relaxed [&_p]:mb-5 [&_p]:text-gray-700
                 [&_ul]:list-disc [&_ul]:pl-6 [&_ul]:my-4 [&_ul]:space-y-2
                 [&_ol]:list-decimal [&_ol]:pl-6 [&_ol]:my-4 [&_ol]:space-y-2
-                [&_li]:leading-relaxed [&_li]:text-gray-700 [&_li]:dark:text-gray-300
-                [&_blockquote]:border-l-4 [&_blockquote]:border-blue-600 [&_blockquote]:pl-4 [&_blockquote]:py-1 [&_blockquote]:my-6 [&_blockquote]:italic [&_blockquote]:bg-blue-50/50 [&_blockquote]:dark:bg-blue-950/20 [&_blockquote]:rounded-r-xl [&_blockquote]:text-gray-700 [&_blockquote]:dark:text-gray-300
-                [&_a]:text-blue-600 [&_a]:dark:text-blue-400 [&_a]:underline [&_a]:font-medium [&_a]:hover:text-blue-800 [&_a]:dark:hover:text-blue-300
+                [&_li]:leading-relaxed [&_li]:text-gray-700
+                [&_blockquote]:border-l-4 [&_blockquote]:border-blue-600 [&_blockquote]:pl-4 [&_blockquote]:py-1 [&_blockquote]:my-6 [&_blockquote]:italic [&_blockquote]:bg-blue-50/50 [&_blockquote]:rounded-r-xl [&_blockquote]:text-gray-700
+                [&_a]:text-blue-600 [&_a]:underline [&_a]:font-medium [&_a]:hover:text-blue-800
                 [&_img]:rounded-2xl [&_img]:shadow-md [&_img]:my-6 [&_img]:mx-auto [&_img]:max-w-full [&_img]:h-auto
                 [&_pre]:bg-gray-900 [&_pre]:text-gray-100 [&_pre]:p-4 [&_pre]:rounded-2xl [&_pre]:overflow-x-auto [&_pre]:my-6 [&_pre]:text-sm
-                [&_code]:bg-gray-100 [&_code]:dark:bg-gray-800 [&_code]:text-blue-600 [&_code]:dark:text-blue-300 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
-                [&_table]:w-full [&_table]:my-6 [&_table]:border-collapse [&_table]:border [&_table]:border-gray-200 [&_table]:dark:border-gray-700
-                [&_th]:bg-gray-100 [&_th]:dark:bg-gray-800 [&_th]:p-3 [&_th]:border [&_th]:border-gray-200 [&_th]:dark:border-gray-700 [&_th]:font-semibold [&_th]:text-left
-                [&_td]:p-3 [&_td]:border [&_td]:border-gray-200 [&_td]:dark:border-gray-700"
+                [&_code]:bg-gray-100 [&_code]:text-blue-600 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:rounded [&_code]:text-sm [&_code]:font-mono
+                [&_table]:w-full [&_table]:my-6 [&_table]:border-collapse [&_table]:border [&_table]:border-gray-200
+                [&_th]:bg-gray-100 [&_th]:p-3 [&_th]:border [&_th]:border-gray-200 [&_th]:font-semibold [&_th]:text-left
+                [&_td]:p-3 [&_td]:border [&_td]:border-gray-200"
               dangerouslySetInnerHTML={{ __html: processedContent }}
             />
 
             {/* Tags section */}
             {post.tags && post.tags.length > 0 && (
-              <div className="pt-6 border-t border-gray-200 dark:border-gray-800">
+              <div className="pt-6 border-t border-gray-200">
                 <div className="flex items-center gap-2 flex-wrap">
-                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 dark:text-gray-400 uppercase tracking-wider">
+                  <span className="inline-flex items-center gap-1.5 text-xs font-bold text-gray-500 uppercase tracking-wider">
                     <FaTag /> Tags:
                   </span>
                   {post.tags.map((tag, idx) => (
                     <Link
                       key={idx}
                       href={`/blog?q=${encodeURIComponent(tag)}`}
-                      className="px-3 py-1 bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-xs font-medium transition-colors"
+                      className="px-3 py-1 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg text-xs font-medium transition-colors"
                     >
                       #{tag}
                     </Link>
@@ -592,12 +592,12 @@ export default function BlogDetailClient({
             )}
 
             {/* Social Share Callout Box */}
-            <div className="p-6 rounded-3xl bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-gray-900 dark:to-blue-950/40 border border-blue-100 dark:border-blue-900/40 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div className="p-6 rounded-3xl bg-gradient-to-r from-blue-50 to-indigo-50 border border-blue-100 flex flex-col sm:flex-row items-center justify-between gap-4">
               <div className="text-center sm:text-left">
-                <h2 className="text-base font-bold text-gray-900 dark:text-white">
+                <h2 className="text-base font-bold text-gray-900">
                   Found this article helpful?
                 </h2>
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300">
+                <p className="text-xs sm:text-sm text-gray-600">
                   Share it with your colleagues and network to spread the knowledge.
                 </p>
               </div>
@@ -605,7 +605,7 @@ export default function BlogDetailClient({
                 <button
                   type="button"
                   onClick={handleCopyLink}
-                  className="px-3.5 py-2 bg-white dark:bg-gray-800 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-800 dark:text-gray-200 text-xs font-semibold rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm transition-colors flex items-center gap-1.5"
+                  className="px-3.5 py-2 bg-white hover:bg-gray-50 text-gray-800 text-xs font-semibold rounded-xl border border-gray-200 shadow-sm transition-colors flex items-center gap-1.5"
                 >
                   {copied ? (
                     <FaCheck className="text-emerald-500 text-xs" />
@@ -618,7 +618,7 @@ export default function BlogDetailClient({
                   href={`https://twitter.com/intent/tweet?text=${shareTitle}&url=${shareUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 hover:bg-sky-500 hover:text-white text-gray-700 dark:text-gray-200 flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm transition-colors"
+                  className="w-9 h-9 rounded-xl bg-white hover:bg-sky-500 hover:text-white text-gray-700 flex items-center justify-center border border-gray-200 shadow-sm transition-colors"
                   title="Share on X"
                 >
                   <FaTwitter />
@@ -627,7 +627,7 @@ export default function BlogDetailClient({
                   href={`https://www.linkedin.com/sharing/share-offsite/?url=${shareUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 hover:bg-blue-600 hover:text-white text-gray-700 dark:text-gray-200 flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm transition-colors"
+                  className="w-9 h-9 rounded-xl bg-white hover:bg-blue-600 hover:text-white text-gray-700 flex items-center justify-center border border-gray-200 shadow-sm transition-colors"
                   title="Share on LinkedIn"
                 >
                   <FaLinkedinIn />
@@ -636,7 +636,7 @@ export default function BlogDetailClient({
                   href={`https://api.whatsapp.com/send?text=${shareTitle}%20${shareUrl}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="w-9 h-9 rounded-xl bg-white dark:bg-gray-800 hover:bg-emerald-600 hover:text-white text-gray-700 dark:text-gray-200 flex items-center justify-center border border-gray-200 dark:border-gray-700 shadow-sm transition-colors"
+                  className="w-9 h-9 rounded-xl bg-white hover:bg-emerald-600 hover:text-white text-gray-700 flex items-center justify-center border border-gray-200 shadow-sm transition-colors"
                   title="Share on WhatsApp"
                 >
                   <FaWhatsapp />
@@ -645,27 +645,27 @@ export default function BlogDetailClient({
             </div>
 
             {/* Author Box */}
-            <div className="p-6 rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm flex items-start gap-4 sm:gap-6">
+            <div className="p-6 rounded-3xl bg-white border border-gray-200/80 shadow-sm flex items-start gap-4 sm:gap-6">
               <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 flex-shrink-0 flex items-center justify-center text-white text-xl sm:text-2xl font-bold shadow-md">
                 {authorName.charAt(0).toUpperCase()}
               </div>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
-                  <h2 className="text-base sm:text-lg font-bold text-gray-900 dark:text-white">
+                  <h2 className="text-base sm:text-lg font-bold text-gray-900">
                     Inxyme
                   </h2>
-                  <span className="px-2 py-0.5 bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 text-[10px] font-semibold rounded-md uppercase">
+                  <span className="px-2 py-0.5 bg-blue-100 text-blue-700 text-[10px] font-semibold rounded-md uppercase">
                     Author
                   </span>
                 </div>
-                <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed">
+                <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
                   {post.author?.bio ||
                     "Passionate educator and industry researcher at Inxyme, dedicated to bringing real-world insights, career trends, and skill advancement tips to modern professionals."}
                 </p>
                 <div className="pt-1">
                   <Link
                     href="/blog"
-                    className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+                    className="text-xs font-semibold text-blue-600 hover:underline inline-flex items-center gap-1"
                   >
                     <span>More from Inxyme</span>
                     <FaArrowRight className="text-[10px]" />
@@ -712,9 +712,9 @@ export default function BlogDetailClient({
             <div className="sticky top-28 space-y-8">
               {/* Table of Contents (if articles have H2/H3 headers) */}
               {tocList.length > 0 && (
-                <div className="p-6 rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm space-y-4">
-                  <div className="flex items-center gap-2 text-sm font-bold text-gray-900 dark:text-white">
-                    <FaListUl className="text-blue-600 dark:text-blue-400" />
+                <div className="p-6 rounded-3xl bg-white border border-gray-200/80 shadow-sm space-y-4">
+                  <div className="flex items-center gap-2 text-sm font-bold text-gray-900">
+                    <FaListUl className="text-blue-600" />
                     <span>Table of Contents</span>
                   </div>
                   <nav className="space-y-1.5 max-h-[340px] overflow-y-auto pr-2 text-xs">
@@ -734,8 +734,8 @@ export default function BlogDetailClient({
                         }}
                         className={`block py-1 transition-colors leading-snug ${item.level === 3 ? "pl-3 text-[11px]" : "font-medium"
                           } ${activeHeadingId === item.id
-                            ? "text-blue-600 dark:text-blue-400 font-bold"
-                            : "text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400"
+                            ? "text-blue-600 font-bold"
+                            : "text-gray-600 hover:text-blue-600"
                           }`}
                       >
                         {item.text}
@@ -769,8 +769,8 @@ export default function BlogDetailClient({
 
               {/* Sidebar More Articles */}
               {relatedPosts.length > 0 && (
-                <div className="p-6 rounded-3xl bg-white dark:bg-gray-900 border border-gray-200/80 dark:border-gray-800 shadow-sm space-y-4">
-                  <h2 className="text-sm font-bold text-gray-900 dark:text-white uppercase tracking-wider">
+                <div className="p-6 rounded-3xl bg-white border border-gray-200/80 shadow-sm space-y-4">
+                  <h2 className="text-sm font-bold text-gray-900 uppercase tracking-wider">
                     Recommended Reads
                   </h2>
                   <div className="space-y-4">
@@ -781,7 +781,7 @@ export default function BlogDetailClient({
                         className="group flex items-start gap-3"
                       >
                         {rel.featuredImage && (
-                          <div className="h-16 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100 dark:bg-gray-800">
+                          <div className="h-16 rounded-xl overflow-hidden flex-shrink-0 bg-gray-100">
                             <img
                               src={getImageUrl(rel.featuredImage)}
                               alt={rel.title}
@@ -790,10 +790,10 @@ export default function BlogDetailClient({
                           </div>
                         )}
                         <div className="space-y-1 min-w-0">
-                          <h4 className="text-xs font-semibold text-gray-800 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2 leading-snug">
+                          <h4 className="text-xs font-semibold text-gray-800 group-hover:text-blue-600 transition-colors line-clamp-2 leading-snug">
                             {rel.title}
                           </h4>
-                          <p className="text-[11px] text-gray-500 dark:text-gray-400">
+                          <p className="text-[11px] text-gray-500">
                             {formatDate(rel.createdAt)}
                           </p>
                         </div>
@@ -808,19 +808,19 @@ export default function BlogDetailClient({
 
         {/* ===== BOTTOM RELATED POSTS GRID ===== */}
         {relatedPosts.length > 0 && (
-          <section className="mt-20 pt-12 border-t border-gray-200 dark:border-gray-800">
+          <section className="mt-20 pt-12 border-t border-gray-200">
             <div className="flex items-center justify-between mb-8">
               <div>
-                <h2 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white">
+                <h2 className="text-2xl sm:text-3xl font-black text-gray-900">
                   Related Articles
                 </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400">
+                <p className="text-sm text-gray-600">
                   Expand your knowledge with curated articles in this field
                 </p>
               </div>
               <Link
                 href="/blog"
-                className="text-xs sm:text-sm font-bold text-blue-600 dark:text-blue-400 hover:underline inline-flex items-center gap-1"
+                className="text-xs sm:text-sm font-bold text-blue-600 hover:underline inline-flex items-center gap-1"
               >
                 <span>View All Articles</span>
                 <FaArrowRight className="text-xs" />
@@ -831,12 +831,12 @@ export default function BlogDetailClient({
               {relatedPosts.slice(0, 3).map((rel) => (
                 <article
                   key={rel._id}
-                  className="group bg-white dark:bg-gray-900 rounded-3xl border border-gray-200/80 dark:border-gray-800 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
+                  className="group bg-white rounded-3xl border border-gray-200/80 shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden flex flex-col"
                 >
                   {rel.featuredImage && (
                     <Link
                       href={`/blog/${rel.slug}`}
-                      className="relative block h-48 overflow-hidden bg-gray-100 dark:bg-gray-800"
+                      className="relative block h-48 overflow-hidden bg-gray-100"
                     >
                       <img
                         src={getImageUrl(rel.featuredImage)}
@@ -847,7 +847,7 @@ export default function BlogDetailClient({
                   )}
                   <div className="p-5 flex-1 flex flex-col justify-between space-y-4">
                     <div className="space-y-2">
-                      <div className="flex items-center gap-3 text-[11px] text-gray-500 dark:text-gray-400">
+                      <div className="flex items-center gap-3 text-[11px] text-gray-500">
                         <span className="flex items-center gap-1">
                           <FaCalendarAlt className="text-[10px]" />
                           {formatDate(rel.createdAt)}
@@ -858,11 +858,11 @@ export default function BlogDetailClient({
                           {rel.readingTime || 5} min read
                         </span>
                       </div>
-                      <h3 className="text-base font-bold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors line-clamp-2">
+                      <h3 className="text-base font-bold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
                         <Link href={`/blog/${rel.slug}`}>{rel.title}</Link>
                       </h3>
                       {rel.excerpt && (
-                        <p className="text-xs text-gray-600 dark:text-gray-300 line-clamp-2">
+                        <p className="text-xs text-gray-600 line-clamp-2">
                           {rel.excerpt}
                         </p>
                       )}
@@ -870,7 +870,7 @@ export default function BlogDetailClient({
                     <div className="pt-2">
                       <Link
                         href={`/blog/${rel.slug}`}
-                        className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 dark:text-blue-400 group-hover:translate-x-1 transition-transform"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-blue-600 group-hover:translate-x-1 transition-transform"
                       >
                         <span>Read Article</span>
                         <FaArrowRight className="text-[10px]" />
