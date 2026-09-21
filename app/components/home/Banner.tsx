@@ -53,10 +53,10 @@ const CertificateModal = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-center justify-center z-50 p-3"
+      className="fixed inset-0 bg-black/60 backdrop-blur-md flex items-start justify-center z-[70] p-4 pt-16 sm:pt-28 overflow-y-auto"
       onContextMenu={(e) => e.preventDefault()}
     >
-      <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border border-white/60 dark:border-slate-700/60 rounded-2xl max-w-[500px] w-full max-h-[500px] overflow-auto relative shadow-2xl">
+      <div className="bg-white/90 dark:bg-gray-900/90 backdrop-blur-2xl border border-white/60 dark:border-slate-700/60 rounded-2xl max-w-[500px] w-full max-h-[85vh] overflow-auto relative shadow-2xl mt-4 sm:mt-6">
         <button
           onClick={onClose}
           className="absolute top-3 right-3 w-8 h-8 rounded-full bg-slate-100/80 dark:bg-slate-800/80 backdrop-blur-sm flex items-center justify-center text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white z-20 transition-all"

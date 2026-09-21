@@ -176,25 +176,30 @@ export default function ContactFormModal({
   if (!isVisible) return null;
 
   return (
-    <div className="fixed inset-0 z-50">
-      <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div
-          className="fixed inset-0 transition-opacity bg-gray-500/75"
-          onClick={closeModal}
-          aria-hidden="true"
-        ></div>
+    <div className="fixed inset-0 z-[70] overflow-y-auto">
+      <div
+        className="fixed inset-0 transition-opacity bg-black/60 backdrop-blur-sm"
+        onClick={closeModal}
+        aria-hidden="true"
+      />
 
-        <div className="inline-block align-middle bg-white dark:bg-gray-800 rounded-lg text-left overflow-y-auto shadow-xl transform transition-all max-h-[90vh] sm:my-4 sm:align-middle sm:max-w-lg sm:w-full">
-          <div className="bg-white dark:bg-gray-800 px-4 py-4 sm:px-6">
-            <div className="flex justify-between items-center mb-2">
-              <h3 className="text-lg font-medium text-gray-900 dark:text-white">
+      <div className="flex min-h-screen items-start justify-center p-4 text-center pt-16 sm:pt-28 pb-16">
+        <div
+          className="relative inline-block w-full max-w-lg bg-white dark:bg-gray-800 rounded-2xl text-left overflow-hidden shadow-2xl border border-slate-200/80 dark:border-slate-700/80 transform transition-all mt-4 sm:mt-6"
+          onClick={(e) => e.stopPropagation()}
+        >
+          <div className="bg-white dark:bg-gray-800 px-5 py-5 sm:px-6 sm:py-6">
+            <div className="flex justify-between items-center mb-3">
+              <h3 className="text-lg font-bold text-gray-900 dark:text-white">
                 Request A Call Back
               </h3>
               <button
+                type="button"
                 onClick={closeModal}
-                className="text-gray-400 hover:text-gray-500 focus:outline-none"
+                className="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white flex items-center justify-center transition-all focus:outline-none"
+                title="Close modal"
               >
-                <FaTimes className="h-6 w-6" />
+                <FaTimes className="text-sm" />
               </button>
             </div>
 

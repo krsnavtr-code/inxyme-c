@@ -198,13 +198,13 @@ export default function BrochureSelectorModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50">
+    <div className="fixed inset-0 z-[70]">
       <div
         className="fixed inset-0 bg-black/60 backdrop-blur-sm"
         onClick={onClose}
       />
-      <div className="fixed inset-0 flex items-center justify-center p-2 sm:p-3">
-        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[90vh] overflow-y-auto border border-slate-200 dark:border-slate-800">
+      <div className="fixed inset-0 flex items-start justify-center p-4 pt-28 sm:pt-36 overflow-y-auto">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-y-auto border border-slate-200 dark:border-slate-800 mt-4 sm:mt-6">
           <div className="p-2 sm:p-4">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg sm:text-xl font-black text-gray-900 dark:text-white tracking-tight">
