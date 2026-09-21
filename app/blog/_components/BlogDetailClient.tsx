@@ -299,9 +299,9 @@ export default function BlogDetailClient({
             <div className="flex items-center gap-4 flex-wrap">
               {/* Author */}
               <div className="flex items-center gap-2.5">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
+                {/* <div className="w-9 h-9 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center text-white font-bold text-sm shadow-sm">
                   Inxyme
-                </div>
+                </div> */}
                 <div>
                   <p className="font-semibold text-gray-900 dark:text-white">
                     Inxyme
