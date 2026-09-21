@@ -48,7 +48,7 @@ function Navbar() {
   const pathname = usePathname();
   const { currentUser, isAuthenticated, isAdmin, logout } = useAuth();
   const logoImg =
-    "https://www.inxyme.com/api/upload/file/final-logo-png-6483.png";
+    "https://www.inxyme.com/api/upload/file/Inxyme-logo-1003.jpeg";
 
   // --- State ---
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

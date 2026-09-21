@@ -16,7 +16,7 @@ interface StandaloneNavbarProps {
 }
 
 const LOGO_URL =
-  "https://www.inxyme.com/api/upload/file/final-logo-png-6483.png";
+  "https://www.inxyme.com/api/upload/file/Inxyme-logo-1003.jpeg";
 
 // Self-contained navbar for standalone landing pages. Uses the main site's
 // logo but only scrolls to sections within the current page — it never
