@@ -82,14 +82,14 @@ export default function PaymentForm({
           : "",
       course: courseName || data.course || "",
       coursePrice: price
-        ? String(Number(price) * 1.18)
+        ? String(Number(price))
         : data.amount
-          ? String(Number(data.amount) * 1.18)
+          ? String(Number(data.amount))
           : "",
       paymentAmount: price
-        ? String(Number(price) * 1.18)
+        ? String(Number(price))
         : data.amount
-          ? String(Number(data.amount) * 1.18)
+          ? String(Number(data.amount))
           : "",
       terms: false,
     };
@@ -169,12 +169,9 @@ export default function PaymentForm({
   useEffect(() => {
     if (paymentType === "registration") {
       const fee = 2000;
-      const gst = Math.round(fee * 0.18);
-      setFormData((prev) => ({ ...prev, paymentAmount: String(fee + gst) }));
+      setFormData((prev) => ({ ...prev, paymentAmount: String(fee) }));
     } else if (paymentType === "full" && effectivePrice !== null && effectivePrice > 0) {
-      const base = Number(effectivePrice);
-      const gst = Math.round(base * 0.18);
-      const total = base + gst;
+      const total = Number(effectivePrice);
       if (discountApplied && currentUser?.discount) {
         const discount = Math.round(total * (currentUser.discount / 100));
         setFormData((prev) => ({
@@ -196,11 +193,9 @@ export default function PaymentForm({
 
     let newAmount = "";
     if (paymentType === "registration") {
-      newAmount = "2360";
+      newAmount = "2000";
     } else if (numericPrice > 0) {
-      const base = numericPrice;
-      const gst = Math.round(base * 0.18);
-      let total = base + gst;
+      let total = numericPrice;
       if (discountApplied && currentUser?.discount) {
         total -= Math.round(total * (currentUser.discount / 100));
       }
@@ -212,7 +207,7 @@ export default function PaymentForm({
     setFormData((prev) => ({
       ...prev,
       course: courseItem.title,
-      coursePrice: String(Math.round(numericPrice * 1.18)),
+      coursePrice: String(numericPrice),
       paymentAmount: newAmount,
     }));
   };
@@ -413,6 +408,26 @@ export default function PaymentForm({
     }
   };
 
+  const isFormValid = isCompanyRegistration
+    ? Boolean(
+        formData.name.trim() &&
+        formData.email.trim() &&
+        formData.countryCode.trim() &&
+        formData.phone.trim() &&
+        formData.terms,
+      )
+    : Boolean(
+        formData.name.trim() &&
+        formData.email.trim() &&
+        formData.countryCode.trim() &&
+        formData.phone.trim() &&
+        formData.course.trim() &&
+        formData.paymentAmount &&
+        !isNaN(Number(formData.paymentAmount)) &&
+        Number(formData.paymentAmount) > 0 &&
+        formData.terms,
+      );
+
   return createPortal(
     <div className="z-[99999] fixed inset-0 bg-black/50 flex items-center justify-center p-2 md:p-4">
       <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl w-full max-w-md max-h-[92vh] overflow-y-auto">
@@ -445,9 +460,9 @@ export default function PaymentForm({
             </button>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-1.5 text-black">
             <div>
-              <label className="block text-sm font-medium text-gray-900 dark:text-white">
+              <label className="block text-sm font-medium">
                 Full Name
               </label>
               <input
@@ -455,7 +470,7 @@ export default function PaymentForm({
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
+                className="w-full px-3 py-1 border rounded-md "
                 required
               />
             </div>
@@ -469,7 +484,7 @@ export default function PaymentForm({
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
+                className="w-full px-3 py-1 border rounded-md dark:bg-gray-700 dark:text-white"
                 required
               />
             </div>
@@ -498,7 +513,7 @@ export default function PaymentForm({
                   pattern="[0-9]{10}"
                   inputMode="numeric"
                   maxLength={15}
-                  className="flex-1 min-w-0 block w-full px-3 py-2 rounded-r-md border border-l-0 dark:bg-gray-700 dark:text-white"
+                  className="flex-1 min-w-0 block w-full px-3 py-1 rounded-r-md border border-l-0 dark:bg-gray-700 dark:text-white"
                   required
                 />
               </div>
@@ -518,7 +533,7 @@ export default function PaymentForm({
                     name="course"
                     value={formData.course}
                     readOnly
-                    className="w-full px-3 py-2 border rounded-md bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white cursor-not-allowed"
+                    className="w-full px-3 py-1 border rounded-md bg-gray-100 dark:bg-gray-700 text-gray-900 dark:text-white cursor-not-allowed"
                   />
                 </div>
 
@@ -541,7 +556,7 @@ export default function PaymentForm({
                         className="text-indigo-600 focus:ring-indigo-500"
                       />
                       <span className="text-sm text-gray-900 dark:text-white">
-                        Registration Fee (₹2,000 + GST)
+                        Registration Fee (₹2,000 - Incl. GST)
                       </span>
                     </label>
                     <label className="flex items-center space-x-2 cursor-pointer">
@@ -559,7 +574,7 @@ export default function PaymentForm({
                       />
                       <span className="text-sm text-gray-900 dark:text-white">
                         Full Payment (₹
-                        {price ? Number(price).toLocaleString() : 0} + GST)
+                        {price ? Number(price).toLocaleString() : 0} - Incl. GST)
                       </span>
                     </label>
                   </div>
@@ -579,7 +594,7 @@ export default function PaymentForm({
                     onFocus={() => setIsDropdownOpen(true)}
                     placeholder="Search or select a program..."
                     autoComplete="off"
-                    className="w-full px-3 py-2 pl-9 pr-14 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition-all"
+                    className="w-full px-3 py-1 pl-9 pr-14 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none text-sm transition-all"
                     required
                   />
                   <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
@@ -672,7 +687,7 @@ export default function PaymentForm({
                           className="text-indigo-600 focus:ring-indigo-500"
                         />
                         <span className="text-sm text-gray-900 dark:text-white">
-                          Registration Fee (₹2,000 + GST)
+                          Registration Fee (₹2,000 - Incl. GST)
                         </span>
                       </label>
                       <label className="flex items-center space-x-2 cursor-pointer">
@@ -690,7 +705,7 @@ export default function PaymentForm({
                         />
                         <span className="text-sm text-gray-900 dark:text-white">
                           Full Payment (₹
-                          {Number(effectivePrice).toLocaleString()} + GST)
+                          {Number(effectivePrice).toLocaleString()} - Incl. GST)
                         </span>
                       </label>
                     </div>
@@ -710,7 +725,7 @@ export default function PaymentForm({
                 onChange={handleChange}
                 min="0"
                 step="0.01"
-                className="w-full px-3 py-2 border rounded-md dark:bg-gray-700 dark:text-white"
+                className="w-full px-3 py-1 border rounded-md dark:bg-gray-700 dark:text-white"
                 required
               />
               {(courseName || (effectivePrice !== null && effectivePrice > 0)) && (
@@ -721,31 +736,26 @@ export default function PaymentForm({
                         <span>Registration Fee:</span>
                         <span>₹2,000</span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between text-gray-500 dark:text-gray-400">
                         <span>GST (18%):</span>
-                        <span>₹360</span>
+                        <span>Included in price</span>
                       </div>
                       <div className="flex justify-between font-semibold border-t pt-1">
                         <span>Total:</span>
-                        <span>₹2,360</span>
+                        <span>₹2,000</span>
                       </div>
                     </div>
                   ) : (
                     <div className="space-y-1">
                       <div className="flex justify-between">
-                        <span>Base Price:</span>
+                        <span>Course Price:</span>
                         <span>
                           ₹{effectivePrice ? Number(effectivePrice).toLocaleString() : 0}
                         </span>
                       </div>
-                      <div className="flex justify-between">
+                      <div className="flex justify-between text-gray-500 dark:text-gray-400">
                         <span>GST (18%):</span>
-                        <span>
-                          ₹
-                          {effectivePrice
-                            ? Math.round(Number(effectivePrice) * 0.18).toLocaleString()
-                            : 0}
-                        </span>
+                        <span>Included in price</span>
                       </div>
                       {discountApplied && currentUser?.discount ? (
                         <div className="flex justify-between text-green-600">
@@ -754,7 +764,6 @@ export default function PaymentForm({
                             -₹
                             {Math.round(
                               Number(effectivePrice || 0) *
-                                1.18 *
                                 (currentUser.discount / 100),
                             ).toLocaleString()}
                           </span>
@@ -794,28 +803,27 @@ export default function PaymentForm({
             </div>
 
             {paymentType === "full" &&
-              currentUser?.discount &&
-              currentUser.discount > 0 && (
-                <div className="text-center">
-                  {!discountApplied ? (
-                    <button
-                      type="button"
-                      onClick={() => setDiscountApplied(true)}
-                      className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700"
-                    >
-                      Apply Discount ({currentUser.discount}%)
-                    </button>
-                  ) : (
-                    <button
-                      type="button"
-                      onClick={() => setDiscountApplied(false)}
-                      className="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
-                    >
-                      Remove Discount
-                    </button>
-                  )}
-                </div>
-              )}
+            (currentUser?.discount ?? 0) > 0 ? (
+              <div className="text-center">
+                {!discountApplied ? (
+                  <button
+                    type="button"
+                    onClick={() => setDiscountApplied(true)}
+                    className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700"
+                  >
+                    Apply Discount ({currentUser?.discount}%)
+                  </button>
+                ) : (
+                  <button
+                    type="button"
+                    onClick={() => setDiscountApplied(false)}
+                    className="px-3 py-1 bg-red-600 text-white text-xs rounded hover:bg-red-700"
+                  >
+                    Remove Discount
+                  </button>
+                )}
+              </div>
+            ) : null}
 
             <div className="flex justify-end space-x-3 pt-2">
               <button
@@ -828,8 +836,12 @@ export default function PaymentForm({
               </button>
               <button
                 type="submit"
-                disabled={isSubmitting || !isRazorpayLoaded}
-                className="py-1 px-3 border border-transparent rounded-md text-white bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50"
+                disabled={!isFormValid || isSubmitting || !isRazorpayLoaded}
+                className={`py-1 px-3 border border-transparent rounded-md text-white font-medium transition-colors ${
+                  !isFormValid || isSubmitting || !isRazorpayLoaded
+                    ? "bg-gray-400 dark:bg-gray-600 cursor-not-allowed text-gray-200"
+                    : "bg-indigo-600 hover:bg-indigo-700 cursor-pointer"
+                }`}
               >
                 {isSubmitting ? "Processing..." : "Continue to Payment"}
               </button>
