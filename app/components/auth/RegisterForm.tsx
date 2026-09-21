@@ -7,6 +7,7 @@ import api from "../../utils/api";
 
 interface RegisterFormProps {
   onSuccess?: (data: any) => void;
+  redirect?: string;
 }
 
 interface RegisterData {
@@ -19,7 +20,7 @@ interface RegisterData {
   department: string;
 }
 
-export default function RegisterForm({ onSuccess }: RegisterFormProps) {
+export default function RegisterForm({ onSuccess, redirect }: RegisterFormProps) {
   const router = useRouter();
   const [formData, setFormData] = useState<RegisterData>({
     fullname: "",
@@ -432,7 +433,18 @@ export default function RegisterForm({ onSuccess }: RegisterFormProps) {
         <span className="text-black">Already have an account? </span>
         <button
           type="button"
-          onClick={() => router.push("/login")}
+          onClick={() => {
+            const dest =
+              redirect ||
+              (typeof window !== "undefined"
+                ? sessionStorage.getItem("payment_redirect")
+                : null);
+            if (dest && dest !== "/") {
+              router.push(`/login?redirect=${encodeURIComponent(dest)}`);
+            } else {
+              router.push("/login");
+            }
+          }}
           className="font-medium text-blue-600 hover:text-blue-500"
         >
           Sign in

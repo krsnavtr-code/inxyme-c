@@ -1,15 +1,37 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import SEO from "../components/SEO";
 import RegisterForm from "../components/auth/RegisterForm";
 
-export default function RegisterPage() {
+function RegisterContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const queryRedirect = searchParams?.get("redirect");
+  const [targetRedirect, setTargetRedirect] = useState<string>("");
+
+  useEffect(() => {
+    if (queryRedirect) {
+      setTargetRedirect(queryRedirect);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("payment_redirect", queryRedirect);
+      }
+    } else if (typeof window !== "undefined") {
+      const saved = sessionStorage.getItem("payment_redirect");
+      if (saved) {
+        setTargetRedirect(saved);
+      }
+    }
+  }, [queryRedirect]);
 
   const handleSuccess = () => {
-    router.push("/login?message=Registration successful! Log in now.");
+    const dest = targetRedirect || queryRedirect || "";
+    const loginUrl = `/login?message=${encodeURIComponent(
+      "Registration successful! Log in now.",
+    )}${dest ? `&redirect=${encodeURIComponent(dest)}` : ""}`;
+    router.push(loginUrl);
   };
 
   return (
@@ -40,10 +62,27 @@ export default function RegisterPage() {
             </p>
           </div>
           <div className="p-8 flex flex-col justify-center">
-            <RegisterForm onSuccess={handleSuccess} />
+            <RegisterForm
+              onSuccess={handleSuccess}
+              redirect={targetRedirect || queryRedirect || ""}
+            />
           </div>
         </div>
       </div>
     </>
+  );
+}
+
+export default function RegisterPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-orange-500 to-blue-500 p-4 text-white">
+          Loading...
+        </div>
+      }
+    >
+      <RegisterContent />
+    </Suspense>
   );
 }

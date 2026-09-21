@@ -26,9 +26,24 @@ function LoginContent() {
   const [otp, setOtp] = useState("");
   const [isVerifyingOTP, setIsVerifyingOTP] = useState(false);
 
-  const redirect = searchParams?.get("redirect") || "/";
+  const queryRedirect = searchParams?.get("redirect");
+  const [targetRedirect, setTargetRedirect] = useState<string>("/");
   const error = searchParams?.get("error");
   const messageParam = searchParams?.get("message");
+
+  useEffect(() => {
+    if (queryRedirect) {
+      setTargetRedirect(queryRedirect);
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("payment_redirect", queryRedirect);
+      }
+    } else if (typeof window !== "undefined") {
+      const saved = sessionStorage.getItem("payment_redirect");
+      if (saved) {
+        setTargetRedirect(saved);
+      }
+    }
+  }, [queryRedirect]);
 
   useEffect(() => {
     if (error === "not_approved") {
@@ -46,9 +61,13 @@ function LoginContent() {
 
   useEffect(() => {
     if (isAuthenticated) {
-      router.replace(redirect);
+      const dest =
+        targetRedirect && targetRedirect !== "/"
+          ? targetRedirect
+          : queryRedirect || "/";
+      router.replace(dest);
     }
-  }, [isAuthenticated, redirect, router]);
+  }, [isAuthenticated, targetRedirect, queryRedirect, router]);
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -78,8 +97,12 @@ function LoginContent() {
         return;
       }
       if (result?.success && result?.user) {
+        const dest =
+          targetRedirect && targetRedirect !== "/"
+            ? targetRedirect
+            : queryRedirect || "/";
         const redirectTo =
-          result.user.role === "admin" ? "/admin/dashboard" : redirect;
+          result.user.role === "admin" ? "/admin/dashboard" : dest;
         toast.success("Login successful!");
         router.replace(redirectTo);
       }
@@ -235,7 +258,18 @@ function LoginContent() {
             </form>
             <p className="mt-4 text-center text-sm text-gray-600">
               Don&apos;t have an account?{" "}
-              <Link href="/register" className="text-blue-500 hover:underline">
+              <Link
+                href={
+                  (targetRedirect && targetRedirect !== "/") || queryRedirect
+                    ? `/register?redirect=${encodeURIComponent(
+                        (targetRedirect && targetRedirect !== "/"
+                          ? targetRedirect
+                          : queryRedirect) || "",
+                      )}`
+                    : "/register"
+                }
+                className="text-blue-500 hover:underline"
+              >
                 Sign up
               </Link>
             </p>

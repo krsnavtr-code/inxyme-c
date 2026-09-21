@@ -21,6 +21,7 @@ import { debounce } from "lodash";
 import api from "../utils/api";
 import CourseMenu from "./CourseMenu";
 import { useAuth } from "../context/AuthContext";
+import PaymentForm from "./PaymentForm";
 
 // TypeScript interfaces
 interface NavLink {
@@ -54,6 +55,7 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [showPaymentDropdown, setShowPaymentDropdown] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
 
   // Search
   const [searchQuery, setSearchQuery] = useState("");
@@ -74,6 +76,58 @@ function Navbar() {
   const paymentDropdownRef = useRef<HTMLDivElement>(null);
   const mobileProfileMenuRef = useRef<HTMLDivElement>(null);
   const mobilePaymentDropdownRef = useRef<HTMLDivElement>(null);
+
+  // --- Handlers & Auth Flow for Payment ---
+  const handlePayRazorpay = () => {
+    setShowPaymentDropdown(false);
+    setIsMobileMenuOpen(false);
+
+    if (isAuthenticated) {
+      setShowPaymentModal(true);
+    } else {
+      const currentPath =
+        typeof window !== "undefined"
+          ? window.location.pathname + window.location.search
+          : pathname || "/";
+      const separator = currentPath.includes("?") ? "&" : "?";
+      const returnUrl = `${currentPath}${separator}openPayment=true`;
+
+      if (typeof window !== "undefined") {
+        sessionStorage.setItem("payment_redirect", returnUrl);
+      }
+
+      router.push(`/login?redirect=${encodeURIComponent(returnUrl)}`);
+    }
+  };
+
+  // Auto-open payment modal when returning after login with payment reference
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const checkPaymentRedirect = () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const hasOpenPaymentParam = urlParams.get("openPayment") === "true";
+      const savedRedirect = sessionStorage.getItem("payment_redirect");
+      const hasSavedRedirect =
+        savedRedirect && savedRedirect.includes("openPayment=true");
+
+      if (isAuthenticated && (hasOpenPaymentParam || hasSavedRedirect)) {
+        setShowPaymentModal(true);
+        sessionStorage.removeItem("payment_redirect");
+
+        if (hasOpenPaymentParam) {
+          urlParams.delete("openPayment");
+          const remainingQuery = urlParams.toString();
+          const cleanUrl =
+            window.location.pathname +
+            (remainingQuery ? `?${remainingQuery}` : "");
+          window.history.replaceState({}, "", cleanUrl);
+        }
+      }
+    };
+
+    checkPaymentRedirect();
+  }, [isAuthenticated, pathname]);
 
   // --- Effects ---
   useEffect(() => {
@@ -335,10 +389,17 @@ function Navbar() {
               </button>
               {showPaymentDropdown && (
                 <div className="absolute right-0 top-6 w-80 bg-white text-gray-800 rounded shadow-xl border border-gray-100 z-50">
-                  <button className="text-left px-3 py-2 bg-blue-200 rounded m-4 text-lg hover:bg-blue-50 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={handlePayRazorpay}
+                    className="w-[calc(100%-2rem)] text-left px-3 py-2.5 bg-blue-100 hover:bg-blue-200 text-gray-900 rounded-lg m-4 text-base font-bold transition-all flex items-center justify-between border border-blue-200 shadow-xs cursor-pointer active:scale-[0.98]"
+                  >
                     <span>
                       Pay Using{" "}
                       <span className="text-orange-600">RazorPay</span>
+                    </span>
+                    <span className="text-xs bg-blue-600 text-white px-2 py-0.5 rounded font-medium">
+                      Instant
                     </span>
                   </button>
 
@@ -503,10 +564,17 @@ function Navbar() {
               </button>
               {showPaymentDropdown && (
                 <div className="absolute right-[-20px] top-6 w-64 bg-white text-gray-800 rounded shadow-xl border border-gray-100 z-50">
-                  <button className="text-left px-3 py-2 bg-blue-200 rounded m-4 text-lg hover:bg-blue-50 flex items-center justify-between">
+                  <button
+                    type="button"
+                    onClick={handlePayRazorpay}
+                    className="w-[calc(100%-1.5rem)] text-left px-3 py-2 bg-blue-100 hover:bg-blue-200 text-gray-900 rounded-lg m-3 text-sm font-bold transition-all flex items-center justify-between border border-blue-200 shadow-xs cursor-pointer active:scale-[0.98]"
+                  >
                     <span>
                       Pay Using{" "}
                       <span className="text-orange-600">RazorPay</span>
+                    </span>
+                    <span className="text-[10px] bg-blue-600 text-white px-1.5 py-0.5 rounded font-medium">
+                      Instant
                     </span>
                   </button>
 
@@ -964,7 +1032,11 @@ function Navbar() {
 
             {showPaymentDropdown && (
               <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
-                <button className="w-full text-left px-2 py-2 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+                <button
+                  type="button"
+                  onClick={handlePayRazorpay}
+                  className="w-full text-left px-2 py-2 bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between cursor-pointer"
+                >
                   <span className="font-medium text-gray-800 dark:text-gray-200">
                     Pay Using <span className="text-orange-600">RazorPay</span>
                   </span>
@@ -1111,6 +1183,10 @@ function Navbar() {
           </div>
         </div>
       </div>
+
+      {showPaymentModal && (
+        <PaymentForm onClose={() => setShowPaymentModal(false)} />
+      )}
     </div>
   );
 }
