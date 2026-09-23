@@ -26,7 +26,7 @@ import BrochureSelectorModal from "../common/BrochureSelectorModal";
 
 const bannerImg =
   "https://www.inxyme.com/api/upload/file/Home-Page-Image-9212.png";
-const logoImg = "https://www.inxyme.com/api/upload/file/inxyme-certificate-6109.jpeg";
+const logoImg = "https://www.inxyme.com/api/upload/file/Inxyme-certificate-0803.png";
 
 interface Course {
   _id: string;
@@ -85,7 +85,7 @@ const CertificateModal = ({
               className="certificate-image-container"
               style={{
                 backgroundImage:
-                  "url('https://www.inxyme.com/api/upload/file/inxyme-certificate-6109.jpeg')",
+                  "url('https://www.inxyme.com/api/upload/file/Inxyme-certificate-0803.png')",
                 backgroundSize: "contain",
                 backgroundRepeat: "no-repeat",
                 backgroundPosition: "center",

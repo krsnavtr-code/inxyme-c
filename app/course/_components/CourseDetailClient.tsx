@@ -399,7 +399,7 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   className="certificate-image-container"
                   style={{
                     backgroundImage:
-                      "url('http://www.inxyme.com/api/upload/file/inxyme-certificate-4563.png')",
+                      "url('https://www.inxyme.com/api/upload/file/Inxyme-certificate-0803.png')",
                     backgroundSize: "contain",
                     backgroundRepeat: "no-repeat",
                     backgroundPosition: "center",
