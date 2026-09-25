@@ -37,7 +37,7 @@ const Newsletter = () => {
                 Apply for Admission
               </button>
               <a
-                href="https://wa.me/919891030303?text=Hi%2C%20I%20would%20like%20to%20talk%20to%20an%20expert%20about%20career%20guidance%20and%20course%20recommendations."
+                href="https://wa.me/919990999561?text=Hi%2C%20I%20would%20like%20to%20talk%20to%20an%20expert%20about%20career%20guidance%20and%20course%20recommendations."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md text-slate-900 dark:text-white border border-slate-200 dark:border-gray-700 px-6 py-3 rounded-xl font-bold text-xs sm:text-sm hover:bg-slate-100 dark:hover:bg-gray-700 transition-all active:scale-98 text-center shadow-xs"

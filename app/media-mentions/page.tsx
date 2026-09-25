@@ -335,7 +335,7 @@ export default function MediaMentionsPage() {
                   press@inxyme.com
                 </p>
                 <p className="text-gray-300">
-                  <span className="font-semibold">Phone:</span> +91 98910 30303
+                  <span className="font-semibold">Phone:</span> +91 99909 99561
                 </p>
               </div>
             </div>

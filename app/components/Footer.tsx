@@ -163,7 +163,7 @@ function Footer() {
               {[
                 {
                   icon: FaWhatsapp,
-                  href: "https://wa.me/919891030303?text=Hi%2C%20I%20am%20interested%20in%20learning%20more%20about%20your%20courses.",
+                  href: "https://wa.me/919990999561?text=Hi%2C%20I%20am%20interested%20in%20learning%20more%20about%20your%20courses.",
                 },
                 { icon: FaTwitter, href: "https://x.com/inxyme" },
                 {
@@ -268,10 +268,10 @@ function Footer() {
               <li className="flex items-center gap-2.5">
                 <FaPhone className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
                 <a
-                  href="tel:+919891030303"
+                  href="tel:+919990999561"
                   className="hover:text-blue-600 dark:hover:text-blue-400"
                 >
-                  +91 9891030303
+                  +91 9990999561
                 </a>
               </li>
               <li className="flex items-center gap-2.5">

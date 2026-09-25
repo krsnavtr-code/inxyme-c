@@ -5,7 +5,7 @@ import { FaCommentDots, FaTimes, FaWhatsapp, FaPhone } from "react-icons/fa";
 
 interface StandaloneFloatingContactProps {
   whatsappUrl: string;
-  phoneNumber: string; // e.g. "+919891030303"
+  phoneNumber: string; // e.g. "+919990999561"
 }
 
 // Floating "Talk" button for standalone landing pages. Expands to show

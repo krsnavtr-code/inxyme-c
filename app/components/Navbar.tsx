@@ -293,7 +293,7 @@ function Navbar() {
           {/* Left Side: Contact / Info */}
           <div className="hidden md:inline-flex items-center gap-4">
             {/* <a
-              href="tel:+919891030303"
+              href="tel:+919990999561"
               className="flex items-center gap-1 hover:text-blue-900 dark:hover:text-orange-300 transition-colors"
             >
               <FaPhoneAlt size={10} /> Call
@@ -315,7 +315,7 @@ function Navbar() {
               <FaEnvelope size={10} />
             </a>
             <a
-              href="tel:+919891030303"
+              href="tel:+919990999561"
               className="flex items-center gap-1 hover:text-blue-900 dark:hover:text-orange-300 transition-colors"
             >
               <FaPhoneAlt size={10} />

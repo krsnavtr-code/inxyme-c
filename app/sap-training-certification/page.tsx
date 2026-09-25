@@ -45,7 +45,7 @@ import StandaloneLeadModal from "../components/standalone/StandaloneLeadModal";
 import StandaloneFloatingContact from "../components/standalone/StandaloneFloatingContact";
 
 const WHATSAPP_URL =
-  "https://wa.me/919891030303?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20SAP%20training%20and%20certification%20courses.";
+  "https://wa.me/919990999561?text=Hi%2C%20I%20would%20like%20to%20know%20more%20about%20SAP%20training%20and%20certification%20courses.";
 
 export const metadata: Metadata = {
   title: "SAP Training & Certification Courses Online in India | Inxyme",
@@ -917,8 +917,8 @@ export default function SapTrainingCertification() {
                   </li>
                   <li className="flex items-center gap-2.5">
                     <FaPhone className="h-3.5 w-3.5 text-emerald-500 shrink-0" />
-                    <a href="tel:+919891030303" className="hover:text-blue-400">
-                      +91 9891030303
+                    <a href="tel:+919990999561" className="hover:text-blue-400">
+                      +91 9990999561
                     </a>
                   </li>
                   <li className="flex items-center gap-2.5">
@@ -950,7 +950,7 @@ export default function SapTrainingCertification() {
         {/* Floating talk button (WhatsApp / Call) */}
         <StandaloneFloatingContact
           whatsappUrl={WHATSAPP_URL}
-          phoneNumber="+919891030303"
+          phoneNumber="+919990999561"
         />
       </div>
     </main>

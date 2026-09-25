@@ -163,10 +163,10 @@ export default function Contact() {
                 <li className="flex items-center gap-3">
                   <FaPhone className="text-emerald-500" />
                   <a
-                    href="tel:+919891030303"
+                    href="tel:+919990999561"
                     className="hover:text-blue-600 dark:hover:text-blue-400"
                   >
-                    +91 9891030303
+                    +91 9990999561
                   </a>
                 </li>
                 <li className="flex items-center gap-3">
@@ -188,7 +188,7 @@ export default function Contact() {
                 right course or admission.
               </p>
               <a
-                href="https://wa.me/919891030303?text=Hi%2C%20I%20would%20like%20to%20talk%20to%20an%20expert%20about%20career%20guidance%20and%20course%20recommendations."
+                href="https://wa.me/919990999561?text=Hi%2C%20I%20would%20like%20to%20talk%20to%20an%20expert%20about%20career%20guidance%20and%20course%20recommendations."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-block bg-white text-blue-600 font-semibold py-2 px-4 rounded-lg hover:bg-blue-50 transition"

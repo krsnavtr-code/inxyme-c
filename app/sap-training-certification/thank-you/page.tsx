@@ -9,7 +9,7 @@ import {
 } from "react-icons/fa";
 
 const WHATSAPP_URL =
-  "https://wa.me/919891030303?text=Hi%2C%20I%20just%20submitted%20the%20SAP%20enquiry%20form%20and%20would%20like%20to%20know%20more.";
+  "https://wa.me/919990999561?text=Hi%2C%20I%20just%20submitted%20the%20SAP%20enquiry%20form%20and%20would%20like%20to%20know%20more.";
 
 export const metadata: Metadata = {
   title: "Thank You | SAP Training & Certification - Inxyme",
@@ -60,10 +60,10 @@ export default function SapThankYou() {
               <FaWhatsapp className="text-base" /> Chat on WhatsApp Now
             </a>
             <a
-              href="tel:+919891030303"
+              href="tel:+919990999561"
               className="w-full inline-flex items-center justify-center gap-2 bg-white/5 border border-white/20 text-white px-6 py-3.5 rounded-xl font-bold text-sm hover:bg-white/10 transition-all"
             >
-              <FaPhone className="text-sm" /> Call +91 98910 30303
+              <FaPhone className="text-sm" /> Call +91 99909 99561
             </a>
             <Link
               href="/sap-training-certification"
