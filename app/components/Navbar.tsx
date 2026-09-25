@@ -49,7 +49,7 @@ function Navbar() {
   const pathname = usePathname();
   const { currentUser, isAuthenticated, isAdmin, logout } = useAuth();
   const logoImg =
-    "https://www.inxyme.com/api/upload/file/Inxyme-capital-logo-png-9402.png";
+    "https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png";
 
   // --- State ---
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -713,7 +713,7 @@ function Navbar() {
                   <img
                     src={logoImg}
                     alt="inxyme – Your Online Learning Partner"
-                    className="h-[68px] rounded"
+                    className="h-[46px]"
                   />
                 </Link>
               </div>

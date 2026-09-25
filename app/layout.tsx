@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     icon: {
       rel: "icon",
       type: "image/png",
-      url: "/images/only-final-logo-png.jpg",
+      url: "https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png",
     },
   },
   verification: {
