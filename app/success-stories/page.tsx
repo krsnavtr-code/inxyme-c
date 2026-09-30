@@ -321,60 +321,60 @@ export default function TestimonialsPage() {
         robots="index, follow"
       />
 
-      {/* --- CORPORATE HERO HEADER --- */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-slate-950 to-indigo-950 text-white py-8 sm:py-10 px-4 sm:px-6 lg:px-8 border-b border-blue-900/30">
-        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:18px_18px]"></div>
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
+      {/* --- CORPORATE HERO HEADER --- */} 
+      <section className="relative overflow-hidden bg-white dark:bg-gray-900 text-slate-900 dark:text-white py-8 sm:py-10 px-4 sm:px-6 lg:px-8 border-b border-slate-200/90 dark:border-slate-800">
+        <div className="absolute inset-0 opacity-40 dark:opacity-10 pointer-events-none bg-[radial-gradient(#e2e8f0_1px,transparent_1px)] dark:bg-[radial-gradient(#334155_1px,transparent_1px)] [background-size:18px_18px]"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-100/60 dark:bg-blue-600/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-100/60 dark:bg-indigo-600/10 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative max-w-7xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/15 backdrop-blur-md border border-blue-400/30 text-blue-200 text-xs sm:text-sm font-semibold tracking-wide">
-            <FaStar className="text-amber-400 text-xs" />
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-50 dark:bg-blue-950/60 border border-blue-200 dark:border-blue-800/80 text-blue-700 dark:text-blue-300 text-xs sm:text-sm font-bold tracking-wide shadow-2xs">
+            <FaStar className="text-amber-500 text-xs" />
             <span>4.9 / 5 Rating from 4,500+ Verified Alumni</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tight text-white leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tight text-slate-950 dark:text-white leading-tight">
             Alumni &amp; Learner{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-sky-200 to-indigo-300">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-indigo-600 to-sky-600 dark:from-blue-400 dark:via-sky-300 dark:to-indigo-300">
               Success Stories
             </span>
           </h1>
 
-          <p className="max-w-3xl mx-auto text-xs sm:text-sm md:text-base text-blue-100/90 font-medium leading-relaxed">
+          <p className="max-w-3xl mx-auto text-xs sm:text-sm md:text-base text-slate-600 dark:text-slate-300 font-medium leading-relaxed">
             Real career journeys from engineers, domain experts, and career-switchers who acquired industry-ready mastery and stepped into high-impact corporate roles.
           </p>
 
           {/* Key Metrics Counters */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-2">
-            <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center">
-              <div className="text-xl sm:text-2xl font-black text-amber-300">
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-2xl p-3 border border-slate-200/80 dark:border-slate-700/80 text-center shadow-xs">
+              <div className="text-xl sm:text-2xl font-black text-amber-500 dark:text-amber-400">
                 4.9 ★
               </div>
-              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5 font-medium">
+              <div className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 mt-0.5 font-semibold">
                 Average Rating
               </div>
             </div>
-            <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center">
-              <div className="text-xl sm:text-2xl font-black text-emerald-300">
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-2xl p-3 border border-slate-200/80 dark:border-slate-700/80 text-center shadow-xs">
+              <div className="text-xl sm:text-2xl font-black text-emerald-600 dark:text-emerald-400">
                 98%
               </div>
-              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5 font-medium">
+              <div className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 mt-0.5 font-semibold">
                 Placement Track Record
               </div>
             </div>
-            <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center">
-              <div className="text-xl sm:text-2xl font-black text-sky-300">
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-2xl p-3 border border-slate-200/80 dark:border-slate-700/80 text-center shadow-xs">
+              <div className="text-xl sm:text-2xl font-black text-blue-600 dark:text-blue-400">
                 120%
               </div>
-              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5 font-medium">
+              <div className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 mt-0.5 font-semibold">
                 Avg. Salary Hike
               </div>
             </div>
-            <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center">
-              <div className="text-xl sm:text-2xl font-black text-indigo-300">
+            <div className="bg-slate-50 dark:bg-slate-800/70 rounded-2xl p-3 border border-slate-200/80 dark:border-slate-700/80 text-center shadow-xs">
+              <div className="text-xl sm:text-2xl font-black text-indigo-600 dark:text-indigo-400">
                 500+
               </div>
-              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5 font-medium">
+              <div className="text-[11px] sm:text-xs text-slate-600 dark:text-slate-400 mt-0.5 font-semibold">
                 Hiring Partners
               </div>
             </div>
