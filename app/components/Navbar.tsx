@@ -264,6 +264,7 @@ function Navbar() {
     {
       label: "Achievements",
       children: [
+        { to: "/why-inxyme", label: "Why Inxyme (Student Benefits)" },
         { to: "/awards-recognition", label: "Awards & Recognitions" },
         { to: "/news-events", label: "News & Events" },
         { to: "/success-stories", label: "Success Stories" },

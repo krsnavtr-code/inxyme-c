@@ -208,6 +208,7 @@ function Footer() {
             <ul className="space-y-2">
               {[
                 { name: "Browse Courses", to: "/courses" },
+                { name: "Why Inxyme (Student Benefits)", to: "/why-inxyme" },
                 { name: "Categories", to: "/categories" },
                 { name: "Free Course", to: "/free-courses" },
                 { name: "About Us", to: "/about" },

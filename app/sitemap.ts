@@ -16,6 +16,7 @@ const staticPaths = [
   { path: "/categories", priority: 0.7 },
   { path: "/blog", priority: 0.9 },
   { path: "/faq", priority: 0.7 },
+  { path: "/why-inxyme", priority: 0.85 },
   { path: "/success-stories", priority: 0.7 },
   { path: "/awards-recognition", priority: 0.7 },
   { path: "/media-mentions", priority: 0.7 },
