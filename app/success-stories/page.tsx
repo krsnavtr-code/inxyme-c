@@ -11,6 +11,11 @@ import {
   FaArrowRight,
   FaLaptopCode,
   FaBuilding,
+  FaIdCard,
+  FaShieldAlt,
+  FaAward,
+  FaBriefcase,
+  FaUsers,
 } from "react-icons/fa";
 import SEO from "../components/SEO";
 
@@ -171,17 +176,124 @@ const CATEGORIES = [
   "College Graduates",
 ];
 
+// Eye-soothing luxury color combinations for ID card designs
+const ID_CARD_PALETTES = [
+  {
+    theme: "sapphire",
+    headerBg: "bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-600",
+    badgeBg: "bg-blue-50 text-blue-700 dark:bg-blue-950/60 dark:text-blue-300 border border-blue-200 dark:border-blue-800",
+    hikeBg: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800",
+    cardBorder: "border-blue-200/90 dark:border-blue-900/60 hover:border-blue-400 dark:hover:border-blue-500",
+    cardShadow: "hover:shadow-blue-500/10",
+    avatarRing: "ring-blue-500/40",
+    barcodeColor: "text-blue-600/70 dark:text-blue-400/60",
+    tagColor: "text-blue-600 dark:text-blue-400",
+  },
+  {
+    theme: "emerald",
+    headerBg: "bg-gradient-to-r from-emerald-700 via-teal-700 to-emerald-600",
+    badgeBg: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800",
+    hikeBg: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800",
+    cardBorder: "border-emerald-200/90 dark:border-emerald-900/60 hover:border-emerald-400 dark:hover:border-emerald-500",
+    cardShadow: "hover:shadow-emerald-500/10",
+    avatarRing: "ring-emerald-500/40",
+    barcodeColor: "text-emerald-600/70 dark:text-emerald-400/60",
+    tagColor: "text-emerald-600 dark:text-emerald-400",
+  },
+  {
+    theme: "amethyst",
+    headerBg: "bg-gradient-to-r from-purple-700 via-indigo-700 to-purple-600",
+    badgeBg: "bg-purple-50 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300 border border-purple-200 dark:border-purple-800",
+    hikeBg: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800",
+    cardBorder: "border-purple-200/90 dark:border-purple-900/60 hover:border-purple-400 dark:hover:border-purple-500",
+    cardShadow: "hover:shadow-purple-500/10",
+    avatarRing: "ring-purple-500/40",
+    barcodeColor: "text-purple-600/70 dark:text-purple-400/60",
+    tagColor: "text-purple-600 dark:text-purple-400",
+  },
+  {
+    theme: "amber",
+    headerBg: "bg-gradient-to-r from-amber-600 via-orange-600 to-yellow-600",
+    badgeBg: "bg-amber-50 text-amber-700 dark:bg-amber-950/60 dark:text-amber-300 border border-amber-200 dark:border-amber-800",
+    hikeBg: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800",
+    cardBorder: "border-amber-200/90 dark:border-amber-900/60 hover:border-amber-400 dark:hover:border-amber-500",
+    cardShadow: "hover:shadow-amber-500/10",
+    avatarRing: "ring-amber-500/40",
+    barcodeColor: "text-amber-600/70 dark:text-amber-400/60",
+    tagColor: "text-amber-600 dark:text-amber-400",
+  },
+  {
+    theme: "cyan",
+    headerBg: "bg-gradient-to-r from-cyan-700 via-sky-600 to-blue-600",
+    badgeBg: "bg-cyan-50 text-cyan-700 dark:bg-cyan-950/60 dark:text-cyan-300 border border-cyan-200 dark:border-cyan-800",
+    hikeBg: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800",
+    cardBorder: "border-cyan-200/90 dark:border-cyan-900/60 hover:border-cyan-400 dark:hover:border-cyan-500",
+    cardShadow: "hover:shadow-cyan-500/10",
+    avatarRing: "ring-cyan-500/40",
+    barcodeColor: "text-cyan-600/70 dark:text-cyan-400/60",
+    tagColor: "text-cyan-600 dark:text-cyan-400",
+  },
+  {
+    theme: "rose",
+    headerBg: "bg-gradient-to-r from-rose-700 via-pink-600 to-rose-600",
+    badgeBg: "bg-rose-50 text-rose-700 dark:bg-rose-950/60 dark:text-rose-300 border border-rose-200 dark:border-rose-800",
+    hikeBg: "bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 border border-emerald-200 dark:border-emerald-800",
+    cardBorder: "border-rose-200/90 dark:border-rose-900/60 hover:border-rose-400 dark:hover:border-rose-500",
+    cardShadow: "hover:shadow-rose-500/10",
+    avatarRing: "ring-rose-500/40",
+    barcodeColor: "text-rose-600/70 dark:text-rose-400/60",
+    tagColor: "text-rose-600 dark:text-rose-400",
+  },
+];
+
+// Genuine Scannable Code-128 Barcode Component
+function AlumniBarcode({ value }: { value: string }) {
+  const svgRef = React.useRef<SVGSVGElement | null>(null);
+
+  React.useEffect(() => {
+    let isMounted = true;
+    import("jsbarcode").then((mod) => {
+      const JsBarcode = mod.default || mod;
+      if (isMounted && svgRef.current && value) {
+        try {
+          JsBarcode(svgRef.current, value, {
+            format: "CODE128",
+            lineColor: "#0f172a",
+            width: 1.3,
+            height: 28,
+            displayValue: false,
+            margin: 4,
+            background: "#ffffff",
+          });
+        } catch (err) {
+          console.error("Barcode generation error:", err);
+        }
+      }
+    });
+    return () => {
+      isMounted = false;
+    };
+  }, [value]);
+
+  return (
+    <div
+      className="bg-white px-2 py-0.5 rounded-md border border-slate-200/90 shadow-2xs inline-flex items-center justify-center hover:border-slate-400 transition-colors"
+      title={`Scannable Inxyme Alumni ID: ${value}`}
+    >
+      <svg ref={svgRef} className="h-6 w-auto max-w-[140px] block" />
+    </div>
+  );
+}
+
 export default function TestimonialsPage() {
   const [activeCategory, setActiveCategory] = useState("All Stories");
   const [searchQuery, setSearchQuery] = useState("");
 
   const filteredTestimonials = ALL_TESTIMONIALS.filter((item) => {
-    // Category filter
     if (activeCategory !== "All Stories" && item.category !== activeCategory) {
       return false;
     }
 
-    // Search filter
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
       const matchName = item.name.toLowerCase().includes(q);
@@ -203,74 +315,66 @@ export default function TestimonialsPage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-gray-950 text-slate-900 dark:text-white transition-colors duration-300 pb-20">
       <SEO
-        title="Inxyme Success Stories | Real Career Transformations"
-        description="Explore inspiring success stories from Inxyme learners who gained skills, built confidence and achieved career growth through practical learning."
-        keywords="Eklavya success stories, student success stories, career success, learner achievements, career transformation, skill development, job ready skills, career growth, Eklavya learners"
+        title="Alumni Success Stories & Career Transitions | Inxyme"
+        description="Explore inspiring verified success stories from Inxyme learners who upskilled, mastered enterprise workflows, and unlocked successful careers."
+        keywords="Inxyme success stories, alumni reviews, student placements, career transformation, SAP placements, AI career switch, verified graduates"
         robots="index, follow"
-        og={{
-          title: "Inxyme Success Stories | Real Career Transformations",
-          description:
-            "Explore inspiring success stories from Inxyme learners who gained skills, built confidence and achieved career growth through practical learning.",
-          type: "website",
-        }}
       />
 
-      {/* --- HERO HEADER --- */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-indigo-900 via-blue-900 to-slate-950 text-white py-6 sm:py-8 px-3 sm:px-4 lg:px-6">
+      {/* --- CORPORATE HERO HEADER --- */}
+      <section className="relative overflow-hidden bg-gradient-to-br from-blue-950 via-slate-950 to-indigo-950 text-white py-8 sm:py-10 px-4 sm:px-6 lg:px-8 border-b border-blue-900/30">
         <div className="absolute inset-0 opacity-10 pointer-events-none bg-[radial-gradient(#fff_1px,transparent_1px)] [background-size:18px_18px]"></div>
-        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-400/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-indigo-600/20 rounded-full blur-3xl pointer-events-none"></div>
 
         <div className="relative max-w-7xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/20 backdrop-blur-md border border-blue-400/30 text-blue-200 text-xs sm:text-sm font-semibold tracking-wide">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-blue-500/15 backdrop-blur-md border border-blue-400/30 text-blue-200 text-xs sm:text-sm font-semibold tracking-wide">
             <FaStar className="text-amber-400 text-xs" />
             <span>4.9 / 5 Rating from 4,500+ Verified Alumni</span>
           </div>
 
-          <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight">
+          <h1 className="text-2xl sm:text-3xl md:text-5xl font-black tracking-tight text-white leading-tight">
             Alumni &amp; Learner{" "}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-sky-300 via-emerald-300 to-teal-200">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-300 via-sky-200 to-indigo-300">
               Success Stories
             </span>
           </h1>
 
-          <p className="max-w-7xl mx-auto text-xs sm:text-sm md:text-base text-blue-100/90 font-medium leading-relaxed">
-            Real stories from real engineers and career-switchers who upskilled,
-            mastered enterprise workflows, and unlocked life-changing career
-            opportunities with Inxyme.
+          <p className="max-w-3xl mx-auto text-xs sm:text-sm md:text-base text-blue-100/90 font-medium leading-relaxed">
+            Real career journeys from engineers, domain experts, and career-switchers who acquired industry-ready mastery and stepped into high-impact corporate roles.
           </p>
 
           {/* Key Metrics Counters */}
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/10 text-center">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 max-w-4xl mx-auto pt-2">
+            <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center">
               <div className="text-xl sm:text-2xl font-black text-amber-300">
                 4.9 ★
               </div>
-              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5">
+              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5 font-medium">
                 Average Rating
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/10 text-center">
+            <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center">
               <div className="text-xl sm:text-2xl font-black text-emerald-300">
                 98%
               </div>
-              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5">
-                Placement Record
+              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5 font-medium">
+                Placement Track Record
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/10 text-center">
+            <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center">
               <div className="text-xl sm:text-2xl font-black text-sky-300">
                 120%
               </div>
-              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5">
+              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5 font-medium">
                 Avg. Salary Hike
               </div>
             </div>
-            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 border border-white/10 text-center">
+            <div className="bg-white/10 dark:bg-slate-900/40 backdrop-blur-md rounded-2xl p-3 border border-white/10 text-center">
               <div className="text-xl sm:text-2xl font-black text-indigo-300">
                 500+
               </div>
-              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5">
+              <div className="text-[11px] sm:text-xs text-blue-200 mt-0.5 font-medium">
                 Hiring Partners
               </div>
             </div>
@@ -279,20 +383,20 @@ export default function TestimonialsPage() {
       </section>
 
       {/* --- MAIN CONTENT --- */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-6 relative z-20 space-y-8">
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 -mt-5 relative z-20 space-y-8">
         {/* --- FEATURED ALUMNI SPOTLIGHT BANNER --- */}
         {featuredTestimonial && (
-          <div className="bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-8 md:p-10 shadow-2xl border border-slate-200/80 dark:border-slate-800 relative overflow-hidden">
+          <div className="bg-white dark:bg-gray-900 rounded-3xl p-6 sm:p-8 shadow-xl border border-slate-200/90 dark:border-slate-800 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-bl from-blue-500/10 via-indigo-500/10 to-transparent rounded-full blur-3xl pointer-events-none"></div>
 
-            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8">
-              <div className="space-y-4 max-w-3xl">
+            <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+              <div className="space-y-3.5 max-w-3xl">
                 <div className="flex items-center gap-2.5 flex-wrap">
                   <span className="bg-blue-600 text-white text-[11px] font-black uppercase px-2.5 py-0.5 rounded-full tracking-wider">
-                    Featured Career Transition
+                    ★ Premier Transition Spotlight
                   </span>
                   {featuredTestimonial.hike && (
-                    <span className="bg-emerald-100 text-emerald-800 dark:bg-emerald-950/80 dark:text-emerald-300 text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-300 dark:border-emerald-800">
+                    <span className="bg-emerald-50 text-emerald-700 dark:bg-emerald-950/80 dark:text-emerald-300 text-[11px] font-bold px-2.5 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
                       ⚡ {featuredTestimonial.hike}
                     </span>
                   )}
@@ -303,25 +407,25 @@ export default function TestimonialsPage() {
                 </div>
 
                 <div className="relative">
-                  <FaQuoteLeft className="text-3xl sm:text-4xl text-blue-500/20 absolute -top-4 -left-2 pointer-events-none" />
+                  <FaQuoteLeft className="text-3xl sm:text-4xl text-blue-500/15 absolute -top-4 -left-2 pointer-events-none" />
                   <p className="text-sm sm:text-base text-slate-700 dark:text-slate-200 leading-relaxed font-medium italic pl-6">
                     &ldquo;{featuredTestimonial.content}&rdquo;
                   </p>
                 </div>
 
-                <div className="flex items-center gap-4 pt-2">
+                <div className="flex items-center gap-4 pt-1">
                   {featuredTestimonial.image ? (
                     <img
                       src={featuredTestimonial.image}
                       alt={featuredTestimonial.name}
-                      className="w-12 h-12 rounded-full object-cover ring-2 ring-blue-500/30"
+                      className="w-14 h-14 rounded-2xl object-cover ring-2 ring-blue-500/30 shadow-md"
                       onError={(e) => {
                         e.currentTarget.onerror = null;
                         e.currentTarget.style.display = "none";
                       }}
                     />
                   ) : (
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-base shadow-md">
+                    <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-base shadow-md">
                       {featuredTestimonial.name.charAt(0)}
                     </div>
                   )}
@@ -334,7 +438,7 @@ export default function TestimonialsPage() {
                         title="Verified Graduate"
                       />
                     </div>
-                    <div className="text-xs text-slate-500 dark:text-slate-400 font-medium">
+                    <div className="text-xs text-slate-600 dark:text-slate-400 font-medium">
                       {featuredTestimonial.role}{" "}
                       {featuredTestimonial.company && (
                         <span>• {featuredTestimonial.company}</span>
@@ -344,16 +448,16 @@ export default function TestimonialsPage() {
                 </div>
               </div>
 
-              <div className="w-full lg:w-auto shrink-0 flex flex-col gap-3">
+              <div className="w-full lg:w-auto shrink-0 flex flex-col gap-2.5">
                 <Link
                   href="/courses"
-                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg shadow-blue-500/25 transition-all transform hover:-translate-y-0.5"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all transform hover:-translate-y-0.5"
                 >
-                  <span>Explore This Course</span>
+                  <span>Explore Similar Program</span>
                   <FaArrowRight className="text-xs" />
                 </Link>
                 <div className="text-center text-[11px] text-slate-500 dark:text-slate-400 font-semibold">
-                  100% Practical • Live Projects
+                  100% Practical • Corporate Placement Drive
                 </div>
               </div>
             </div>
@@ -372,7 +476,7 @@ export default function TestimonialsPage() {
                     key={cat}
                     onClick={() => setActiveCategory(cat)}
                     className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-200 ${isActive
-                        ? "bg-blue-600 text-white shadow-md shadow-blue-600/20"
+                        ? "bg-blue-600 text-white shadow-md shadow-blue-600/20 font-black"
                         : "bg-white dark:bg-gray-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-gray-700 border border-slate-200/80 dark:border-slate-800"
                       }`}
                   >
@@ -387,7 +491,7 @@ export default function TestimonialsPage() {
               <FaSearch className="w-3.5 h-3.5 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
-                placeholder="Search by student, role, course, keyword..."
+                placeholder="Search by student, role, course, company..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-9 pr-4 py-2.5 bg-white dark:bg-gray-800 border border-slate-200 dark:border-slate-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all shadow-xs"
@@ -396,18 +500,17 @@ export default function TestimonialsPage() {
           </div>
         </div>
 
-        {/* --- TESTIMONIALS GRID --- */}
+        {/* --- PHENOMENAL STUDENT STORIES AS ALUMNI ID CARDS --- */}
         {filteredTestimonials.length === 0 ? (
           <div className="text-center py-16 bg-white dark:bg-gray-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-8 space-y-3">
             <div className="w-12 h-12 rounded-full bg-blue-50 dark:bg-blue-950/50 text-blue-600 dark:text-blue-400 flex items-center justify-center mx-auto text-lg">
               <FaSearch />
             </div>
             <h3 className="text-base font-bold text-slate-900 dark:text-white">
-              No matching learner reviews found
+              No matching alumni records found
             </h3>
             <p className="text-xs text-slate-500 dark:text-slate-400 max-w-sm mx-auto">
-              Try adjusting your search criteria or select another category
-              filter above.
+              Try adjusting your search criteria or select another category filter above.
             </p>
             <button
               onClick={() => {
@@ -421,100 +524,214 @@ export default function TestimonialsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredTestimonials.map((item) => (
-              <div
-                key={item.id}
-                className="bg-white dark:bg-gray-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 p-6 sm:p-7 shadow-sm hover:shadow-xl hover:border-blue-300 dark:hover:border-blue-600/50 transition-all duration-300 flex flex-col justify-between group"
-              >
-                <div className="space-y-4">
-                  {/* Top Row: Stars & Badge */}
-                  <div className="flex items-center justify-between gap-2 flex-wrap">
-                    <div className="flex items-center gap-1 text-amber-400 text-xs sm:text-sm">
-                      {Array.from({ length: item.rating }).map((_, i) => (
-                        <FaStar key={i} />
-                      ))}
-                    </div>
+            {filteredTestimonials.map((item, index) => {
+              // Cycle through eye-pleasing harmonious color palettes for ID cards
+              const palette = ID_CARD_PALETTES[index % ID_CARD_PALETTES.length];
 
-                    <div className="flex items-center gap-1.5">
-                      {item.hike && (
-                        <span className="text-[10px] font-extrabold bg-emerald-50 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300 px-2 py-0.5 rounded-full border border-emerald-200 dark:border-emerald-800">
-                          {item.hike}
+              // Non-sequential, realistic alumni credentials with mixed 2025 & 2026 batch years
+              const badgeYear = [2025, 2026, 2025, 2026, 2026, 2025, 2025, 2026][item.id % 8] || (item.id % 2 === 0 ? 2026 : 2025);
+              // Fixed 4-digit code starting with 0 and followed by 3 deterministic pseudo-random digits (fixed across page reloads)
+              const hashSeed = Math.abs((item.id ^ 0x45d9) * 2654435761);
+              const randomThreeDigits = 100 + (hashSeed % 900);
+              const cardIdNumber = `INX-${badgeYear}-0${randomThreeDigits}`;
+
+              return (
+                <div
+                  key={item.id}
+                  className={`relative bg-white dark:bg-gray-900 rounded-3xl border ${palette.cardBorder} shadow-sm hover:shadow-xl ${palette.cardShadow} transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1.5 pt-2`}
+                >
+                  {/* Top Lanyard Punch Slot */}
+                  <div className="w-12 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 mx-auto mb-2 shadow-inner" />
+
+                  {/* ID Card Header Strip */}
+                  <div className={`${palette.headerBg} px-5 py-2.5 text-white flex items-center justify-between text-xs shadow-xs`}>
+                    <div className="flex items-center gap-1.5 font-black tracking-wider text-[11px] uppercase">
+                      <FaIdCard className="text-xs opacity-90" />
+                      <span>Inxyme Alumni ID</span>
+                    </div>
+                    <div className="font-mono text-[10px] tracking-widest opacity-90 font-semibold">
+                      {cardIdNumber}
+                    </div>
+                  </div>
+
+                  {/* ID Card Main Body */}
+                  <div className="relative p-5 sm:p-6 flex-1 flex flex-col justify-between bg-white dark:bg-slate-900 overflow-hidden">
+
+                    {/* Subtle Background Watermark / Security Grid */}
+                    <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(#cbd5e1_1px,transparent_1px)] dark:bg-[radial-gradient(#1e293b_1px,transparent_1px)] [background-size:12px_12px] opacity-40" />
+
+                    <div className="relative z-10 space-y-4">
+                      {/* Top Micro ID Serial & Clearance Row */}
+                      <div className="flex items-center justify-between border-b border-slate-200/80 dark:border-slate-800 pb-2.5">
+                        <div className="flex items-center gap-1.5">
+                          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+                          <span className="font-mono text-[10px] font-bold tracking-widest text-slate-400 dark:text-slate-500 uppercase">
+                            ID // INX-{badgeYear}-{item.name ? item.name.slice(0, 3).toUpperCase() : "ALU"}
+                          </span>
+                        </div>
+                        <span className={`text-[10px] font-extrabold px-2.5 py-0.5 rounded-md uppercase tracking-wider shadow-2xs ${palette.badgeBg}`}>
+                          {item.category}
                         </span>
-                      )}
-                      <span className="text-[10px] font-bold bg-slate-100 text-slate-700 dark:bg-gray-800 dark:text-slate-300 px-2 py-0.5 rounded-full">
-                        {item.category}
-                      </span>
+                      </div>
+
+                      {/* Student Profile Row (Passport Photo + Primary Dossier) */}
+                      <div className="flex items-stretch gap-4">
+                        {/* Photo in Framed ID Slot */}
+                        <div className="relative shrink-0">
+                          <div className="p-1 rounded-2xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 shadow-inner">
+                            {item.image ? (
+                              <img
+                                src={item.image}
+                                alt={item.name}
+                                className={`w-16 h-20 sm:w-20 sm:h-24 rounded-xl object-cover ring-1 ${palette.avatarRing}`}
+                                onError={(e) => {
+                                  e.currentTarget.onerror = null;
+                                  e.currentTarget.style.display = "none";
+                                }}
+                              />
+                            ) : (
+                              <div className={`w-16 h-20 sm:w-20 sm:h-24 rounded-xl ${palette.headerBg} text-white flex items-center justify-center font-black text-2xl shadow-inner`}>
+                                {item.name.charAt(0)}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Verified Status Pill pinned to bottom of photo */}
+                          <span
+                            className="absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap px-2 py-0.5 rounded-full bg-emerald-600 text-white flex items-center gap-1 text-[9px] font-black uppercase tracking-wider shadow-sm ring-2 ring-white dark:ring-slate-900"
+                            title="Verified Inxyme Alumni"
+                          >
+                            ✓ Verified
+                          </span>
+                        </div>
+
+                        {/* Structured ID Data Fields */}
+                        <div className="flex-1 min-w-0 flex flex-col justify-between py-0.5">
+                          <div>
+                            <span className="block text-[9px] font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                              Cardholder Name
+                            </span>
+                            <h3 className="text-base sm:text-lg font-black text-slate-900 dark:text-white truncate leading-tight">
+                              {item.name}
+                            </h3>
+                          </div>
+
+                          <div className="mt-2 grid grid-cols-1 gap-1.5 bg-slate-50 dark:bg-slate-800/60 p-2.5 rounded-xl border border-slate-200/70 dark:border-slate-800">
+                            <div className="min-w-0">
+                              <span className="block text-[8px] font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                                Designation
+                              </span>
+                              <p className="text-xs font-bold text-slate-800 dark:text-slate-200 truncate">
+                                {item.role}
+                              </p>
+                            </div>
+
+                            {item.company && (
+                              <div className="min-w-0 pt-1 border-t border-slate-200/60 dark:border-slate-700/60 flex items-center justify-between gap-2">
+                                <div className="min-w-0">
+                                  <span className="block text-[8px] font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                                    Placed Organization
+                                  </span>
+                                  <p className="text-[11px] font-bold text-slate-700 dark:text-slate-300 truncate flex items-center gap-1.5 mt-0.5">
+                                    <FaBuilding className="text-[10px] text-slate-400 shrink-0" />
+                                    <span className="truncate">{item.company}</span>
+                                  </p>
+                                </div>
+
+                                {item.hike && (
+                                  <span className={`shrink-0 text-[10px] font-black px-2 py-0.5 rounded-md border border-current/10 shadow-2xs ${palette.hikeBg}`}>
+                                    ⚡ {item.hike}
+                                  </span>
+                                )}
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Course Credential Strip */}
+                      <div className="bg-slate-900 dark:bg-slate-800 text-white p-2.5 rounded-xl shadow-xs flex items-center justify-between gap-2">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <div className="w-7 h-7 rounded-lg bg-white/10 flex items-center justify-center shrink-0">
+                            <FaGraduationCap className="text-amber-400 text-sm" />
+                          </div>
+                          <div className="min-w-0">
+                            <span className="block text-[8px] font-mono uppercase tracking-widest text-slate-400">
+                              Certified Specialization
+                            </span>
+                            <span className="block text-xs font-bold truncate text-slate-100">
+                              {item.course}
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Star Rating Badge */}
+                        <div className="shrink-0 flex flex-col items-end pl-2 border-l border-slate-700">
+                          <span className="text-[8px] font-mono uppercase tracking-wider text-slate-400">
+                            Rating
+                          </span>
+                          <div className="flex items-center gap-0.5 text-amber-400 text-[10px] mt-0.5">
+                            {Array.from({ length: item.rating }).map((_, i) => (
+                              <FaStar key={i} />
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Official Endorsement / Experience Log */}
+                      <div className="relative bg-slate-50/80 dark:bg-slate-800/40 rounded-xl p-3 border-l-4 border-slate-300 dark:border-slate-700">
+                        <div className="flex items-center justify-between mb-1">
+                          <span className="text-[9px] font-mono font-bold uppercase tracking-widest text-slate-400 dark:text-slate-500">
+                            Alumni Testimony Log
+                          </span>
+                          <FaQuoteLeft className="text-xs text-slate-300 dark:text-slate-700" />
+                        </div>
+                        <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed italic line-clamp-3">
+                          &ldquo;{item.content}&rdquo;
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* ID Card Bottom Strip: Realistic CSS Barcode & Hologram Seal */}
+                    <div className="relative z-10 mt-5 pt-3 border-t-2 border-dashed border-slate-200 dark:border-slate-800 flex items-center justify-between gap-2">
+                      <div className="space-y-1">
+                        {/* Scannable Code-128 Barcode that displays Inxyme Alumni ID when scanned */}
+                        <AlumniBarcode value={cardIdNumber} />
+                        <div className="text-[9px] font-mono font-semibold tracking-widest text-slate-400 dark:text-slate-500 uppercase">
+                          BATCH OF {badgeYear} • INXYME VERIFIED
+                        </div>
+                      </div>
+
+                      {/* Holographic-style Security Seal */}
+                      <div className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-wider text-slate-700 dark:text-slate-200 bg-gradient-to-r from-emerald-500/10 via-sky-500/10 to-purple-500/10 dark:from-emerald-400/15 dark:via-sky-400/15 dark:to-purple-400/15 px-2.5 py-1.5 rounded-lg border border-emerald-500/30 shadow-2xs">
+                        <FaShieldAlt className="text-emerald-500 text-xs shrink-0" />
+                        <span>AUTHENTIC</span>
+                      </div>
                     </div>
                   </div>
-
-                  {/* Course Pill */}
-                  <div className="inline-flex items-center gap-1 text-xs text-blue-600 dark:text-blue-400 font-bold bg-blue-50/80 dark:bg-blue-950/50 px-2.5 py-1 rounded-lg border border-blue-200/60 dark:border-blue-900/40">
-                    <FaLaptopCode className="shrink-0 text-xs" />
-                    <span className="truncate">{item.course}</span>
-                  </div>
-
-                  {/* Quote Content */}
-                  <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-300 leading-relaxed italic">
-                    &ldquo;{item.content}&rdquo;
-                  </p>
                 </div>
-
-                {/* Author Metadata */}
-                <div className="flex items-center gap-3.5 pt-5 mt-4 border-t border-slate-200 dark:border-slate-800">
-                  {item.image ? (
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-11 h-11 rounded-full object-cover ring-2 ring-blue-500/20 shrink-0"
-                      onError={(e) => {
-                        e.currentTarget.onerror = null;
-                        e.currentTarget.style.display = "none";
-                      }}
-                    />
-                  ) : (
-                    <div className="w-11 h-11 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center font-bold text-sm shadow-sm shrink-0">
-                      {item.name.charAt(0)}
-                    </div>
-                  )}
-
-                  <div className="truncate">
-                    <div className="flex items-center gap-1.5 font-bold text-slate-900 dark:text-white text-sm">
-                      <span className="truncate">{item.name}</span>
-                      <FaCheckCircle
-                        className="text-emerald-500 text-xs shrink-0"
-                        title="Verified Graduate"
-                      />
-                    </div>
-                    <p className="text-xs text-slate-500 dark:text-slate-400 truncate">
-                      {item.role}
-                    </p>
-                    {item.company && (
-                      <p className="text-[11px] text-slate-400 dark:text-slate-500 truncate flex items-center gap-1 mt-0.5">
-                        <FaBuilding className="text-[10px]" /> {item.company}
-                      </p>
-                    )}
-                  </div>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         )}
 
         {/* --- STATS ACCREDITATION BANNER --- */}
-        <section className="bg-gradient-to-r from-blue-700 via-indigo-700 to-slate-950 rounded-3xl p-8 sm:p-12 text-white shadow-xl overflow-hidden relative">
-          <div className="relative z-10 max-w-4xl mx-auto text-center space-y-6">
+        <section className="bg-gradient-to-r from-blue-900 via-indigo-900 to-slate-900 rounded-3xl p-8 sm:p-12 text-white shadow-xl overflow-hidden relative">
+          <div className="relative z-10 max-w-4xl mx-auto text-center space-y-5">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs font-bold text-blue-100">
+              <FaAward className="text-xs text-amber-300" />
+              <span>Job-Ready Learning Platform</span>
+            </div>
             <h3 className="text-2xl sm:text-3xl font-black tracking-tight">
-              Ready to Accelerate Your Tech Career?
+              Ready to Write Your Own Success Story?
             </h3>
             <p className="text-xs sm:text-sm md:text-base text-blue-100/90 leading-relaxed max-w-2xl mx-auto">
-              Join over 40,000+ engineers, students, and professionals who
-              transformed their skillsets and landed high-growth engineering
-              roles.
+              Join thousands of learners and working professionals who mastered in-demand SAP, AI, Cloud, and Full Stack technologies with Inxyme.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center items-center pt-2">
               <Link
                 href="/courses"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-white hover:bg-slate-100 text-blue-700 font-bold text-xs sm:text-sm rounded-xl transition-all shadow-md active:scale-95"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 bg-blue-500 hover:bg-blue-600 text-white font-bold text-xs sm:text-sm rounded-xl transition-all shadow-md active:scale-95"
               >
                 <span>Browse All Courses</span>
                 <FaArrowRight className="text-xs" />
