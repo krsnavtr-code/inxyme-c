@@ -66,8 +66,10 @@ export function getOrCreateVisitorId(): string {
   }
 }
 
+import { getDeviceFingerprint } from "./fingerprint";
+
 /**
- * Silently sync visitor page view with backend API
+ * Silently sync visitor page view with backend API, sending visitorId, browser fingerprint & device info
  */
 export async function trackVisitorPageView(pageUrl: string, pageTitle?: string): Promise<any> {
   if (typeof window === "undefined") return null;
@@ -76,8 +78,12 @@ export async function trackVisitorPageView(pageUrl: string, pageTitle?: string):
     const visitorId = getOrCreateVisitorId();
     if (!visitorId) return null;
 
+    const fpData = await getDeviceFingerprint();
+
     const response = await api.post("/visitors/track", {
       visitorId,
+      fingerprint: fpData?.fingerprint || "",
+      device: fpData?.deviceInfo || null,
       pageUrl,
       pageTitle: pageTitle || (typeof document !== "undefined" ? document.title : ""),
       referrer: typeof document !== "undefined" ? document.referrer : "",
@@ -91,7 +97,7 @@ export async function trackVisitorPageView(pageUrl: string, pageTitle?: string):
 }
 
 /**
- * Link this visitor UUID with user details (called on form submit or onBlur)
+ * Link this visitor UUID & browser fingerprint with user details (called on form submit or onBlur)
  */
 export async function identifyVisitor(data: { name?: string; email?: string; phone?: string }): Promise<any> {
   if (typeof window === "undefined") return null;
@@ -100,8 +106,12 @@ export async function identifyVisitor(data: { name?: string; email?: string; pho
     const visitorId = getOrCreateVisitorId();
     if (!visitorId) return null;
 
+    const fpData = await getDeviceFingerprint();
+
     const response = await api.post("/visitors/identify", {
       visitorId,
+      fingerprint: fpData?.fingerprint || "",
+      device: fpData?.deviceInfo || null,
       ...data,
     });
 
@@ -109,4 +119,9 @@ export async function identifyVisitor(data: { name?: string; email?: string; pho
   } catch {
     return null;
   }
+}
+
+export async function getFingerprint(): Promise<string> {
+  const fpData = await getDeviceFingerprint();
+  return fpData?.fingerprint || "";
 }
