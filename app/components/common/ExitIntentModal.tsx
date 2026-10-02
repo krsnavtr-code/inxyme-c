@@ -26,7 +26,14 @@ export default function ExitIntentModal() {
     courseId: "",
     courseTitle: "",
   });
-  const [courses, setCourses] = useState<Course[]>([]);
+  const [courses, setCourses] = useState<Course[]>([
+    { _id: "mern-stack", title: "MERN Stack Web Development" },
+    { _id: "python-fullstack", title: "Python Full Stack Developer" },
+    { _id: "digital-marketing", title: "Advanced Digital Marketing & SEO" },
+    { _id: "data-analytics", title: "Data Analytics & Business Intelligence" },
+    { _id: "ui-ux-design", title: "UI/UX Design Masterclass" },
+    { _id: "cloud-devops", title: "Cloud Computing & DevOps" },
+  ]);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [copied, setCopied] = useState(false);
@@ -43,30 +50,53 @@ export default function ExitIntentModal() {
     }),
   });
 
-  // Fetch courses list
+  // Pre-fetch courses list on mount so dropdown is never empty and loads instantly
   useEffect(() => {
-    if (!isOpen) return;
+    let isMounted = true;
 
     const fetchCourses = async () => {
       try {
         const res = await api.get("/courses", {
-          params: { isPublished: "true", limit: 100 },
+          params: { isPublished: "true", limit: 200 },
         });
-        const list: Course[] = Array.isArray(res?.data?.data) ? res.data.data : [];
-        setCourses(list);
 
-        // Auto-detect course if user is currently on a /course/[slug] page
-        if (pathname?.startsWith("/course/")) {
-          const slug = pathname.replace("/course/", "").split("/")[0];
-          const matched = list.find(
-            (c) => c.slug === slug || c.title?.toLowerCase().replace(/\s+/g, "-") === slug
-          );
-          if (matched) {
-            setFormData((prev) => ({
-              ...prev,
-              courseId: matched._id,
-              courseTitle: matched.title || "",
-            }));
+        // The API returns an array directly: res.data = [ {...}, {...} ] or res.data.data
+        const rawList = Array.isArray(res?.data)
+          ? res.data
+          : Array.isArray(res?.data?.data)
+          ? res.data.data
+          : [];
+
+        if (!isMounted) return;
+
+        if (rawList.length > 0) {
+          const formatted: Course[] = rawList
+            .filter((c: any) => c && (c.title || c.name))
+            .map((c: any) => ({
+              _id: c._id || c.slug || c.title,
+              title: c.title || c.name || "Course",
+              slug: c.slug || "",
+            }))
+            .sort((a: Course, b: Course) => (a.title || "").localeCompare(b.title || ""));
+
+          setCourses(formatted);
+
+          // Auto-detect course if user is currently on a /course/[slug] page
+          if (pathname?.startsWith("/course/")) {
+            const currentSlug = pathname.replace("/course/", "").split("/")[0].toLowerCase();
+            const matched = formatted.find(
+              (c) =>
+                (c.slug && c.slug.toLowerCase() === currentSlug) ||
+                (c.title && c.title.toLowerCase().replace(/\s+/g, "-") === currentSlug) ||
+                (c.title && currentSlug.includes(c.title.toLowerCase().substring(0, 10)))
+            );
+            if (matched) {
+              setFormData((prev) => ({
+                ...prev,
+                courseId: matched._id,
+                courseTitle: matched.title || "",
+              }));
+            }
           }
         }
       } catch (err) {
@@ -75,7 +105,11 @@ export default function ExitIntentModal() {
     };
 
     fetchCourses();
-  }, [isOpen, pathname]);
+
+    return () => {
+      isMounted = false;
+    };
+  }, [pathname]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
