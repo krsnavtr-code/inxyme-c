@@ -24,6 +24,9 @@ import { useAuth } from "../../context/AuthContext";
 import PaymentForm from "../../components/PaymentForm";
 import CourseTopSection from "../../components/course/CourseTopSection";
 import TestimonialsSection from "../../components/course/TestimonialsSection";
+import { useMagicPrefill } from "../../hooks/useMagicPrefill";
+import { savePrefillData } from "../../utils/magicLink";
+import MagicPrefillBanner from "../../components/common/MagicPrefillBanner";
 
 interface FormDataState {
   name: string;
@@ -93,7 +96,9 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
     courseInterests: [],
   });
 
-  // Auto-fill user data when component mounts or user changes
+  const { prefillData, isMagicLink, clearPrefill } = useMagicPrefill();
+
+  // Auto-fill user data when component mounts, user changes, or magic prefill is detected
   useEffect(() => {
     if (currentUser) {
       setFormData((prev) => ({
@@ -102,8 +107,15 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
         email: currentUser.email || prev.email,
         phone: currentUser.phone || prev.phone,
       }));
+    } else if (prefillData && (prefillData.name || prefillData.phone || prefillData.email)) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || prefillData.name || "",
+        email: prev.email || prefillData.email || "",
+        phone: prev.phone || prefillData.phone || "",
+      }));
     }
-  }, [currentUser]);
+  }, [currentUser, prefillData]);
 
   const discountPercentage =
     course.originalPrice && course.originalPrice > course.price
@@ -217,6 +229,12 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
             },
           },
         );
+
+        savePrefillData({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+        });
 
         setFormData({
           name: "",
@@ -1038,6 +1056,16 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
                   )}
                 </div>
               </div>
+
+              {/* 09 - Magic Prefill Banner */}
+              <MagicPrefillBanner
+                name={formData.name}
+                phone={formData.phone}
+                email={formData.email}
+                isMagicLink={isMagicLink}
+                onClear={clearPrefill}
+                compact={false}
+              />
 
               <form onSubmit={handleContactSubmit} className="space-y-4">
                 <div>

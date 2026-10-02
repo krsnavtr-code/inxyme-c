@@ -24,6 +24,11 @@ import { formatPrice } from "../../utils/format";
 import { getImageUrl } from "../../utils/imageUtils";
 import api from "../../utils/api";
 import { usePartialLead } from "../../hooks/usePartialLead";
+import { useMagicPrefill } from "../../hooks/useMagicPrefill";
+import { savePrefillData } from "../../utils/magicLink";
+import { useAuth } from "../../context/AuthContext";
+import MagicPrefillBanner from "../common/MagicPrefillBanner";
+import CourseShareModal from "./CourseShareModal";
 
 export interface CourseTopSectionProps {
   course: {
@@ -223,20 +228,9 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
   onShowCertificate,
   onShowContactForm,
 }) => {
-  const shareCourse = () => {
-    if (navigator.share) {
-      navigator
-        .share({
-          title: course.title,
-          text: `Check out this course: ${course.title}`,
-          url: window.location.href,
-        })
-        .catch(console.error);
-    } else {
-      navigator.clipboard.writeText(window.location.href);
-      toast.success("Link copied to clipboard!");
-    }
-  };
+  const { currentUser } = useAuth();
+  const { prefillData, isMagicLink, clearPrefill } = useMagicPrefill();
+  const [isShareModalOpen, setIsShareModalOpen] = useState(false);
 
   const [enquiry, setEnquiry] = useState({
     name: "",
@@ -244,6 +238,22 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
     phone: "",
     message: "",
   });
+
+  // Sync pre-filled magic details into enquiry form
+  useEffect(() => {
+    if (prefillData && (prefillData.name || prefillData.phone || prefillData.email)) {
+      setEnquiry((prev) => ({
+        ...prev,
+        name: prev.name || prefillData.name || "",
+        email: prev.email || prefillData.email || "",
+        phone: prev.phone || prefillData.phone || "",
+      }));
+    }
+  }, [prefillData]);
+
+  const shareCourse = () => {
+    setIsShareModalOpen(true);
+  };
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showEnquiryReminder, setShowEnquiryReminder] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
@@ -334,6 +344,12 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
             },
           },
         );
+
+        savePrefillData({
+          name: enquiry.name,
+          email: enquiry.email,
+          phone: enquiry.phone,
+        });
 
         setEnquiry({
           name: "",
@@ -690,9 +706,20 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
                 ref={formRef}
                 className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-700"
               >
-                <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-4">
+                <h4 className="text-sm font-bold text-slate-900 dark:text-white mb-3">
                   Have a Question?
                 </h4>
+
+                {/* 09 - Pre-filled Magic Link Banner */}
+                <MagicPrefillBanner
+                  name={enquiry.name}
+                  phone={enquiry.phone}
+                  email={enquiry.email}
+                  isMagicLink={isMagicLink}
+                  onClear={clearPrefill}
+                  compact={false}
+                />
+
                 <form onSubmit={handleEnquirySubmit} className="space-y-3">
                   <div>
                     <input
@@ -747,6 +774,10 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
                   >
                     {isSubmitting ? (
                       "Submitting..."
+                    ) : isMagicLink ? (
+                      <>
+                        <span>⚡</span> Confirm My Seat (1-Click)
+                      </>
                     ) : (
                       <>
                         <MessageSquare className="w-4 h-4" /> Send Enquiry
@@ -777,6 +808,14 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
           </span>
         </button>
       )}
+
+      {/* Course Share & Magic Link Modal */}
+      <CourseShareModal
+        isOpen={isShareModalOpen}
+        onClose={() => setIsShareModalOpen(false)}
+        course={course}
+        currentUser={currentUser}
+      />
     </div>
   );
 };

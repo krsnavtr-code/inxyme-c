@@ -8,6 +8,9 @@ import { toast } from "react-hot-toast";
 import api from "../../utils/api";
 import { submitContactForm } from "../../api/contactApi";
 import { usePartialLead } from "../../hooks/usePartialLead";
+import { useMagicPrefill } from "../../hooks/useMagicPrefill";
+import { savePrefillData } from "../../utils/magicLink";
+import MagicPrefillBanner from "./MagicPrefillBanner";
 
 interface ContactFormModalProps {
   isOpen?: boolean;
@@ -44,11 +47,25 @@ export default function ContactFormModal({
   const [lastSubmitTime, setLastSubmitTime] = useState(0);
   const [autoOpened, setAutoOpened] = useState(false);
 
+  const { prefillData, isMagicLink, clearPrefill } = useMagicPrefill();
+
   // Partial Lead capture on blur
   const { handlePartialLeadBlur, markConverted } = usePartialLead({
     source: "contact_form_modal",
     getFormData: () => formData,
   });
+
+  // Sync magic pre-filled user details
+  useEffect(() => {
+    if (prefillData && (prefillData.name || prefillData.phone || prefillData.email)) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || prefillData.name || "",
+        email: prev.email || prefillData.email || "",
+        phone: prev.phone || prefillData.phone || "",
+      }));
+    }
+  }, [prefillData]);
 
   const isVisible = isOpen || autoOpened;
 
@@ -146,6 +163,11 @@ export default function ContactFormModal({
         if (result.data?.trackingId) {
           localStorage.setItem("user_tracker_id", result.data.trackingId);
         }
+        savePrefillData({
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+        });
         setIsSuccess(true);
         markConverted();
         setFormData({
@@ -245,7 +267,16 @@ export default function ContactFormModal({
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-3">
+              <>
+                <MagicPrefillBanner
+                  name={formData.name}
+                  phone={formData.phone}
+                  email={formData.email}
+                  isMagicLink={isMagicLink}
+                  onClear={clearPrefill}
+                  compact={true}
+                />
+                <form onSubmit={handleSubmit} className="space-y-3">
                 <div>
                   <label
                     htmlFor="name"
@@ -396,7 +427,8 @@ export default function ContactFormModal({
                   </button>
                 </div>
               </form>
-            )}
+            </>
+          )}
           </div>
         </div>
       </div>

@@ -10,6 +10,9 @@ import { getFingerprint } from "../../utils/visitorTracker";
 import api from "../../utils/api";
 import { submitContactForm } from "../../api/contactApi";
 import { posthogCapture, posthogIdentify, posthogTrackLead } from "../../utils/posthog";
+import { useMagicPrefill } from "../../hooks/useMagicPrefill";
+import { savePrefillData } from "../../utils/magicLink";
+import MagicPrefillBanner from "./MagicPrefillBanner";
 
 
 interface Course {
@@ -39,6 +42,18 @@ export default function ExitIntentModal() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [copied, setCopied] = useState(false);
+  const { prefillData, isMagicLink, clearPrefill } = useMagicPrefill();
+
+  // Sync pre-filled details
+  useEffect(() => {
+    if (prefillData && (prefillData.name || prefillData.phone)) {
+      setFormData((prev) => ({
+        ...prev,
+        name: prev.name || prefillData.name || "",
+        phone: prev.phone || prefillData.phone || "",
+      }));
+    }
+  }, [prefillData]);
 
   // Partial lead capture onBlur: captures lead even if user still exits before clicking submit!
   const { handlePartialLeadBlur, markConverted } = usePartialLead({
@@ -179,6 +194,12 @@ export default function ExitIntentModal() {
         name: formData.name.trim(),
       });
 
+      // Save to returning user prefill
+      savePrefillData({
+        name: formData.name.trim(),
+        phone: cleanPhone,
+      });
+
       // Mark partial lead as converted
       markConverted();
 
@@ -241,6 +262,13 @@ export default function ExitIntentModal() {
         <div className="p-6 sm:p-7">
           {!isSuccess ? (
             <form onSubmit={handleSubmit} className="space-y-4">
+              <MagicPrefillBanner
+                name={formData.name}
+                phone={formData.phone}
+                isMagicLink={isMagicLink}
+                onClear={clearPrefill}
+                compact={true}
+              />
               {/* Highlight Perks */}
               <div className="grid grid-cols-2 gap-2 text-xs font-semibold text-gray-700 bg-white p-3 rounded-xl border border-indigo-100/80 shadow-xs mb-1">
                 <div className="flex items-center gap-2">
