@@ -5,6 +5,7 @@ import {
   savePartialLead,
   convertPartialLead,
 } from "../api/partialLeadApi";
+import { getOrCreateVisitorId } from "../utils/visitorTracker";
 
 /**
  * Generate a unique session fingerprint for this form session.
@@ -91,6 +92,7 @@ export function usePartialLead({ source, getFormData }: UsePartialLeadOptions) {
         source,
         pageUrl: typeof window !== "undefined" ? window.location.pathname : "",
         sessionFingerprint: fingerprintRef.current,
+        visitorId: typeof window !== "undefined" ? getOrCreateVisitorId() : "",
       });
     },
     [source, getFormData],
