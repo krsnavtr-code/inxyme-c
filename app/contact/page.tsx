@@ -12,6 +12,7 @@ import {
 } from "react-icons/fa";
 import SEO from "../components/SEO";
 import { submitContactForm } from "../api/contactApi";
+import { usePartialLead } from "../hooks/usePartialLead";
 import api from "../utils/api";
 
 interface Course {
@@ -33,6 +34,12 @@ export default function Contact() {
   const [isLoadingCourses, setIsLoadingCourses] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [lastSubmitTime, setLastSubmitTime] = useState(0);
+
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur, markConverted } = usePartialLead({
+    source: "contact_page",
+    getFormData: () => formData,
+  });
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -98,6 +105,7 @@ export default function Contact() {
         if (result.data?.trackingId) {
           localStorage.setItem("user_tracker_id", result.data.trackingId);
         }
+        markConverted();
         const thanksMessage =
           result.message || "Your message has been sent successfully!";
         router.push("/thank-you?message=" + encodeURIComponent(thanksMessage));
@@ -213,6 +221,7 @@ export default function Contact() {
                   name="name"
                   value={formData.name}
                   onChange={handleChange}
+                  onBlur={handlePartialLeadBlur}
                   required
                   className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white bg-gray-50 text-black"
                   placeholder="Your name"
@@ -228,6 +237,7 @@ export default function Contact() {
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
+                  onBlur={handlePartialLeadBlur}
                   required
                   className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white bg-gray-50 text-black"
                   placeholder="your.email@example.com"
@@ -243,6 +253,7 @@ export default function Contact() {
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  onBlur={handlePartialLeadBlur}
                   required
                   className="mt-1 w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md dark:bg-gray-700 dark:text-white bg-gray-50 text-black"
                   placeholder="+91 8080808080"

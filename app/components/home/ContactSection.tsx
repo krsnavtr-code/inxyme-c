@@ -13,6 +13,7 @@ import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 import Link from "next/link";
 import api from "../../utils/api";
+import { usePartialLead } from "../../hooks/usePartialLead";
 
 const ContactSection = () => {
   const [formData, setFormData] = useState({
@@ -24,6 +25,12 @@ const ContactSection = () => {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur, markConverted } = usePartialLead({
+    source: "home_contact_section",
+    getFormData: () => formData,
+  });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -58,6 +65,7 @@ const ContactSection = () => {
       await new Promise((resolve) => setTimeout(resolve, 1000));
 
       toast.success("Message sent successfully!");
+      markConverted();
       setIsSubmitted(true);
       setFormData({
         name: "",
@@ -205,6 +213,7 @@ const ContactSection = () => {
                         required
                         value={formData.name}
                         onChange={handleChange}
+                        onBlur={handlePartialLeadBlur}
                         className="w-full px-4 py-3 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-slate-200/80 dark:border-gray-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
                         placeholder="John Doe"
                       />
@@ -224,6 +233,7 @@ const ContactSection = () => {
                         required
                         value={formData.email}
                         onChange={handleChange}
+                        onBlur={handlePartialLeadBlur}
                         className="w-full px-4 py-3 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-slate-200/80 dark:border-gray-700 rounded-xl text-xs sm:text-sm text-slate-900 dark:text-white focus:bg-white dark:focus:bg-gray-900 focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
                         placeholder="you@example.com"
                       />

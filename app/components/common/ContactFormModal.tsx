@@ -7,6 +7,7 @@ import { FaTimes } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import api from "../../utils/api";
 import { submitContactForm } from "../../api/contactApi";
+import { usePartialLead } from "../../hooks/usePartialLead";
 
 interface ContactFormModalProps {
   isOpen?: boolean;
@@ -42,6 +43,12 @@ export default function ContactFormModal({
   const [isLoadingCourses, setIsLoadingCourses] = useState(true);
   const [lastSubmitTime, setLastSubmitTime] = useState(0);
   const [autoOpened, setAutoOpened] = useState(false);
+
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur, markConverted } = usePartialLead({
+    source: "contact_form_modal",
+    getFormData: () => formData,
+  });
 
   const isVisible = isOpen || autoOpened;
 
@@ -140,6 +147,7 @@ export default function ContactFormModal({
           localStorage.setItem("user_tracker_id", result.data.trackingId);
         }
         setIsSuccess(true);
+        markConverted();
         setFormData({
           name: "",
           email: "",
@@ -251,6 +259,7 @@ export default function ContactFormModal({
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    onBlur={handlePartialLeadBlur}
                     required
                     className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white bg-gray-50 text-black"
                     placeholder="Your name"
@@ -270,6 +279,7 @@ export default function ContactFormModal({
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onBlur={handlePartialLeadBlur}
                     required
                     className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white bg-gray-50 text-black"
                     placeholder="your.email@example.com"
@@ -289,6 +299,7 @@ export default function ContactFormModal({
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    onBlur={handlePartialLeadBlur}
                     required
                     className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white bg-gray-50 text-black"
                     placeholder="+91 8080808080"

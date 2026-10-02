@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import { FaCheckCircle } from "react-icons/fa";
 import api from "../../utils/api";
 import { submitContactForm } from "../../api/contactApi";
+import { usePartialLead } from "../../hooks/usePartialLead";
 
 interface Course {
   _id: string;
@@ -55,6 +56,12 @@ export default function StandaloneLeadForm({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [courseLocked, setCourseLocked] = useState(false);
+
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur, markConverted } = usePartialLead({
+    source: "standalone_lead_form",
+    getFormData: () => formData,
+  });
 
   useEffect(() => {
     const loadCourses = async () => {
@@ -129,9 +136,11 @@ export default function StandaloneLeadForm({
           localStorage.setItem("user_tracker_id", result.data.trackingId);
         }
         if (redirectTo) {
+          markConverted();
           router.push(redirectTo);
           return;
         }
+        markConverted();
         setIsSuccess(true);
         toast.success("Submitted successfully! We will call you back soon.");
       } else {
@@ -206,6 +215,7 @@ export default function StandaloneLeadForm({
               name="name"
               value={formData.name}
               onChange={handleChange}
+              onBlur={handlePartialLeadBlur}
               required
               placeholder="Your name"
               className={inputClass}
@@ -220,6 +230,7 @@ export default function StandaloneLeadForm({
               name="phone"
               value={formData.phone}
               onChange={handleChange}
+              onBlur={handlePartialLeadBlur}
               required
               placeholder="+91 8080808080"
               className={inputClass}
@@ -234,6 +245,7 @@ export default function StandaloneLeadForm({
               name="email"
               value={formData.email}
               onChange={handleChange}
+              onBlur={handlePartialLeadBlur}
               required
               placeholder="your.email@example.com"
               className={inputClass}

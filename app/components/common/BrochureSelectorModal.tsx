@@ -5,6 +5,7 @@ import { FaTimes, FaDownload, FaBook, FaArrowLeft } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import api from "../../utils/api";
 import { getImageUrl } from "../../utils/imageUtils";
+import { usePartialLead } from "../../hooks/usePartialLead";
 
 interface Course {
   _id: string;
@@ -30,6 +31,18 @@ export default function BrochureSelectorModal({
   const [selectedCourse, setSelectedCourse] = useState<Course | null>(null);
   const [formData, setFormData] = useState({ name: "", email: "", phone: "" });
   const [isDownloading, setIsDownloading] = useState(false);
+
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur, markConverted } = usePartialLead({
+    source: "brochure_download_modal",
+    getFormData: () => ({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      courseId: selectedCourse?._id,
+      courseTitle: selectedCourse?.title,
+    }),
+  });
 
   useEffect(() => {
     if (!isOpen) return;
@@ -127,6 +140,8 @@ export default function BrochureSelectorModal({
           subject: "Course Brochure Download",
           message: `User downloaded uploaded course brochure for "${selectedCourse.title}".`,
         });
+        // Mark partial lead as converted
+        markConverted();
       } catch (contactErr) {
         console.warn("Contact logging warning:", contactErr);
       }
@@ -245,6 +260,7 @@ export default function BrochureSelectorModal({
                       name="name"
                       value={formData.name}
                       onChange={handleInputChange}
+                      onBlur={handlePartialLeadBlur}
                       required
                       className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="Your full name"
@@ -260,6 +276,7 @@ export default function BrochureSelectorModal({
                       name="email"
                       value={formData.email}
                       onChange={handleInputChange}
+                      onBlur={handlePartialLeadBlur}
                       required
                       className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="your.email@example.com"
@@ -275,6 +292,7 @@ export default function BrochureSelectorModal({
                       name="phone"
                       value={formData.phone}
                       onChange={handleInputChange}
+                      onBlur={handlePartialLeadBlur}
                       required
                       className="w-full px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                       placeholder="+91 8080808080"

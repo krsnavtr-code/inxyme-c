@@ -33,6 +33,7 @@ import {
   FaClock,
 } from "react-icons/fa";
 import SEO from "../components/SEO";
+import { usePartialLead } from "../hooks/usePartialLead";
 
 // Core 12 Value Pillars that guarantee student transformation and admission conversion
 interface BenefitPillar {
@@ -456,6 +457,12 @@ export default function WhyInxymePage() {
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur: handleCounselingBlur, markConverted: markCounselingConverted } = usePartialLead({
+    source: "why_inxyme_counseling",
+    getFormData: () => counselingFormData,
+  });
+
   const filteredPillars =
     activeCategory === "all"
       ? BENEFIT_PILLARS
@@ -466,6 +473,7 @@ export default function WhyInxymePage() {
 
   const handleCounselingSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    markCounselingConverted();
     setIsSubmitted(true);
     setTimeout(() => {
       setIsSubmitted(false);
@@ -1063,6 +1071,7 @@ export default function WhyInxymePage() {
                       onChange={(e) =>
                         setCounselingFormData({ ...counselingFormData, name: e.target.value })
                       }
+                      onBlur={handleCounselingBlur}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
@@ -1079,6 +1088,7 @@ export default function WhyInxymePage() {
                       onChange={(e) =>
                         setCounselingFormData({ ...counselingFormData, phone: e.target.value })
                       }
+                      onBlur={handleCounselingBlur}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>
@@ -1095,6 +1105,7 @@ export default function WhyInxymePage() {
                       onChange={(e) =>
                         setCounselingFormData({ ...counselingFormData, email: e.target.value })
                       }
+                      onBlur={handleCounselingBlur}
                       className="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 text-xs sm:text-sm text-slate-900 dark:text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                   </div>

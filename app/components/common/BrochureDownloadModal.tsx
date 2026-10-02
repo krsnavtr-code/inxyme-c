@@ -5,6 +5,7 @@ import { FaTimes } from "react-icons/fa";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 import api from "../../utils/api";
+import { usePartialLead } from "../../hooks/usePartialLead";
 
 interface BrochureDownloadModalProps {
   isOpen: boolean;
@@ -28,6 +29,12 @@ export default function BrochureDownloadModal({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur, markConverted } = usePartialLead({
+    source: "brochure_download",
+    getFormData: () => ({ ...formData, courseTitle }),
+  });
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -62,6 +69,7 @@ export default function BrochureDownloadModal({
       const result = response.data;
 
       if (result.success) {
+        markConverted();
         setIsSuccess(true);
         setSuccessMessage(result.message || "Request submitted successfully!");
         toast.success(result.message || "Request submitted successfully!");
@@ -155,6 +163,7 @@ export default function BrochureDownloadModal({
                     name="name"
                     value={formData.name}
                     onChange={handleChange}
+                    onBlur={handlePartialLeadBlur}
                     required
                     className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white bg-gray-50 border-gray-800 text-black"
                     placeholder="Your name"
@@ -174,6 +183,7 @@ export default function BrochureDownloadModal({
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
+                    onBlur={handlePartialLeadBlur}
                     required
                     className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white bg-gray-50 border-gray-800 text-black"
                     placeholder="your.email@example.com"
@@ -193,6 +203,7 @@ export default function BrochureDownloadModal({
                     name="phone"
                     value={formData.phone}
                     onChange={handleChange}
+                    onBlur={handlePartialLeadBlur}
                     required
                     className="w-full px-3 py-1.5 text-sm border border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:text-white bg-gray-50 border-gray-800 text-black"
                     placeholder="+91 8080808080"

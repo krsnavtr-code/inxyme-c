@@ -23,6 +23,7 @@ import { FaMessage as MessageSquare } from "react-icons/fa6";
 import { formatPrice } from "../../utils/format";
 import { getImageUrl } from "../../utils/imageUtils";
 import api from "../../utils/api";
+import { usePartialLead } from "../../hooks/usePartialLead";
 
 export interface CourseTopSectionProps {
   course: {
@@ -247,6 +248,12 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
   const [showEnquiryReminder, setShowEnquiryReminder] = useState(false);
   const formRef = useRef<HTMLDivElement>(null);
 
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur: handleEnquiryBlur, markConverted: markEnquiryConverted } = usePartialLead({
+    source: "course_enquiry_form",
+    getFormData: () => ({ ...enquiry, courseTitle: course.title }),
+  });
+
   useEffect(() => {
     const form = formRef.current;
     if (!form) return;
@@ -334,6 +341,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
           phone: "",
           message: "",
         });
+        markEnquiryConverted();
       } else {
         throw new Error(response.data.message || "Failed to submit enquiry");
       }
@@ -692,6 +700,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
                       name="name"
                       value={enquiry.name}
                       onChange={handleEnquiryChange}
+                      onBlur={handleEnquiryBlur}
                       placeholder="Your name"
                       className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white placeholder:text-slate-700 dark:placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       required
@@ -703,6 +712,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
                       name="email"
                       value={enquiry.email}
                       onChange={handleEnquiryChange}
+                      onBlur={handleEnquiryBlur}
                       placeholder="Your email"
                       className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white placeholder:text-slate-700 dark:placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       required
@@ -714,6 +724,7 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
                       name="phone"
                       value={enquiry.phone}
                       onChange={handleEnquiryChange}
+                      onBlur={handleEnquiryBlur}
                       placeholder="Your phone number"
                       className="w-full px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900 text-slate-900 dark:text-white placeholder:text-slate-700 dark:placeholder:text-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
                       required

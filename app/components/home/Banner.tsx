@@ -21,6 +21,7 @@ import Link from "next/link";
 import { toast } from "react-hot-toast";
 import api from "../../utils/api";
 import { submitContactForm } from "../../api/contactApi";
+import { usePartialLead } from "../../hooks/usePartialLead";
 import ContactFormModal from "../common/ContactFormModal";
 import BrochureSelectorModal from "../common/BrochureSelectorModal";
 
@@ -125,6 +126,12 @@ function Banner() {
   const [lastSubmitTime, setLastSubmitTime] = useState(0);
   const [showBrochureModal, setShowBrochureModal] = useState(false);
 
+  // Partial Lead capture on blur
+  const { handlePartialLeadBlur, markConverted } = usePartialLead({
+    source: "banner_lead_form",
+    getFormData: () => formData,
+  });
+
   useEffect(() => {
     const fetchCourseCount = async () => {
       try {
@@ -222,6 +229,7 @@ function Banner() {
         if (result.data?.trackingId) {
           localStorage.setItem("user_tracker_id", result.data.trackingId);
         }
+        markConverted();
         setIsSubmitted(true);
         toast.success(
           result.message ||
@@ -433,6 +441,7 @@ function Banner() {
                           required
                           value={formData.name}
                           onChange={handleFormChange}
+                          onBlur={handlePartialLeadBlur}
                           placeholder="Your Name"
                           className="w-full pl-9 pr-3 py-2 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-slate-200/80 dark:border-gray-700/80 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:bg-white dark:focus:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                         />
@@ -452,6 +461,7 @@ function Banner() {
                             required
                             value={formData.email}
                             onChange={handleFormChange}
+                            onBlur={handlePartialLeadBlur}
                             placeholder="you@email.com"
                             className="w-full pl-9 pr-3 py-2 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-slate-200/80 dark:border-gray-700/80 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:bg-white dark:focus:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                           />
@@ -470,6 +480,7 @@ function Banner() {
                             required
                             value={formData.phone}
                             onChange={handleFormChange}
+                            onBlur={handlePartialLeadBlur}
                             placeholder="+91 9876543210"
                             className="w-full pl-9 pr-3 py-2 bg-white/70 dark:bg-gray-900/70 backdrop-blur-sm border border-slate-200/80 dark:border-gray-700/80 rounded-lg text-xs sm:text-sm text-slate-900 dark:text-white placeholder-slate-400 focus:bg-white dark:focus:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
                           />
