@@ -8,6 +8,7 @@ import { AuthProvider } from "./context/AuthContext";
 import DefaultCanonical from "./components/DefaultCanonical";
 import VisitorTracker from "./components/common/VisitorTracker";
 import ExitIntentModal from "./components/common/ExitIntentModal";
+import PostHogProvider from "./components/common/PostHogProvider";
 
 const GTM_ID = "GTM-WP77FSW2";
 
@@ -86,6 +87,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
         <DefaultCanonical />
         <VisitorTracker />
         <ExitIntentModal />
+        <PostHogProvider />
         <AuthProvider>
           <AppShell>
             <main className="flex-1">{children}</main>

@@ -67,6 +67,7 @@ export function getOrCreateVisitorId(): string {
 }
 
 import { getDeviceFingerprint } from "./fingerprint";
+import { posthogIdentify, posthogCapture, posthogTrackCourseView } from "./posthog";
 
 /**
  * Silently sync visitor page view with backend API, sending visitorId, browser fingerprint & device info
@@ -79,6 +80,14 @@ export async function trackVisitorPageView(pageUrl: string, pageTitle?: string):
     if (!visitorId) return null;
 
     const fpData = await getDeviceFingerprint();
+
+    // 08 - PostHog Event-Driven Tracking
+    if (pageUrl.includes("/courses/") || pageUrl.includes("/course")) {
+      posthogTrackCourseView(pageTitle || pageUrl, undefined, {
+        visitorId,
+        fingerprint: fpData?.fingerprint || "",
+      });
+    }
 
     const response = await api.post("/visitors/track", {
       visitorId,
@@ -108,6 +117,18 @@ export async function identifyVisitor(data: { name?: string; email?: string; pho
 
     const fpData = await getDeviceFingerprint();
 
+    // 08 - PostHog Student Identification (Funnel Journey Stitching)
+    posthogIdentify(visitorId, {
+      ...data,
+      fingerprint: fpData?.fingerprint || "",
+      ...(fpData?.deviceInfo || {}),
+    });
+    posthogCapture("student_identified", {
+      ...data,
+      visitorId,
+      fingerprint: fpData?.fingerprint || "",
+    });
+
     const response = await api.post("/visitors/identify", {
       visitorId,
       fingerprint: fpData?.fingerprint || "",
@@ -125,3 +146,4 @@ export async function getFingerprint(): Promise<string> {
   const fpData = await getDeviceFingerprint();
   return fpData?.fingerprint || "";
 }
+

@@ -9,6 +9,8 @@ import { getOrCreateVisitorId } from "../../utils/visitorTracker";
 import { getFingerprint } from "../../utils/visitorTracker";
 import api from "../../utils/api";
 import { submitContactForm } from "../../api/contactApi";
+import { posthogCapture, posthogIdentify, posthogTrackLead } from "../../utils/posthog";
+
 
 interface Course {
   _id: string;
@@ -49,6 +51,16 @@ export default function ExitIntentModal() {
       pageUrl: pathname || "/",
     }),
   });
+
+  // 08 - PostHog Track Exit Intent Modal Shown
+  useEffect(() => {
+    if (isOpen) {
+      posthogCapture("exit_intent_modal_shown", {
+        pathname: pathname || "/",
+        courseTitle: formData.courseTitle,
+      });
+    }
+  }, [isOpen, pathname, formData.courseTitle]);
 
   // Pre-fetch courses list on mount so dropdown is never empty and loads instantly
   useEffect(() => {
@@ -150,6 +162,21 @@ export default function ExitIntentModal() {
         source: "exit_intent",
         visitorId,
         fingerprint,
+      });
+
+      // 08 - PostHog Student Identification and Funnel Step
+      posthogIdentify(visitorId, {
+        name: formData.name.trim() || undefined,
+        phone: cleanPhone,
+        courseTitle: formData.courseTitle || undefined,
+        claimedExitOffer: true,
+      });
+      posthogTrackLead({
+        leadType: "exit_intent",
+        courseTitle: formData.courseTitle,
+        source: "exit_intent_scholarship",
+        phone: cleanPhone,
+        name: formData.name.trim(),
       });
 
       // Mark partial lead as converted

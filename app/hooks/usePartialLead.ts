@@ -6,6 +6,8 @@ import {
   convertPartialLead,
 } from "../api/partialLeadApi";
 import { getOrCreateVisitorId } from "../utils/visitorTracker";
+import { posthogIdentify, posthogTrackLead } from "../utils/posthog";
+
 
 /**
  * Generate a unique session fingerprint for this form session.
@@ -82,6 +84,24 @@ export function usePartialLead({ source, getFormData }: UsePartialLeadOptions) {
       if (sig === lastSentRef.current) return;
       lastSentRef.current = sig;
 
+      const visitorId = typeof window !== "undefined" ? getOrCreateVisitorId() : "";
+
+      // 08 - PostHog Funnel Tracking for Form Field Drop-off
+      posthogIdentify(visitorId, {
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+        courseTitle: data.courseTitle,
+      });
+      posthogTrackLead({
+        leadType: "partial",
+        courseTitle: data.courseTitle,
+        source: `form_blur_${source}`,
+        name: data.name,
+        email: data.email,
+        phone: data.phone,
+      });
+
       // Fire-and-forget — completely silent
       savePartialLead({
         name: data.name || "",
@@ -92,7 +112,7 @@ export function usePartialLead({ source, getFormData }: UsePartialLeadOptions) {
         source,
         pageUrl: typeof window !== "undefined" ? window.location.pathname : "",
         sessionFingerprint: fingerprintRef.current,
-        visitorId: typeof window !== "undefined" ? getOrCreateVisitorId() : "",
+        visitorId,
       });
     },
     [source, getFormData],
