@@ -74,6 +74,17 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
     }
   }, [course]);
 
+  // Track course view in Microsoft Clarity
+  useEffect(() => {
+    if (typeof window !== "undefined" && (window as any).clarity && course?.title) {
+      (window as any).clarity("set", "course_viewed", course.title);
+      (window as any).clarity("set", "course_slug", course.slug || "");
+      if (course._id) {
+        (window as any).clarity("set", "course_id", course._id);
+      }
+    }
+  }, [course]);
+
   const [formData, setFormData] = useState<FormDataState>({
     name: currentUser?.name || "",
     email: currentUser?.email || "",
