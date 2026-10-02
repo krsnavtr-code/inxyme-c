@@ -92,7 +92,7 @@ const CourseCard = ({ course }: { course: Course }) => {
       const timeoutId = setTimeout(() => {
         if (isMounted) {
           const imgElement = new Image();
-          imgElement.onload = () => {};
+          imgElement.onload = () => { };
           imgElement.onerror = () => {
             if (isMounted) {
               setImageState({
@@ -142,7 +142,7 @@ const CourseCard = ({ course }: { course: Course }) => {
         href={`/course/${course.slug || course._id}`}
         className="flex flex-col h-full"
       >
-        <div className="relative w-full h-48 bg-slate-100 dark:bg-gray-900 overflow-hidden">
+        <div className="relative w-full bg-slate-100 dark:bg-gray-900 overflow-hidden">
           {imageState.loading ? (
             <div className="w-full h-full flex items-center justify-center">
               <div className="animate-pulse rounded-full h-10 w-10 border-3 border-t-blue-500 border-gray-300"></div>
@@ -155,7 +155,7 @@ const CourseCard = ({ course }: { course: Course }) => {
             <img
               src={imageState.url}
               alt={course.title || "Course image"}
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+              className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
               loading="lazy"
             />
           )}

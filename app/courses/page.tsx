@@ -297,20 +297,18 @@ function CoursesContent() {
           <div className="inline-flex p-1.5 rounded-2xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl border border-slate-200/80 dark:border-slate-700/60 shadow-lg shadow-slate-200/40 dark:shadow-black/30 gap-2">
             <button
               onClick={() => handleTabChange("all")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 ${
-                activeTab === "all"
-                  ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 scale-[1.02]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-gray-800/60"
-              }`}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 ${activeTab === "all"
+                ? "bg-blue-600 text-white shadow-md shadow-blue-600/30 scale-[1.02]"
+                : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-gray-800/60"
+                }`}
             >
               <FaGraduationCap className="text-sm" />
               <span>All Courses</span>
               <span
-                className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${
-                  activeTab === "all"
-                    ? "bg-white/20 text-white"
-                    : "bg-slate-200/70 dark:bg-gray-700 text-slate-700 dark:text-slate-300"
-                }`}
+                className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${activeTab === "all"
+                  ? "bg-white/20 text-white"
+                  : "bg-slate-200/70 dark:bg-gray-700 text-slate-700 dark:text-slate-300"
+                  }`}
               >
                 {courses.length}
               </span>
@@ -318,11 +316,10 @@ function CoursesContent() {
 
             <button
               onClick={() => handleTabChange("free")}
-              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 ${
-                activeTab === "free"
-                  ? "bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-md shadow-emerald-600/30 scale-[1.02]"
-                  : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-gray-800/60"
-              }`}
+              className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 ${activeTab === "free"
+                ? "bg-gradient-to-r from-emerald-600 to-green-600 text-white shadow-md shadow-emerald-600/30 scale-[1.02]"
+                : "text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/60 dark:hover:bg-gray-800/60"
+                }`}
             >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
@@ -331,11 +328,10 @@ function CoursesContent() {
               <FaGift className="text-sm" />
               <span>Free Courses</span>
               <span
-                className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${
-                  activeTab === "free"
-                    ? "bg-white/20 text-white"
-                    : "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-400"
-                }`}
+                className={`px-2 py-0.5 rounded-full text-[10px] font-extrabold ${activeTab === "free"
+                  ? "bg-white/20 text-white"
+                  : "bg-emerald-100 dark:bg-emerald-950/70 text-emerald-700 dark:text-emerald-400"
+                  }`}
               >
                 {freeCount}
               </span>
@@ -430,16 +426,16 @@ function CoursesContent() {
                   className="group relative block bg-white/80 dark:bg-gray-800/80 backdrop-blur-md rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden border border-slate-200/80 dark:border-slate-700/60 hover:border-blue-500 dark:hover:border-blue-500 hover:-translate-y-1 flex flex-col justify-between"
                 >
                   <div>
-                    <div className="w-full h-48 bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden relative">
+                    <div className="w-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center overflow-hidden relative">
                       {course.thumbnail || course.image ? (
                         <img
                           src={getImageUrl(course.thumbnail || course.image)}
                           alt={course.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-500"
                           loading="lazy"
                         />
                       ) : (
-                        <div className="w-full h-full flex items-center justify-center text-slate-400">
+                        <div className="w-full h-auto flex items-center justify-center text-slate-400">
                           <FaBook className="text-4xl opacity-50" />
                         </div>
                       )}
