@@ -123,20 +123,20 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     rating: 5,
     featured: false,
   },
-  {
-    id: 7,
-    name: "Pooja Verma",
-    role: "SAP FICO Consultant",
-    company: "Deloitte India Ecosystem",
-    course: "SAP FICO Financial Accounting",
-    category: "SAP Enterprise",
-    hike: "115% Hike",
-    image: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
-    content:
-      "The SAP FICO training bridged the gap between academic accounting and live enterprise ERP financial management. General Ledger, Accounts Payable, and Asset Accounting were explained with live case studies. Truly invaluable for finance professionals looking to switch to SAP.",
-    rating: 5,
-    featured: false,
-  },
+  // {
+  //   id: 7,
+  //   name: "Pooja Verma",
+  //   role: "SAP FICO Consultant",
+  //   company: "Deloitte India Ecosystem",
+  //   course: "SAP FICO Financial Accounting",
+  //   category: "SAP Enterprise",
+  //   hike: "115% Hike",
+  //   image: "https://www.inxyme.com/api/upload/file/1777960745027-1855.png",
+  //   content:
+  //     "The SAP FICO training bridged the gap between academic accounting and live enterprise ERP financial management. General Ledger, Accounts Payable, and Asset Accounting were explained with live case studies. Truly invaluable for finance professionals looking to switch to SAP.",
+  //   rating: 5,
+  //   featured: false,
+  // },
   {
     id: 8,
     name: "Rahul Mehta",
@@ -151,20 +151,20 @@ const ALL_TESTIMONIALS: Testimonial[] = [
     rating: 5,
     featured: false,
   },
-  {
-    id: 9,
-    name: "Neha Gupta",
-    role: "Data Scientist",
-    company: "Analytics Quotient",
-    course: "Machine Learning & AI Certification",
-    category: "AI & Data",
-    hike: "130% Hike",
-    image: "https://www.inxyme.com/api/upload/file/1777960745009-2116.png",
-    content:
-      "The balance between mathematical intuition and Python code implementation in this course is unmatched. Working on real-world datasets for fraud detection and recommendation engines prepared me thoroughly for senior data science interviews.",
-    rating: 5,
-    featured: false,
-  },
+  // {
+  //   id: 9,
+  //   name: "Neha Gupta",
+  //   role: "Data Scientist",
+  //   company: "Analytics Quotient",
+  //   course: "Machine Learning & AI Certification",
+  //   category: "AI & Data",
+  //   hike: "130% Hike",
+  //   image: "https://www.inxyme.com/api/upload/file/1777960745009-2116.png",
+  //   content:
+  //     "The balance between mathematical intuition and Python code implementation in this course is unmatched. Working on real-world datasets for fraud detection and recommendation engines prepared me thoroughly for senior data science interviews.",
+  //   rating: 5,
+  //   featured: false,
+  // },
 ];
 
 const CATEGORIES = [
