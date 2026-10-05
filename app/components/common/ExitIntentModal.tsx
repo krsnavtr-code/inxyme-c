@@ -253,15 +253,12 @@ export default function ExitIntentModal() {
           <h3 className="text-xl sm:text-2xl font-black tracking-tight leading-snug">
             Get 10% Instant Scholarship & Free Course Syllabus
           </h3>
-          <p className="text-xs sm:text-sm text-blue-100 mt-1 max-w-md mx-auto">
-            Don't leave empty-handed! Get complete placement curriculum & scholarship coupon code directly on WhatsApp.
-          </p>
         </div>
 
         {/* Modal Body */}
-        <div className="p-6 sm:p-7">
+        <div className="p-2 sm:p-4">
           {!isSuccess ? (
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-2">
               <MagicPrefillBanner
                 name={formData.name}
                 phone={formData.phone}
@@ -370,17 +367,6 @@ export default function ExitIntentModal() {
                   </>
                 )}
               </button>
-
-              {/* Opt-out text */}
-              <div className="text-center pt-1">
-                <button
-                  type="button"
-                  onClick={closeModal}
-                  className="text-xs text-gray-400 hover:text-gray-600 underline transition-colors cursor-pointer"
-                >
-                  No thanks, I will pay full fees later
-                </button>
-              </div>
             </form>
           ) : (
             /* Success State */
