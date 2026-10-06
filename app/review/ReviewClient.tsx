@@ -21,6 +21,7 @@ import {
   Film,
   X,
   Zap,
+  ImageIcon,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -108,6 +109,13 @@ export default function ReviewClient() {
   const [phoneError, setPhoneError] = useState("");
   const [reviewText, setReviewText] = useState("");
 
+  // Selfie / Photo state (ONLY FOR WRITTEN REVIEW - OPTIONAL)
+  const [studentPhotoFile, setStudentPhotoFile] = useState<File | null>(null);
+  const [studentPhotoPreview, setStudentPhotoPreview] = useState<string | null>(null);
+  const [preUploadedPhotoUrl, setPreUploadedPhotoUrl] = useState<string | null>(null);
+  const [isPhotoUploading, setIsPhotoUploading] = useState(false);
+  const photoInputRef = useRef<HTMLInputElement | null>(null);
+
   // Video review specific states
   const [videoSource, setVideoSource] = useState<"record" | "upload">("record");
   const [isCameraActive, setIsCameraActive] = useState(false);
@@ -178,6 +186,7 @@ export default function ReviewClient() {
       }
       if (recordedVideoUrl) URL.revokeObjectURL(recordedVideoUrl);
       if (uploadedVideoPreview) URL.revokeObjectURL(uploadedVideoPreview);
+      if (studentPhotoPreview) URL.revokeObjectURL(studentPhotoPreview);
     };
   }, []);
 
@@ -243,9 +252,62 @@ export default function ReviewClient() {
     return true;
   };
 
-  // ==================== BACKGROUND PRE-UPLOAD FUNCTION ====================
-  // Starts uploading the video to the server IMMEDIATELY in the background
-  // while the student is busy typing their name, phone, and rating!
+  // Handle Selfie / Photo Upload for Written Review
+  const handlePhotoChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      toast.error("Please select a valid image file (JPEG, PNG, WebP).");
+      return;
+    }
+
+    if (file.size > 10 * 1024 * 1024) {
+      toast.error("Photo size should be less than 10MB.");
+      return;
+    }
+
+    if (studentPhotoPreview) {
+      URL.revokeObjectURL(studentPhotoPreview);
+    }
+
+    setStudentPhotoFile(file);
+    const preview = URL.createObjectURL(file);
+    setStudentPhotoPreview(preview);
+
+    // Fast pre-upload photo to server
+    setIsPhotoUploading(true);
+    try {
+      const formData = new FormData();
+      formData.append("photo", file);
+      const res = await fetch(`${apiBaseUrl}/reviews/upload-photo`, {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.success && data.photoUrl) {
+        setPreUploadedPhotoUrl(data.photoUrl);
+      }
+    } catch (err) {
+      console.error("Selfie upload error:", err);
+    } finally {
+      setIsPhotoUploading(false);
+    }
+  };
+
+  const handleRemovePhoto = () => {
+    if (studentPhotoPreview) {
+      URL.revokeObjectURL(studentPhotoPreview);
+    }
+    setStudentPhotoFile(null);
+    setStudentPhotoPreview(null);
+    setPreUploadedPhotoUrl(null);
+    if (photoInputRef.current) {
+      photoInputRef.current.value = "";
+    }
+  };
+
+  // ==================== BACKGROUND PRE-UPLOAD FUNCTION (FOR VIDEO) ====================
   const startBackgroundPreUpload = (fileOrBlob: Blob | File) => {
     if (backgroundXhrRef.current) {
       backgroundXhrRef.current.abort();
@@ -494,7 +556,7 @@ export default function ReviewClient() {
     }
   };
 
-  // Submit Text Review
+  // Submit Text Review (with optional selfie photo)
   const handleSubmitTextReview = async () => {
     if (!reviewText.trim()) {
       toast.error("Please write your review or experience.");
@@ -518,6 +580,7 @@ export default function ReviewClient() {
         body: JSON.stringify({
           studentName: studentName.trim(),
           studentPhone: fullPhone,
+          studentPhoto: preUploadedPhotoUrl || "",
           rating,
           tags: selectedTags,
           reviewText: reviewText.trim(),
@@ -1186,6 +1249,72 @@ export default function ReviewClient() {
                   </div>
                 </div>
               </div>
+
+              {/* ================= OPTIONAL SELFIE PHOTO UPLOAD (ONLY FOR WRITTEN REVIEW) ================= */}
+              {reviewMode === "text" && (
+                <div className="bg-slate-50/80 dark:bg-slate-800/50 p-2.5 rounded-xl border border-slate-200/80 dark:border-slate-700 space-y-1.5">
+                  <div className="flex items-center justify-between">
+                    <label className="text-[11px] font-medium text-slate-800 dark:text-slate-300 flex items-center gap-1.5">
+                      <Camera className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
+                      Add Selfie / Photo <span className="text-[10px] text-slate-400 font-normal">(Optional)</span>
+                    </label>
+                    {studentPhotoPreview && (
+                      <button
+                        type="button"
+                        onClick={handleRemovePhoto}
+                        className="text-[10px] text-rose-500 hover:text-rose-600 font-medium"
+                      >
+                        Remove Photo
+                      </button>
+                    )}
+                  </div>
+
+                  <input
+                    ref={photoInputRef}
+                    type="file"
+                    accept="image/*"
+                    onChange={handlePhotoChange}
+                    className="hidden"
+                  />
+
+                  {studentPhotoPreview ? (
+                    <div className="flex items-center gap-3 bg-white dark:bg-slate-900/60 p-2 rounded-lg border border-slate-200 dark:border-slate-700">
+                      <div className="relative w-11 h-11 rounded-full overflow-hidden border-2 border-indigo-500 shadow-sm flex-shrink-0">
+                        <img
+                          src={studentPhotoPreview}
+                          alt="Student Selfie"
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-xs font-semibold text-slate-800 dark:text-slate-200 truncate">
+                          {studentPhotoFile?.name || "Selfie attached"}
+                        </p>
+                        <p className="text-[10px] text-emerald-600 dark:text-emerald-400 flex items-center gap-1 font-medium">
+                          {isPhotoUploading ? "Saving photo..." : "✓ Photo attached (Optional)"}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => photoInputRef.current?.click()}
+                        className="px-2.5 py-1 text-[11px] font-medium text-indigo-600 dark:text-indigo-400 bg-indigo-50 dark:bg-indigo-950/60 rounded-lg hover:bg-indigo-100"
+                      >
+                        Change
+                      </button>
+                    </div>
+                  ) : (
+                    <div
+                      onClick={() => photoInputRef.current?.click()}
+                      className="flex items-center justify-center gap-2 p-2 border border-dashed border-indigo-200 dark:border-slate-700 hover:border-indigo-400 rounded-lg cursor-pointer bg-white dark:bg-slate-900/40 hover:bg-indigo-50/20 transition-all text-center"
+                    >
+                      <Camera className="w-4 h-4 text-indigo-600" />
+                      <span className="text-xs text-slate-600 dark:text-slate-300 font-medium">
+                        Upload Selfie / Face Photo <span className="text-slate-400 text-[10px] font-normal">(Optional)</span>
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
 
               {/* REVIEW TEXTAREA (Required for Text review, Optional caption for Video review) */}
               <div>
