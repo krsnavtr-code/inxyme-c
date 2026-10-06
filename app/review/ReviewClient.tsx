@@ -151,8 +151,16 @@ export default function ReviewClient() {
         {submittedSuccess ? (
           /* ================= SUCCESS STATE ================= */
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 sm:p-10 shadow-2xl border border-indigo-100 dark:border-slate-800 text-center space-y-6 animate-in fade-in zoom-in-95 duration-200">
-            <div className="w-20 h-20 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto shadow-inner ring-8 ring-emerald-50/50">
-              <Check className="w-10 h-10 stroke-[3]" />
+            <div className="flex justify-center">
+              <img
+                src="https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png"
+                alt="Inxyme Logo"
+                className="h-9 w-auto object-contain"
+              />
+            </div>
+
+            <div className="w-16 h-16 bg-emerald-50 dark:bg-emerald-950/40 text-emerald-600 dark:text-emerald-400 rounded-full flex items-center justify-center mx-auto shadow-inner ring-8 ring-emerald-50/50">
+              <Check className="w-8 h-8 stroke-[3]" />
             </div>
 
             <div className="space-y-2">
@@ -221,16 +229,23 @@ export default function ReviewClient() {
           /* ================= MAIN REVIEW FORM ================= */
           <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-9 shadow-2xl border border-indigo-100 dark:border-slate-800 space-y-6">
             {/* Header */}
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-3">
+              <div className="flex justify-center">
+                <img
+                  src="https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png"
+                  alt="Inxyme Logo"
+                  className="h-10 w-auto object-contain"
+                />
+              </div>
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300 border border-indigo-200 dark:border-indigo-800">
                 <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                Inxyme Student Review
+                Official Student Review
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
                 How Was Your Experience?
               </h1>
               <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm max-w-sm mx-auto">
-                Share your learning journey in just <span className="font-semibold text-indigo-600 dark:text-indigo-400">2-3 quick clicks</span>!
+                Share your feedback in just <span className="font-semibold text-indigo-600 dark:text-indigo-400">2-3 quick clicks</span>!
               </p>
             </div>
 

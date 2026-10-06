@@ -224,7 +224,7 @@ export default function ExitIntentModal() {
     setTimeout(() => setCopied(false), 2500);
   };
 
-  if (!isOpen) return null;
+  if (!isOpen || pathname?.startsWith("/review") || pathname?.startsWith("/sap-training-certification")) return null;
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 bg-black/70 backdrop-blur-md animate-in fade-in duration-200">
