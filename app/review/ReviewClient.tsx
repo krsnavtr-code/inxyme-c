@@ -179,6 +179,16 @@ export default function ReviewClient() {
     }
   };
 
+  // Ensure live video stream is bound as soon as camera becomes active
+  useEffect(() => {
+    if (isCameraActive && mediaStreamRef.current && liveVideoRef.current) {
+      if (liveVideoRef.current.srcObject !== mediaStreamRef.current) {
+        liveVideoRef.current.srcObject = mediaStreamRef.current;
+      }
+      liveVideoRef.current.play().catch(() => {});
+    }
+  }, [isCameraActive]);
+
   useEffect(() => {
     return () => {
       stopCameraStream();
@@ -398,33 +408,46 @@ export default function ReviewClient() {
         stream = await navigator.mediaDevices.getUserMedia({
           video: {
             facingMode: "user",
-            width: { ideal: 1080 },
-            height: { ideal: 1920 },
-            aspectRatio: { ideal: 9 / 16 },
+            width: { ideal: 1280 },
+            height: { ideal: 720 },
           },
           audio: true,
         });
       } catch (portraitErr) {
-        // Fallback for devices or desktop webcams that don't support custom aspect ratio
-        stream = await navigator.mediaDevices.getUserMedia({
-          video: {
-            facingMode: "user",
-          },
-          audio: true,
-        });
+        try {
+          // Fallback with generic constraints
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+            audio: true,
+          });
+        } catch (audioErr) {
+          // If microphone is blocked or unavailable, at least open video
+          stream = await navigator.mediaDevices.getUserMedia({
+            video: true,
+          });
+        }
       }
 
       mediaStreamRef.current = stream;
       setIsCameraActive(true);
 
+      // Bind to video ref if already mounted or in next event loop tick
       if (liveVideoRef.current) {
         liveVideoRef.current.srcObject = stream;
         liveVideoRef.current.play().catch(() => {});
       }
+      setTimeout(() => {
+        if (liveVideoRef.current && stream) {
+          if (liveVideoRef.current.srcObject !== stream) {
+            liveVideoRef.current.srcObject = stream;
+          }
+          liveVideoRef.current.play().catch(() => {});
+        }
+      }, 50);
     } catch (err: any) {
       console.error("Camera access error:", err);
       toast.error(
-        "Could not access camera or microphone. Please enable camera permissions or upload a video file instead."
+        "Could not access camera. Please allow camera permissions in your browser or upload a video file instead."
       );
       setVideoSource("upload");
     }
@@ -1044,10 +1067,19 @@ export default function ReviewClient() {
                               <div className="relative mx-auto w-full max-w-[280px] sm:max-w-[310px] aspect-[9/16] rounded-3xl overflow-hidden bg-black border-4 border-slate-900 dark:border-slate-800 shadow-2xl flex flex-col justify-between">
                                 {/* Mirrored Live Camera Stream */}
                                 <video
-                                  ref={liveVideoRef}
+                                  ref={(node) => {
+                                    liveVideoRef.current = node;
+                                    if (node && mediaStreamRef.current && node.srcObject !== mediaStreamRef.current) {
+                                      node.srcObject = mediaStreamRef.current;
+                                      node.play().catch(() => {});
+                                    }
+                                  }}
                                   autoPlay
                                   playsInline
                                   muted
+                                  onLoadedMetadata={(e) => {
+                                    (e.target as HTMLVideoElement).play().catch(() => {});
+                                  }}
                                   style={{ transform: "scaleX(-1)" }}
                                   className="absolute inset-0 w-full h-full object-cover z-0"
                                 />
