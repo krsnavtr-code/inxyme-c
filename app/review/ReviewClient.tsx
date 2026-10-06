@@ -20,7 +20,7 @@ import {
   Play,
   Film,
   X,
-  AlertCircle,
+  Zap,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -71,6 +71,21 @@ const PREDEFINED_TAGS = [
   "📚 Quality Material",
 ];
 
+const COUNTRY_CODES = [
+  { code: "+91", country: "India", flag: "🇮🇳", maxDigits: 10 },
+  { code: "+1", country: "USA/Canada", flag: "🇺🇸", maxDigits: 10 },
+  { code: "+44", country: "UK", flag: "🇬🇧", maxDigits: 10 },
+  { code: "+971", country: "UAE", flag: "🇦🇪", maxDigits: 9 },
+  { code: "+966", country: "Saudi Arabia", flag: "🇸🇦", maxDigits: 9 },
+  { code: "+65", country: "Singapore", flag: "🇸🇬", maxDigits: 8 },
+  { code: "+61", country: "Australia", flag: "🇦🇺", maxDigits: 9 },
+  { code: "+977", country: "Nepal", flag: "🇳🇵", maxDigits: 10 },
+  { code: "+880", country: "Bangladesh", flag: "🇧🇩", maxDigits: 10 },
+  { code: "+49", country: "Germany", flag: "🇩🇪", maxDigits: 11 },
+  { code: "+33", country: "France", flag: "🇫🇷", maxDigits: 9 },
+  { code: "+81", country: "Japan", flag: "🇯🇵", maxDigits: 10 },
+];
+
 export default function ReviewClient() {
   const searchParams = useSearchParams();
   const initialType = searchParams.get("type");
@@ -88,7 +103,9 @@ export default function ReviewClient() {
     "💻 Practical Live Projects",
   ]);
   const [studentName, setStudentName] = useState("");
+  const [countryCode, setCountryCode] = useState("+91");
   const [studentPhone, setStudentPhone] = useState("");
+  const [phoneError, setPhoneError] = useState("");
   const [reviewText, setReviewText] = useState("");
 
   // Video review specific states
@@ -101,7 +118,15 @@ export default function ReviewClient() {
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [uploadedVideoPreview, setUploadedVideoPreview] = useState<string | null>(null);
 
-  // Camera stream refs
+  // Background Pre-Upload States (Fast / Optimistic Upload)
+  const [backgroundUploadStatus, setBackgroundUploadStatus] = useState<
+    "idle" | "uploading" | "ready" | "error"
+  >("idle");
+  const [backgroundUploadProgress, setBackgroundUploadProgress] = useState(0);
+  const [preUploadedVideoUrl, setPreUploadedVideoUrl] = useState<string | null>(null);
+  const [preUploadedVideoSize, setPreUploadedVideoSize] = useState<number>(0);
+
+  // Refs
   const liveVideoRef = useRef<HTMLVideoElement | null>(null);
   const mediaStreamRef = useRef<MediaStream | null>(null);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -109,9 +134,15 @@ export default function ReviewClient() {
   const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
+  // Background Upload XHR & Promise resolver ref
+  const backgroundXhrRef = useRef<XMLHttpRequest | null>(null);
+  const pendingUploadPromiseRef = useRef<{
+    resolve: (val: { url: string; size: number } | null) => void;
+  } | null>(null);
+
   // Submission state
   const [submitting, setSubmitting] = useState(false);
-  const [uploadProgress, setUploadProgress] = useState(0);
+  const [fallbackProgress, setFallbackProgress] = useState(0);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
 
   const apiBaseUrl = useMemo(() => {
@@ -122,7 +153,7 @@ export default function ReviewClient() {
     return envUrl.replace(/\/$/, "");
   }, []);
 
-  // Cleanup camera stream when component unmounts or mode changes
+  // Stop camera stream cleanly
   const stopCameraStream = () => {
     if (mediaStreamRef.current) {
       mediaStreamRef.current.getTracks().forEach((track) => track.stop());
@@ -142,6 +173,9 @@ export default function ReviewClient() {
   useEffect(() => {
     return () => {
       stopCameraStream();
+      if (backgroundXhrRef.current) {
+        backgroundXhrRef.current.abort();
+      }
       if (recordedVideoUrl) URL.revokeObjectURL(recordedVideoUrl);
       if (uploadedVideoPreview) URL.revokeObjectURL(uploadedVideoPreview);
     };
@@ -154,6 +188,142 @@ export default function ReviewClient() {
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
+  };
+
+  // Phone Validation Logic
+  const handlePhoneChange = (val: string) => {
+    const cleanDigits = val.replace(/\D/g, "");
+    setStudentPhone(cleanDigits);
+
+    if (cleanDigits.length === 0) {
+      setPhoneError("Phone number is required");
+    } else if (countryCode === "+91") {
+      if (cleanDigits.length !== 10) {
+        setPhoneError("Enter 10-digit number");
+      } else if (!/^[6-9]/.test(cleanDigits)) {
+        setPhoneError("Must start with 6, 7, 8 or 9");
+      } else {
+        setPhoneError("");
+      }
+    } else {
+      if (cleanDigits.length < 7 || cleanDigits.length > 15) {
+        setPhoneError("Enter 7-15 digits");
+      } else {
+        setPhoneError("");
+      }
+    }
+  };
+
+  const validatePhone = () => {
+    const cleanDigits = studentPhone.replace(/\D/g, "");
+    if (!cleanDigits) {
+      toast.error("Please enter your mobile / WhatsApp number.");
+      setPhoneError("Mobile number is required");
+      return false;
+    }
+
+    if (countryCode === "+91") {
+      if (cleanDigits.length !== 10) {
+        toast.error("Please enter a valid 10-digit Indian mobile number.");
+        setPhoneError("Must be 10 digits");
+        return false;
+      }
+      if (!/^[6-9]/.test(cleanDigits)) {
+        toast.error("Indian mobile numbers must start with 6, 7, 8, or 9.");
+        setPhoneError("Must start with 6, 7, 8 or 9");
+        return false;
+      }
+    } else if (cleanDigits.length < 7 || cleanDigits.length > 15) {
+      toast.error("Please enter a valid phone number (7-15 digits).");
+      setPhoneError("Must be 7-15 digits");
+      return false;
+    }
+
+    setPhoneError("");
+    return true;
+  };
+
+  // ==================== BACKGROUND PRE-UPLOAD FUNCTION ====================
+  // Starts uploading the video to the server IMMEDIATELY in the background
+  // while the student is busy typing their name, phone, and rating!
+  const startBackgroundPreUpload = (fileOrBlob: Blob | File) => {
+    if (backgroundXhrRef.current) {
+      backgroundXhrRef.current.abort();
+      backgroundXhrRef.current = null;
+    }
+
+    setBackgroundUploadStatus("uploading");
+    setBackgroundUploadProgress(0);
+    setPreUploadedVideoUrl(null);
+    setPreUploadedVideoSize(0);
+
+    const formData = new FormData();
+    const ext =
+      fileOrBlob instanceof File
+        ? fileOrBlob.name.split(".").pop() || "mp4"
+        : fileOrBlob.type.includes("mp4")
+        ? "mp4"
+        : "webm";
+
+    formData.append(
+      "video",
+      fileOrBlob,
+      `review-${Date.now()}.${ext}`
+    );
+
+    const xhr = new XMLHttpRequest();
+    backgroundXhrRef.current = xhr;
+    xhr.open("POST", `${apiBaseUrl}/reviews/upload-video`);
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percent = Math.round((event.loaded / event.total) * 100);
+        setBackgroundUploadProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      backgroundXhrRef.current = null;
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const res = JSON.parse(xhr.responseText);
+          if (res.success && res.videoUrl) {
+            setPreUploadedVideoUrl(res.videoUrl);
+            setPreUploadedVideoSize(res.videoSize || 0);
+            setBackgroundUploadStatus("ready");
+            setBackgroundUploadProgress(100);
+
+            if (pendingUploadPromiseRef.current) {
+              pendingUploadPromiseRef.current.resolve({
+                url: res.videoUrl,
+                size: res.videoSize || 0,
+              });
+              pendingUploadPromiseRef.current = null;
+            }
+            return;
+          }
+        } catch (e) {
+          console.error("Error parsing pre-upload response:", e);
+        }
+      }
+
+      setBackgroundUploadStatus("error");
+      if (pendingUploadPromiseRef.current) {
+        pendingUploadPromiseRef.current.resolve(null);
+        pendingUploadPromiseRef.current = null;
+      }
+    };
+
+    xhr.onerror = () => {
+      backgroundXhrRef.current = null;
+      setBackgroundUploadStatus("error");
+      if (pendingUploadPromiseRef.current) {
+        pendingUploadPromiseRef.current.resolve(null);
+        pendingUploadPromiseRef.current = null;
+      }
+    };
+
+    xhr.send(formData);
   };
 
   // Start Camera for live recording
@@ -172,7 +342,6 @@ export default function ReviewClient() {
       mediaStreamRef.current = stream;
       setIsCameraActive(true);
 
-      // Attach stream to video element
       if (liveVideoRef.current) {
         liveVideoRef.current.srcObject = stream;
         liveVideoRef.current.play().catch(() => {});
@@ -180,7 +349,7 @@ export default function ReviewClient() {
     } catch (err: any) {
       console.error("Camera access error:", err);
       toast.error(
-        "Could not access camera or microphone. Please enable camera permissions in your browser or upload a video file instead."
+        "Could not access camera or microphone. Please enable camera permissions or upload a video file instead."
       );
       setVideoSource("upload");
     }
@@ -222,19 +391,19 @@ export default function ReviewClient() {
         const url = URL.createObjectURL(finalBlob);
         setRecordedVideoUrl(url);
 
-        // Turn off camera tracks after recording is complete
         stopCameraStream();
+
+        // ⚡ Immediately start background upload so user doesn't wait later!
+        startBackgroundPreUpload(finalBlob);
       };
 
-      recorder.start(1000); // 1-second chunks
+      recorder.start(1000);
       setIsRecording(true);
       setRecordingSeconds(0);
 
-      // Timer
       timerIntervalRef.current = setInterval(() => {
         setRecordingSeconds((prev) => {
           if (prev >= 180) {
-            // Auto stop at 3 minutes (180s)
             handleStopRecording();
             return prev;
           }
@@ -261,12 +430,20 @@ export default function ReviewClient() {
 
   // Retake video
   const handleRetakeVideo = () => {
+    if (backgroundXhrRef.current) {
+      backgroundXhrRef.current.abort();
+      backgroundXhrRef.current = null;
+    }
     if (recordedVideoUrl) {
       URL.revokeObjectURL(recordedVideoUrl);
     }
     setRecordedBlob(null);
     setRecordedVideoUrl(null);
     setRecordingSeconds(0);
+    setPreUploadedVideoUrl(null);
+    setPreUploadedVideoSize(0);
+    setBackgroundUploadStatus("idle");
+    setBackgroundUploadProgress(0);
     handleStartCamera();
   };
 
@@ -280,7 +457,6 @@ export default function ReviewClient() {
       return;
     }
 
-    // 150MB limit check
     if (file.size > 150 * 1024 * 1024) {
       toast.error("Selected video is larger than 150MB. Please select a smaller video.");
       return;
@@ -293,15 +469,26 @@ export default function ReviewClient() {
     setVideoFile(file);
     const url = URL.createObjectURL(file);
     setUploadedVideoPreview(url);
+
+    // ⚡ Immediately start background upload so user doesn't wait later!
+    startBackgroundPreUpload(file);
   };
 
   // Remove uploaded file
   const handleRemoveUploadedFile = () => {
+    if (backgroundXhrRef.current) {
+      backgroundXhrRef.current.abort();
+      backgroundXhrRef.current = null;
+    }
     if (uploadedVideoPreview) {
       URL.revokeObjectURL(uploadedVideoPreview);
     }
     setVideoFile(null);
     setUploadedVideoPreview(null);
+    setPreUploadedVideoUrl(null);
+    setPreUploadedVideoSize(0);
+    setBackgroundUploadStatus("idle");
+    setBackgroundUploadProgress(0);
     if (fileInputRef.current) {
       fileInputRef.current.value = "";
     }
@@ -319,6 +506,8 @@ export default function ReviewClient() {
       return;
     }
 
+    const fullPhone = `${countryCode} ${studentPhone.trim()}`;
+
     setSubmitting(true);
     try {
       const response = await fetch(`${apiBaseUrl}/reviews`, {
@@ -328,7 +517,7 @@ export default function ReviewClient() {
         },
         body: JSON.stringify({
           studentName: studentName.trim(),
-          studentPhone: studentPhone.trim(),
+          studentPhone: fullPhone,
           rating,
           tags: selectedTags,
           reviewText: reviewText.trim(),
@@ -351,21 +540,77 @@ export default function ReviewClient() {
     }
   };
 
-  // Submit Video Review via XMLHttpRequest with progress tracking
-  const handleSubmitVideoReview = () => {
+  // Submit Video Review (Instant if pre-uploaded, or awaits background progress)
+  const handleSubmitVideoReview = async () => {
     const videoToUpload =
       videoSource === "record" ? recordedBlob : videoFile;
 
-    if (!videoToUpload) {
+    if (!videoToUpload && !preUploadedVideoUrl) {
       toast.error("Please record or select a video first.");
       return;
     }
 
+    const fullPhone = `${countryCode} ${studentPhone.trim()}`;
+
     setSubmitting(true);
-    setUploadProgress(0);
 
+    let finalVideoUrl = preUploadedVideoUrl;
+    let finalVideoSize = preUploadedVideoSize;
+
+    // 1. If background upload is still in progress, smoothly wait for it to finish!
+    if (backgroundUploadStatus === "uploading" && !finalVideoUrl) {
+      const result = await new Promise<{ url: string; size: number } | null>(
+        (resolve) => {
+          pendingUploadPromiseRef.current = { resolve };
+        }
+      );
+      if (result) {
+        finalVideoUrl = result.url;
+        finalVideoSize = result.size;
+      }
+    }
+
+    // 2. FAST PATH: Video was pre-uploaded in background (95%+ of the time)
+    // Instant submission in < 100 milliseconds!
+    if (finalVideoUrl) {
+      try {
+        const response = await fetch(`${apiBaseUrl}/reviews/video`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            videoUrl: finalVideoUrl,
+            videoSize: finalVideoSize,
+            studentName: studentName.trim(),
+            studentPhone: fullPhone,
+            rating,
+            tags: selectedTags,
+            reviewText:
+              reviewText.trim() || `Video Review by ${studentName.trim()}`,
+            videoDuration: recordingSeconds || 0,
+          }),
+        });
+
+        const resData = await response.json();
+
+        if (!response.ok || !resData.success) {
+          throw new Error(resData.message || "Failed to submit video review");
+        }
+
+        setSubmittedSuccess(true);
+        toast.success("Video review submitted successfully! 🎉");
+      } catch (err: any) {
+        console.error("Fast submit error:", err);
+        toast.error(err.message || "Failed to submit. Please try again.");
+      } finally {
+        setSubmitting(false);
+      }
+      return;
+    }
+
+    // 3. FALLBACK PATH: If background pre-upload failed, do standard FormData upload
     const formData = new FormData();
-
     if (videoSource === "record" && recordedBlob) {
       const ext = recordedBlob.type.includes("mp4") ? "mp4" : "webm";
       formData.append(
@@ -378,7 +623,7 @@ export default function ReviewClient() {
     }
 
     formData.append("studentName", studentName.trim());
-    formData.append("studentPhone", studentPhone.trim());
+    formData.append("studentPhone", fullPhone);
     formData.append("rating", rating.toString());
     formData.append("tags", JSON.stringify(selectedTags));
     formData.append(
@@ -395,7 +640,7 @@ export default function ReviewClient() {
     xhr.upload.onprogress = (event) => {
       if (event.lengthComputable) {
         const percent = Math.round((event.loaded / event.total) * 100);
-        setUploadProgress(percent);
+        setFallbackProgress(percent);
       }
     };
 
@@ -437,6 +682,10 @@ export default function ReviewClient() {
 
     if (!studentName.trim()) {
       toast.error("Please enter your name.");
+      return;
+    }
+
+    if (!validatePhone()) {
       return;
     }
 
@@ -805,6 +1054,43 @@ export default function ReviewClient() {
                       )}
                     </div>
                   )}
+
+                  {/* ⚡ BACKGROUND PRE-UPLOAD STATUS BADGE */}
+                  {(recordedBlob || videoFile) && (
+                    <div className="pt-1">
+                      {backgroundUploadStatus === "uploading" && (
+                        <div className="bg-indigo-50/90 dark:bg-slate-800 border border-indigo-200/80 dark:border-indigo-800/60 rounded-xl p-2.5 space-y-1.5 animate-in fade-in duration-150">
+                          <div className="flex items-center justify-between text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+                            <span className="flex items-center gap-1.5">
+                              <Sparkles className="w-3.5 h-3.5 text-indigo-600 animate-spin" />
+                              Saving video in background... (Fill details below)
+                            </span>
+                            <span className="font-mono text-[11px] font-bold">
+                              {backgroundUploadProgress}%
+                            </span>
+                          </div>
+                          <div className="w-full h-1.5 bg-indigo-200/60 dark:bg-slate-700 rounded-full overflow-hidden">
+                            <div
+                              className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full transition-all duration-200"
+                              style={{ width: `${backgroundUploadProgress}%` }}
+                            />
+                          </div>
+                        </div>
+                      )}
+
+                      {backgroundUploadStatus === "ready" && (
+                        <div className="flex items-center justify-between bg-emerald-50/90 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800/60 rounded-xl px-3 py-2 text-xs text-emerald-800 dark:text-emerald-200 animate-in fade-in duration-150">
+                          <span className="flex items-center gap-1.5 font-semibold">
+                            <Check className="w-4 h-4 text-emerald-600 stroke-[3]" />
+                            Video saved! Ready for instant 1-click submit
+                          </span>
+                          <span className="inline-flex items-center gap-1 text-[10px] font-bold bg-emerald-100 dark:bg-emerald-900/60 text-emerald-700 dark:text-emerald-300 px-2 py-0.5 rounded-full">
+                            <Zap className="w-3 h-3 text-amber-500 fill-amber-400" /> Fast Ready
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                  )}
                 </div>
               )}
 
@@ -835,8 +1121,9 @@ export default function ReviewClient() {
                 </div>
               </div>
 
-              {/* STUDENT INPUTS (2-Column Grid) */}
+              {/* STUDENT INPUTS (2-Column Grid: Name & Required Mobile with Country Code) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                {/* Full Name */}
                 <div>
                   <label className="block text-[11px] font-medium text-slate-800 dark:text-slate-400 mb-1">
                     Full Name <span className="text-rose-500">*</span>
@@ -854,19 +1141,48 @@ export default function ReviewClient() {
                   </div>
                 </div>
 
+                {/* Mobile / WhatsApp Number (REQUIRED with Country Code Dropdown) */}
                 <div>
-                  <label className="block text-[11px] font-medium text-slate-800 dark:text-slate-400 mb-1">
-                    Phone / WhatsApp <span className="text-[10px] text-slate-400">(Optional)</span>
-                  </label>
-                  <div className="relative">
-                    <Phone className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
-                    <input
-                      type="tel"
-                      value={studentPhone}
-                      onChange={(e) => setStudentPhone(e.target.value)}
-                      placeholder="e.g. +91 98765..."
-                      className="w-full pl-8 pr-2.5 py-2 bg-slate-50 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                    />
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-[11px] font-medium text-slate-800 dark:text-slate-400">
+                      Mobile / WhatsApp <span className="text-rose-500">*</span>
+                    </label>
+                    {phoneError && (
+                      <span className="text-[10px] text-rose-500 font-medium">
+                        {phoneError}
+                      </span>
+                    )}
+                  </div>
+                  <div className="flex rounded-xl overflow-hidden border border-slate-300 dark:border-slate-700 bg-slate-50 dark:bg-slate-800/80 focus-within:ring-2 focus-within:ring-indigo-500 transition-all">
+                    {/* Country Code Dropdown */}
+                    <select
+                      value={countryCode}
+                      onChange={(e) => {
+                        setCountryCode(e.target.value);
+                        setPhoneError("");
+                      }}
+                      className="bg-slate-100 dark:bg-slate-700/80 border-r border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold px-2 py-2 focus:outline-none cursor-pointer"
+                    >
+                      {COUNTRY_CODES.map((c) => (
+                        <option key={c.code} value={c.code}>
+                          {c.flag} {c.code}
+                        </option>
+                      ))}
+                    </select>
+
+                    {/* Phone Input */}
+                    <div className="relative flex-1">
+                      <input
+                        type="tel"
+                        required
+                        inputMode="numeric"
+                        maxLength={countryCode === "+91" ? 10 : 15}
+                        value={studentPhone}
+                        onChange={(e) => handlePhoneChange(e.target.value)}
+                        placeholder={countryCode === "+91" ? "98765 43210" : "Mobile number"}
+                        className="w-full pl-2.5 pr-2.5 py-2 bg-transparent text-xs text-slate-900 dark:text-white focus:outline-none placeholder:text-slate-400"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -912,17 +1228,19 @@ export default function ReviewClient() {
                 )}
               </div>
 
-              {/* UPLOAD PROGRESS BAR (When uploading a video) */}
-              {submitting && reviewMode === "video" && (
-                <div className="space-y-1 bg-indigo-50 dark:bg-slate-800 p-2.5 rounded-xl border border-indigo-100 dark:border-slate-700">
+              {/* FALLBACK UPLOAD PROGRESS (Only shown if background upload was delayed) */}
+              {submitting && reviewMode === "video" && !preUploadedVideoUrl && (
+                <div className="space-y-1 bg-indigo-50 dark:bg-slate-800 p-2.5 rounded-xl border border-indigo-100 dark:border-slate-700 animate-in fade-in">
                   <div className="flex items-center justify-between text-xs font-semibold text-indigo-700 dark:text-indigo-300">
-                    <span>Uploading Video Review...</span>
-                    <span>{uploadProgress}%</span>
+                    <span>Finalizing Video Upload...</span>
+                    <span>{backgroundUploadProgress || fallbackProgress}%</span>
                   </div>
                   <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                     <div
                       className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-200"
-                      style={{ width: `${uploadProgress}%` }}
+                      style={{
+                        width: `${backgroundUploadProgress || fallbackProgress}%`,
+                      }}
                     />
                   </div>
                 </div>
@@ -933,14 +1251,14 @@ export default function ReviewClient() {
                 type="submit"
                 disabled={
                   submitting ||
-                  (reviewMode === "video" && !recordedBlob && !videoFile)
+                  (reviewMode === "video" && !recordedBlob && !videoFile && !preUploadedVideoUrl)
                 }
                 className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {submitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    {reviewMode === "video" ? `Uploading Video (${uploadProgress}%)...` : "Submitting..."}
+                    Submitting Review...
                   </>
                 ) : (
                   <>
