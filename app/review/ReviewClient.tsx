@@ -10,7 +10,6 @@ import {
   User,
   Phone,
   ShieldCheck,
-  MessageSquare,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -18,7 +17,7 @@ const RATING_EMOTIONS = [
   {
     rating: 5,
     emoji: "🤩",
-    label: "Outstanding! Best experience ever",
+    label: "Outstanding! Loved every moment",
     color: "text-amber-500",
     bg: "bg-amber-50 border-amber-200 dark:bg-amber-950/40 dark:border-amber-800",
   },
@@ -32,14 +31,14 @@ const RATING_EMOTIONS = [
   {
     rating: 3,
     emoji: "🙂",
-    label: "Good! Helpful learning",
+    label: "Good! Valuable learning",
     color: "text-blue-500",
     bg: "bg-blue-50 border-blue-200 dark:bg-blue-950/40 dark:border-blue-800",
   },
   {
     rating: 2,
     emoji: "😐",
-    label: "Average! Can be improved",
+    label: "Average! Room for improvement",
     color: "text-orange-500",
     bg: "bg-orange-50 border-orange-200 dark:bg-orange-950/40 dark:border-orange-800",
   },
@@ -55,9 +54,9 @@ const RATING_EMOTIONS = [
 const PREDEFINED_TAGS = [
   "👨‍🏫 Great Mentors",
   "💻 Practical Live Projects",
-  "💡 Simple & Clear Teaching",
+  "💡 Simple & Clear Explanations",
   "🤝 Instant Doubt Support",
-  "🚀 Career / Placement Help",
+  "🚀 Career & Placement Guidance",
   "📚 Quality Study Material",
   "🎯 Friendly Learning Environment",
   "💰 Value for Money",
@@ -87,7 +86,7 @@ export default function ReviewClient() {
     return envUrl.replace(/\/$/, "");
   }, []);
 
-  // Toggle tag
+  // Toggle highlight tag
   const handleToggleTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
@@ -165,7 +164,7 @@ export default function ReviewClient() {
                 Thank You, {studentName}! 🎉
               </h2>
               <p className="text-slate-600 dark:text-slate-300 text-sm max-w-sm mx-auto">
-                Aapka review submit ho gaya hai. Inxyme par aapke honest feedback se hume aur baki students ko motivate karta hai!
+                Your review has been submitted successfully. Your honest feedback helps future students make the right career choices!
               </p>
             </div>
 
@@ -228,10 +227,10 @@ export default function ReviewClient() {
                 Inxyme Student Review
               </div>
               <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
-                Kaisa Laga Inxyme me Padhke?
+                How Was Your Experience?
               </h1>
               <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm max-w-sm mx-auto">
-                Sirf <span className="font-semibold text-indigo-600 dark:text-indigo-400">2-3 clicks</span> me apna review share karein!
+                Share your learning journey in just <span className="font-semibold text-indigo-600 dark:text-indigo-400">2-3 quick clicks</span>!
               </p>
             </div>
 
@@ -243,7 +242,7 @@ export default function ReviewClient() {
                     1
                   </span>
                   <span className="text-sm font-bold text-slate-800 dark:text-white">
-                    Rate Your Experience
+                    Rate Your Learning Experience
                   </span>
                 </div>
 
@@ -291,7 +290,7 @@ export default function ReviewClient() {
                     2
                   </span>
                   <span className="text-sm font-bold text-slate-800 dark:text-white">
-                    Sabse accha kya laga? (Tap 1-2 chips)
+                    What stood out the most? (Tap 1-2 highlights)
                   </span>
                 </div>
 
@@ -324,7 +323,7 @@ export default function ReviewClient() {
                     3
                   </span>
                   <span className="text-sm font-bold text-slate-800 dark:text-white">
-                    Aapki Jankari & Review
+                    Your Information & Review
                   </span>
                 </div>
 
@@ -332,7 +331,7 @@ export default function ReviewClient() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
                     <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
-                      Aapka Name <span className="text-rose-500">*</span>
+                      Full Name <span className="text-rose-500">*</span>
                     </label>
                     <div className="relative">
                       <User className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -341,7 +340,7 @@ export default function ReviewClient() {
                         required
                         value={studentName}
                         onChange={(e) => setStudentName(e.target.value)}
-                        placeholder="e.g. Rahul Sharma"
+                        placeholder="e.g. John Doe"
                         className="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
@@ -357,7 +356,7 @@ export default function ReviewClient() {
                         type="tel"
                         value={studentPhone}
                         onChange={(e) => setStudentPhone(e.target.value)}
-                        placeholder="e.g. 9876543210"
+                        placeholder="e.g. +91 98765 43210"
                         className="w-full pl-9 pr-3 py-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
                       />
                     </div>
@@ -367,14 +366,14 @@ export default function ReviewClient() {
                 {/* Feedback Textarea */}
                 <div>
                   <label className="block text-xs font-medium text-slate-600 dark:text-slate-400 mb-1">
-                    Aapka Anubhav / Review (Optional - Chahein to course name bhi likh sakte hain)
+                    Your Experience & Review (Optional — You may mention your course here)
                   </label>
                   <div className="relative">
                     <textarea
                       rows={3}
                       value={reviewText}
                       onChange={(e) => setReviewText(e.target.value)}
-                      placeholder="e.g. Maine Inxyme se Data Science padha. Sir ne sab kuch practically sikhaya aur doubts time par clear kiye..."
+                      placeholder="e.g. I took the Data Science program at Inxyme. The mentor explained complex concepts with real-world projects, and doubt resolution was top-notch..."
                       className="w-full p-3 bg-slate-50 dark:bg-slate-800/80 border border-slate-200 dark:border-slate-700 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-slate-400"
                     />
                   </div>
@@ -395,13 +394,13 @@ export default function ReviewClient() {
                 ) : (
                   <>
                     <Star className="w-5 h-5 fill-white text-white" />
-                    Submit Review 🚀
+                    Submit My Review 🚀
                   </>
                 )}
               </button>
 
               <p className="text-center text-[11px] text-slate-400">
-                🔒 Aapki contact details safe hain aur kisi ke sath share nahi ki jayegi.
+                🔒 Your contact details are kept secure and confidential.
               </p>
             </form>
           </div>
