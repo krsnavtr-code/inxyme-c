@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useRef, useEffect } from "react";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 import {
   Star,
   Sparkles,
@@ -10,6 +11,16 @@ import {
   User,
   Phone,
   ShieldCheck,
+  Video,
+  FileText,
+  Camera,
+  Upload,
+  RotateCcw,
+  Square,
+  Play,
+  Film,
+  X,
+  AlertCircle,
 } from "lucide-react";
 import toast from "react-hot-toast";
 
@@ -61,6 +72,15 @@ const PREDEFINED_TAGS = [
 ];
 
 export default function ReviewClient() {
+  const searchParams = useSearchParams();
+  const initialType = searchParams.get("type");
+
+  // Mode: "video" (default) | "text"
+  const [reviewMode, setReviewMode] = useState<"text" | "video">(
+    initialType === "text" ? "text" : "video"
+  );
+
+  // Common form fields
   const [rating, setRating] = useState<number>(5);
   const [hoverRating, setHoverRating] = useState<number>(0);
   const [selectedTags, setSelectedTags] = useState<string[]>([
@@ -71,7 +91,27 @@ export default function ReviewClient() {
   const [studentPhone, setStudentPhone] = useState("");
   const [reviewText, setReviewText] = useState("");
 
+  // Video review specific states
+  const [videoSource, setVideoSource] = useState<"record" | "upload">("record");
+  const [isCameraActive, setIsCameraActive] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingSeconds, setRecordingSeconds] = useState(0);
+  const [recordedBlob, setRecordedBlob] = useState<Blob | null>(null);
+  const [recordedVideoUrl, setRecordedVideoUrl] = useState<string | null>(null);
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [uploadedVideoPreview, setUploadedVideoPreview] = useState<string | null>(null);
+
+  // Camera stream refs
+  const liveVideoRef = useRef<HTMLVideoElement | null>(null);
+  const mediaStreamRef = useRef<MediaStream | null>(null);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const recordedChunksRef = useRef<Blob[]>([]);
+  const timerIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+
+  // Submission state
   const [submitting, setSubmitting] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0);
   const [submittedSuccess, setSubmittedSuccess] = useState(false);
 
   const apiBaseUrl = useMemo(() => {
@@ -82,6 +122,32 @@ export default function ReviewClient() {
     return envUrl.replace(/\/$/, "");
   }, []);
 
+  // Cleanup camera stream when component unmounts or mode changes
+  const stopCameraStream = () => {
+    if (mediaStreamRef.current) {
+      mediaStreamRef.current.getTracks().forEach((track) => track.stop());
+      mediaStreamRef.current = null;
+    }
+    if (liveVideoRef.current) {
+      liveVideoRef.current.srcObject = null;
+    }
+    setIsCameraActive(false);
+    setIsRecording(false);
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+  };
+
+  useEffect(() => {
+    return () => {
+      stopCameraStream();
+      if (recordedVideoUrl) URL.revokeObjectURL(recordedVideoUrl);
+      if (uploadedVideoPreview) URL.revokeObjectURL(uploadedVideoPreview);
+    };
+  }, []);
+
+  // Handle Tag toggle
   const handleToggleTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
       setSelectedTags(selectedTags.filter((t) => t !== tag));
@@ -90,26 +156,166 @@ export default function ReviewClient() {
     }
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // Start Camera for live recording
+  const handleStartCamera = async () => {
+    try {
+      stopCameraStream();
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: {
+          facingMode: "user",
+          width: { ideal: 1280 },
+          height: { ideal: 720 },
+        },
+        audio: true,
+      });
 
-    if (!studentName.trim()) {
-      toast.error("Please enter your name!");
+      mediaStreamRef.current = stream;
+      setIsCameraActive(true);
+
+      // Attach stream to video element
+      if (liveVideoRef.current) {
+        liveVideoRef.current.srcObject = stream;
+        liveVideoRef.current.play().catch(() => {});
+      }
+    } catch (err: any) {
+      console.error("Camera access error:", err);
+      toast.error(
+        "Could not access camera or microphone. Please enable camera permissions in your browser or upload a video file instead."
+      );
+      setVideoSource("upload");
+    }
+  };
+
+  // Start MediaRecorder
+  const handleStartRecording = () => {
+    if (!mediaStreamRef.current) {
+      handleStartCamera();
       return;
     }
 
-    if (!rating || rating < 1 || rating > 5) {
-      toast.error("Please select a star rating!");
+    recordedChunksRef.current = [];
+
+    let mimeType = "video/webm";
+    if (MediaRecorder.isTypeSupported("video/webm;codecs=vp9,opus")) {
+      mimeType = "video/webm;codecs=vp9,opus";
+    } else if (MediaRecorder.isTypeSupported("video/webm;codecs=vp8,opus")) {
+      mimeType = "video/webm;codecs=vp8,opus";
+    } else if (MediaRecorder.isTypeSupported("video/mp4")) {
+      mimeType = "video/mp4";
+    }
+
+    try {
+      const recorder = new MediaRecorder(mediaStreamRef.current, { mimeType });
+      mediaRecorderRef.current = recorder;
+
+      recorder.ondataavailable = (event) => {
+        if (event.data && event.data.size > 0) {
+          recordedChunksRef.current.push(event.data);
+        }
+      };
+
+      recorder.onstop = () => {
+        const finalBlob = new Blob(recordedChunksRef.current, {
+          type: mimeType,
+        });
+        setRecordedBlob(finalBlob);
+        const url = URL.createObjectURL(finalBlob);
+        setRecordedVideoUrl(url);
+
+        // Turn off camera tracks after recording is complete
+        stopCameraStream();
+      };
+
+      recorder.start(1000); // 1-second chunks
+      setIsRecording(true);
+      setRecordingSeconds(0);
+
+      // Timer
+      timerIntervalRef.current = setInterval(() => {
+        setRecordingSeconds((prev) => {
+          if (prev >= 180) {
+            // Auto stop at 3 minutes (180s)
+            handleStopRecording();
+            return prev;
+          }
+          return prev + 1;
+        });
+      }, 1000);
+    } catch (err) {
+      console.error("Failed to start MediaRecorder:", err);
+      toast.error("Could not start recording. Please try uploading a video file.");
+    }
+  };
+
+  // Stop MediaRecorder
+  const handleStopRecording = () => {
+    if (mediaRecorderRef.current && mediaRecorderRef.current.state !== "inactive") {
+      mediaRecorderRef.current.stop();
+    }
+    if (timerIntervalRef.current) {
+      clearInterval(timerIntervalRef.current);
+      timerIntervalRef.current = null;
+    }
+    setIsRecording(false);
+  };
+
+  // Retake video
+  const handleRetakeVideo = () => {
+    if (recordedVideoUrl) {
+      URL.revokeObjectURL(recordedVideoUrl);
+    }
+    setRecordedBlob(null);
+    setRecordedVideoUrl(null);
+    setRecordingSeconds(0);
+    handleStartCamera();
+  };
+
+  // Handle Device Video File Selection
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("video/") && !/\.(mp4|webm|mov|mkv|avi|3gp)$/i.test(file.name)) {
+      toast.error("Please select a valid video file (MP4, WebM, MOV, etc.).");
       return;
     }
 
+    // 150MB limit check
+    if (file.size > 150 * 1024 * 1024) {
+      toast.error("Selected video is larger than 150MB. Please select a smaller video.");
+      return;
+    }
+
+    if (uploadedVideoPreview) {
+      URL.revokeObjectURL(uploadedVideoPreview);
+    }
+
+    setVideoFile(file);
+    const url = URL.createObjectURL(file);
+    setUploadedVideoPreview(url);
+  };
+
+  // Remove uploaded file
+  const handleRemoveUploadedFile = () => {
+    if (uploadedVideoPreview) {
+      URL.revokeObjectURL(uploadedVideoPreview);
+    }
+    setVideoFile(null);
+    setUploadedVideoPreview(null);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  // Submit Text Review
+  const handleSubmitTextReview = async () => {
     if (!reviewText.trim()) {
-      toast.error("Please write your review or experience!");
+      toast.error("Please write your review or experience.");
       return;
     }
 
     if (reviewText.trim().length < 5) {
-      toast.error("Review must be at least 5 characters long!");
+      toast.error("Review must be at least 5 characters long.");
       return;
     }
 
@@ -145,15 +351,122 @@ export default function ReviewClient() {
     }
   };
 
+  // Submit Video Review via XMLHttpRequest with progress tracking
+  const handleSubmitVideoReview = () => {
+    const videoToUpload =
+      videoSource === "record" ? recordedBlob : videoFile;
+
+    if (!videoToUpload) {
+      toast.error("Please record or select a video first.");
+      return;
+    }
+
+    setSubmitting(true);
+    setUploadProgress(0);
+
+    const formData = new FormData();
+
+    if (videoSource === "record" && recordedBlob) {
+      const ext = recordedBlob.type.includes("mp4") ? "mp4" : "webm";
+      formData.append(
+        "video",
+        recordedBlob,
+        `review-recording-${Date.now()}.${ext}`
+      );
+    } else if (videoFile) {
+      formData.append("video", videoFile);
+    }
+
+    formData.append("studentName", studentName.trim());
+    formData.append("studentPhone", studentPhone.trim());
+    formData.append("rating", rating.toString());
+    formData.append("tags", JSON.stringify(selectedTags));
+    formData.append(
+      "reviewText",
+      reviewText.trim() || `Video Review by ${studentName.trim()}`
+    );
+    if (recordingSeconds > 0) {
+      formData.append("videoDuration", recordingSeconds.toString());
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open("POST", `${apiBaseUrl}/reviews/video`);
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const percent = Math.round((event.loaded / event.total) * 100);
+        setUploadProgress(percent);
+      }
+    };
+
+    xhr.onload = () => {
+      setSubmitting(false);
+      if (xhr.status >= 200 && xhr.status < 300) {
+        try {
+          const res = JSON.parse(xhr.responseText);
+          if (res.success) {
+            setSubmittedSuccess(true);
+            toast.success("Video review submitted successfully! 🎉");
+          } else {
+            toast.error(res.message || "Failed to upload video review.");
+          }
+        } catch {
+          setSubmittedSuccess(true);
+          toast.success("Video review submitted successfully! 🎉");
+        }
+      } else {
+        try {
+          const err = JSON.parse(xhr.responseText);
+          toast.error(err.message || "Failed to upload video review.");
+        } catch {
+          toast.error("Upload failed. Please check your connection and try again.");
+        }
+      }
+    };
+
+    xhr.onerror = () => {
+      setSubmitting(false);
+      toast.error("Network error while uploading video. Please try again.");
+    };
+
+    xhr.send(formData);
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!studentName.trim()) {
+      toast.error("Please enter your name.");
+      return;
+    }
+
+    if (!rating || rating < 1 || rating > 5) {
+      toast.error("Please select a star rating.");
+      return;
+    }
+
+    if (reviewMode === "text") {
+      handleSubmitTextReview();
+    } else {
+      handleSubmitVideoReview();
+    }
+  };
+
   const activeEmotion = RATING_EMOTIONS.find(
     (e) => e.rating === (hoverRating || rating)
   );
 
+  const formatSeconds = (sec: number) => {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${m.toString().padStart(2, "0")}:${s.toString().padStart(2, "0")}`;
+  };
+
   return (
     <div className="min-h-[85vh] bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/20 dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 py-4 px-3 sm:px-6 flex flex-col justify-center items-center">
-      <div className="w-full max-w-md mx-auto">
+      <div className="w-full max-w-lg mx-auto">
         {submittedSuccess ? (
-          /* ================= SUCCESS STATE ================= */
+          /* ================= SUCCESS STATE (100% ENGLISH) ================= */
           <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 shadow-xl border border-indigo-100 dark:border-slate-800 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex justify-center">
               <img
@@ -170,13 +483,13 @@ export default function ReviewClient() {
             <div className="space-y-1.5">
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-100 dark:bg-emerald-900/50 text-emerald-800 dark:text-emerald-200">
                 <Sparkles className="w-3 h-3" />
-                Verified Feedback
+                Verified Student Feedback
               </span>
               <h2 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
                 Thank You, {studentName}! 🎉
               </h2>
               <p className="text-slate-600 dark:text-slate-300 text-xs max-w-xs mx-auto">
-                Aapka review successfully submit ho gaya hai. Isse dusre students ko bhi help milegi!
+                Your review has been successfully submitted. Your honest feedback helps future students make the right career choice!
               </p>
             </div>
 
@@ -197,11 +510,11 @@ export default function ReviewClient() {
             </div>
           </div>
         ) : (
-          /* ================= COMPACT MAIN REVIEW FORM ================= */
-          <div className="bg-white/90 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl p-5 sm:p-7 shadow-xl border border-indigo-100/80 dark:border-slate-800 space-y-4">
+          /* ================= MAIN REVIEW FORM ================= */
+          <div className="bg-white/95 dark:bg-slate-900/90 backdrop-blur-xl rounded-2xl p-4 sm:p-6 shadow-xl border border-indigo-100/80 dark:border-slate-800 space-y-4">
 
             {/* Header */}
-            <div className="text-center space-y-2">
+            <div className="text-center space-y-1.5">
               <div className="flex justify-center">
                 <img
                   src="https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png"
@@ -211,18 +524,50 @@ export default function ReviewClient() {
               </div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800">
                 <ShieldCheck className="w-3.5 h-3.5 text-indigo-600 dark:text-indigo-400" />
-                Quick Student Review
+                Student Review Portal
               </div>
-              <h1 className="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white tracking-tight">
+              <h1 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white tracking-tight">
                 How was your learning experience?
               </h1>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            {/* REVIEW MODE SWITCHER (Video Review first by default) */}
+            <div className="grid grid-cols-2 gap-1.5 p-1 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200/80 dark:border-slate-700">
+              <button
+                type="button"
+                onClick={() => setReviewMode("video")}
+                className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold transition-all relative ${
+                  reviewMode === "video"
+                    ? "bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-300 shadow-sm"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                }`}
+              >
+                <Video className="w-3.5 h-3.5 text-rose-500" />
+                Video Review
+                <span className="inline-block w-2 h-2 rounded-full bg-rose-500 animate-pulse" />
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  stopCameraStream();
+                  setReviewMode("text");
+                }}
+                className={`flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg text-xs font-semibold transition-all ${
+                  reviewMode === "text"
+                    ? "bg-white dark:bg-slate-900 text-indigo-700 dark:text-indigo-300 shadow-sm"
+                    : "text-slate-600 dark:text-slate-400 hover:text-slate-900"
+                }`}
+              >
+                <FileText className="w-3.5 h-3.5" />
+                Written Review
+              </button>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-3.5">
 
               {/* STAR RATING SECTION */}
-              <div className="text-center bg-slate-50/80 dark:bg-slate-800/40 p-3 rounded-xl border border-slate-100 dark:border-slate-800/80 space-y-2">
-                <div className="flex items-center justify-center gap-2">
+              <div className="text-center bg-slate-50/80 dark:bg-slate-800/40 p-2.5 rounded-xl border border-slate-100 dark:border-slate-800/80 space-y-1.5">
+                <div className="flex items-center justify-center gap-1.5">
                   {[1, 2, 3, 4, 5].map((star) => {
                     const isFilled = star <= (hoverRating || rating);
                     return (
@@ -236,10 +581,11 @@ export default function ReviewClient() {
                         aria-label={`${star} Stars`}
                       >
                         <Star
-                          className={`w-8 h-8 sm:w-9 sm:h-9 transition-all ${isFilled
+                          className={`w-7 h-7 sm:w-8 sm:h-8 transition-all ${
+                            isFilled
                               ? "text-amber-400 fill-amber-400 drop-shadow-[0_2px_8px_rgba(251,191,36,0.4)]"
                               : "text-slate-300 dark:text-slate-700 fill-transparent hover:text-amber-200"
-                            }`}
+                          }`}
                         />
                       </button>
                     );
@@ -248,7 +594,7 @@ export default function ReviewClient() {
 
                 {activeEmotion && (
                   <div
-                    className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-xs font-semibold transition-all ${activeEmotion.bg}`}
+                    className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full border text-xs font-semibold transition-all ${activeEmotion.bg}`}
                   >
                     <span>{activeEmotion.emoji}</span>
                     <span className={activeEmotion.color}>{activeEmotion.label}</span>
@@ -256,10 +602,216 @@ export default function ReviewClient() {
                 )}
               </div>
 
-              {/* QUICK HIGHLIGHT TAGS (Compact Grid) */}
-              <div className="space-y-1.5">
+              {/* ================= VIDEO SECTION (IF MODE === VIDEO) ================= */}
+              {reviewMode === "video" && (
+                <div className="space-y-2.5 bg-slate-50/80 dark:bg-slate-800/50 p-3 rounded-xl border border-indigo-100 dark:border-slate-700">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
+                      <Film className="w-3.5 h-3.5 text-indigo-600" />
+                      Your Video Review <span className="text-rose-500">*</span>
+                    </label>
+
+                    {/* Switch between Live Record and Device Upload */}
+                    <div className="inline-flex p-0.5 bg-slate-200/80 dark:bg-slate-700 rounded-lg text-[11px]">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setVideoSource("record");
+                        }}
+                        className={`px-2 py-0.5 rounded-md font-medium transition-all ${
+                          videoSource === "record"
+                            ? "bg-white dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 shadow-xs"
+                            : "text-slate-600 dark:text-slate-400"
+                        }`}
+                      >
+                        🎥 Record Live
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          stopCameraStream();
+                          setVideoSource("upload");
+                        }}
+                        className={`px-2 py-0.5 rounded-md font-medium transition-all ${
+                          videoSource === "upload"
+                            ? "bg-white dark:bg-slate-800 text-indigo-700 dark:text-indigo-300 shadow-xs"
+                            : "text-slate-600 dark:text-slate-400"
+                        }`}
+                      >
+                        📁 Upload File
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* 1. LIVE CAMERA RECORDING */}
+                  {videoSource === "record" && (
+                    <div className="space-y-2">
+                      {recordedVideoUrl ? (
+                        /* Recorded Video Playback Preview */
+                        <div className="space-y-2">
+                          <div className="relative rounded-xl overflow-hidden bg-black aspect-video border border-slate-700 shadow-inner flex items-center justify-center">
+                            <video
+                              src={recordedVideoUrl}
+                              controls
+                              playsInline
+                              className="w-full h-full object-contain"
+                            />
+                            <div className="absolute top-2 right-2 bg-emerald-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-md">
+                              <Check className="w-3 h-3" /> Ready
+                            </div>
+                          </div>
+
+                          <div className="flex items-center justify-between text-xs">
+                            <span className="text-slate-500">
+                              Duration: {formatSeconds(recordingSeconds || 0)}
+                            </span>
+                            <button
+                              type="button"
+                              onClick={handleRetakeVideo}
+                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-50"
+                            >
+                              <RotateCcw className="w-3.5 h-3.5 text-indigo-600" />
+                              Retake Video
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        /* Live Camera View */
+                        <div className="space-y-2">
+                          <div className="relative rounded-xl overflow-hidden bg-slate-900 aspect-video border border-slate-700 shadow-inner flex flex-col items-center justify-center text-white">
+                            <video
+                              ref={liveVideoRef}
+                              autoPlay
+                              playsInline
+                              muted
+                              className={`w-full h-full object-cover ${
+                                isCameraActive ? "block" : "hidden"
+                              }`}
+                            />
+
+                            {!isCameraActive && (
+                              <div className="text-center p-4 space-y-2">
+                                <div className="w-12 h-12 bg-indigo-600/30 text-indigo-400 rounded-full flex items-center justify-center mx-auto">
+                                  <Camera className="w-6 h-6" />
+                                </div>
+                                <p className="text-xs text-slate-300 max-w-xs">
+                                  Record a 30-90 second video sharing your learning experience and mentors.
+                                </p>
+                                <button
+                                  type="button"
+                                  onClick={handleStartCamera}
+                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md transition-all"
+                                >
+                                  <Camera className="w-3.5 h-3.5" />
+                                  Turn On Camera
+                                </button>
+                              </div>
+                            )}
+
+                            {/* Recording Timer Badge */}
+                            {isRecording && (
+                              <div className="absolute top-2 left-2 bg-rose-600/90 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 animate-pulse shadow-md">
+                                <span className="w-2 h-2 rounded-full bg-white" />
+                                REC {formatSeconds(recordingSeconds)} / 03:00
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Controls */}
+                          {isCameraActive && (
+                            <div className="flex items-center justify-center gap-3 pt-1">
+                              {!isRecording ? (
+                                <button
+                                  type="button"
+                                  onClick={handleStartRecording}
+                                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-lg shadow-rose-600/30 transition-all hover:scale-105"
+                                >
+                                  <span className="w-2.5 h-2.5 rounded-full bg-white" />
+                                  Start Recording
+                                </button>
+                              ) : (
+                                <button
+                                  type="button"
+                                  onClick={handleStopRecording}
+                                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs shadow-lg transition-all"
+                                >
+                                  <Square className="w-3 h-3 fill-white" />
+                                  Stop Recording
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* 2. DEVICE FILE UPLOAD */}
+                  {videoSource === "upload" && (
+                    <div className="space-y-2">
+                      <input
+                        ref={fileInputRef}
+                        type="file"
+                        accept="video/*,.mp4,.webm,.mov,.m4v,.mkv,.avi"
+                        onChange={handleFileChange}
+                        className="hidden"
+                      />
+
+                      {uploadedVideoPreview && videoFile ? (
+                        /* Uploaded file preview */
+                        <div className="space-y-2">
+                          <div className="relative rounded-xl overflow-hidden bg-black aspect-video border border-slate-700 shadow-inner flex items-center justify-center">
+                            <video
+                              src={uploadedVideoPreview}
+                              controls
+                              playsInline
+                              className="w-full h-full object-contain"
+                            />
+                            <button
+                              type="button"
+                              onClick={handleRemoveUploadedFile}
+                              className="absolute top-2 right-2 p-1 bg-rose-600/90 text-white rounded-full hover:bg-rose-700 shadow-md"
+                              title="Remove video"
+                            >
+                              <X className="w-3.5 h-3.5" />
+                            </button>
+                          </div>
+
+                          <div className="flex items-center justify-between text-xs bg-slate-100 dark:bg-slate-800 p-2 rounded-lg">
+                            <span className="text-slate-700 dark:text-slate-300 font-medium truncate max-w-[200px]">
+                              {videoFile.name}
+                            </span>
+                            <span className="text-slate-500 font-mono text-[11px]">
+                              {(videoFile.size / (1024 * 1024)).toFixed(1)} MB
+                            </span>
+                          </div>
+                        </div>
+                      ) : (
+                        /* Upload Dropzone */
+                        <div
+                          onClick={() => fileInputRef.current?.click()}
+                          className="border-2 border-dashed border-indigo-200 dark:border-slate-700 hover:border-indigo-400 bg-white dark:bg-slate-900/60 rounded-xl p-5 text-center cursor-pointer transition-all hover:bg-indigo-50/20"
+                        >
+                          <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-2">
+                            <Upload className="w-5 h-5" />
+                          </div>
+                          <p className="text-xs font-semibold text-slate-800 dark:text-slate-200">
+                            Click or tap to select a recorded video
+                          </p>
+                          <p className="text-[10px] text-slate-500 mt-0.5">
+                            Supports MP4, WebM, MOV (Max 150MB)
+                          </p>
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* QUICK HIGHLIGHT TAGS */}
+              <div className="space-y-1">
                 <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block">
-                  What stood out most? <span className="text-[10px] text-slate-700 font-normal">(Select tags)</span>
+                  What stood out most? <span className="text-[10px] text-slate-500 font-normal">(Select highlights)</span>
                 </label>
                 <div className="flex flex-wrap gap-1.5">
                   {PREDEFINED_TAGS.map((tag) => {
@@ -269,10 +821,11 @@ export default function ReviewClient() {
                         key={tag}
                         type="button"
                         onClick={() => handleToggleTag(tag)}
-                        className={`px-2.5 border border-slate-300 dark:border-slate-700 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1 ${isSelected
-                          ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30 scale-[1.02]"
-                          : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
-                          }`}
+                        className={`px-2.5 border border-slate-300 dark:border-slate-700 py-1 rounded-lg text-[11px] font-medium transition-all flex items-center gap-1 ${
+                          isSelected
+                            ? "bg-indigo-600 text-white shadow-sm shadow-indigo-600/30 scale-[1.02]"
+                            : "bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700"
+                        }`}
                       >
                         {isSelected && <Check className="w-3 h-3" />}
                         {tag}
@@ -282,14 +835,14 @@ export default function ReviewClient() {
                 </div>
               </div>
 
-              {/* STUDENT INPUTS (2-Column Grid to save vertical space) */}
+              {/* STUDENT INPUTS (2-Column Grid) */}
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                 <div>
                   <label className="block text-[11px] font-medium text-slate-800 dark:text-slate-400 mb-1">
                     Full Name <span className="text-rose-500">*</span>
                   </label>
                   <div className="relative">
-                    <User className="w-3.5 h-3.5 text-slate-700 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                    <User className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="text"
                       required
@@ -306,7 +859,7 @@ export default function ReviewClient() {
                     Phone / WhatsApp <span className="text-[10px] text-slate-400">(Optional)</span>
                   </label>
                   <div className="relative">
-                    <Phone className="w-3.5 h-3.5 text-slate-700 absolute left-2.5 top-1/2 -translate-y-1/2" />
+                    <Phone className="w-3.5 h-3.5 text-slate-500 absolute left-2.5 top-1/2 -translate-y-1/2" />
                     <input
                       type="tel"
                       value={studentPhone}
@@ -318,48 +871,85 @@ export default function ReviewClient() {
                 </div>
               </div>
 
-              {/* REVIEW TEXTAREA (Required with proper validation) */}
+              {/* REVIEW TEXTAREA (Required for Text review, Optional caption for Video review) */}
               <div>
                 <div className="flex items-center justify-between mb-1">
                   <label className="block text-[11px] font-medium text-slate-800 dark:text-slate-400">
-                    Your Review / Experience <span className="text-rose-500">*</span>
+                    {reviewMode === "text" ? (
+                      <>
+                        Your Review / Experience <span className="text-rose-500">*</span>
+                      </>
+                    ) : (
+                      <>
+                        Course Name or Message <span className="text-[10px] text-slate-400">(Optional)</span>
+                      </>
+                    )}
                   </label>
-                  <span className="text-[10px] text-slate-400">
-                    {reviewText.trim().length > 0 ? `${reviewText.trim().length}/2000` : "Min 5 characters"}
-                  </span>
+                  {reviewMode === "text" && (
+                    <span className="text-[10px] text-slate-400">
+                      {reviewText.trim().length > 0 ? `${reviewText.trim().length}/2000` : "Min 5 characters"}
+                    </span>
+                  )}
                 </div>
                 <textarea
-                  required
-                  minLength={5}
+                  required={reviewMode === "text"}
+                  minLength={reviewMode === "text" ? 5 : 0}
                   maxLength={2000}
                   rows={2}
                   value={reviewText}
                   onChange={(e) => setReviewText(e.target.value)}
-                  placeholder="Share your experience (course, mentors, what you learned, etc.)..."
+                  placeholder={
+                    reviewMode === "text"
+                      ? "Share your experience (course, mentors, what you learned, etc.)..."
+                      : "Mention your course or a short message with your video (optional)..."
+                  }
                   className="w-full p-2.5 bg-slate-50 dark:bg-slate-800/80 border border-slate-300 dark:border-slate-700 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500 placeholder:text-slate-400 resize-none transition-all"
                 />
-                {reviewText.length > 0 && reviewText.trim().length < 5 && (
+                {reviewMode === "text" && reviewText.length > 0 && reviewText.trim().length < 5 && (
                   <p className="text-[10px] text-rose-500 mt-0.5">
                     Please enter at least 5 characters (currently {reviewText.trim().length}).
                   </p>
                 )}
               </div>
 
+              {/* UPLOAD PROGRESS BAR (When uploading a video) */}
+              {submitting && reviewMode === "video" && (
+                <div className="space-y-1 bg-indigo-50 dark:bg-slate-800 p-2.5 rounded-xl border border-indigo-100 dark:border-slate-700">
+                  <div className="flex items-center justify-between text-xs font-semibold text-indigo-700 dark:text-indigo-300">
+                    <span>Uploading Video Review...</span>
+                    <span>{uploadProgress}%</span>
+                  </div>
+                  <div className="w-full h-2 bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-gradient-to-r from-indigo-500 to-purple-600 transition-all duration-200"
+                      style={{ width: `${uploadProgress}%` }}
+                    />
+                  </div>
+                </div>
+              )}
+
               {/* SUBMIT BUTTON */}
               <button
                 type="submit"
-                disabled={submitting}
+                disabled={
+                  submitting ||
+                  (reviewMode === "video" && !recordedBlob && !videoFile)
+                }
                 className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-indigo-600 via-indigo-700 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-semibold text-sm shadow-lg shadow-indigo-600/25 active:scale-[0.99] transition-all flex items-center justify-center gap-2 disabled:opacity-50"
               >
                 {submitting ? (
                   <>
                     <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Submitting...
+                    {reviewMode === "video" ? `Uploading Video (${uploadProgress}%)...` : "Submitting..."}
                   </>
                 ) : (
                   <>
-                    <Star className="w-4 h-4 fill-white text-white" />
-                    Submit Review 🚀
+                    {reviewMode === "video" ? (
+                      <Video className="w-4 h-4 fill-white text-white" />
+                    ) : (
+                      <Star className="w-4 h-4 fill-white text-white" />
+                    )}
+                    {reviewMode === "video" ? "Submit Video Review 🚀" : "Submit Written Review 🚀"}
                   </>
                 )}
               </button>
