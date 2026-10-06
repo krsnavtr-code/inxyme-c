@@ -14,6 +14,7 @@ import {
   Video,
   FileText,
   Camera,
+  Smartphone,
   Upload,
   RotateCcw,
   Square,
@@ -388,18 +389,30 @@ export default function ReviewClient() {
     xhr.send(formData);
   };
 
-  // Start Camera for live recording
+  // Start Camera for live recording (9:16 Reel Format)
   const handleStartCamera = async () => {
     try {
       stopCameraStream();
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: {
-          facingMode: "user",
-          width: { ideal: 1280 },
-          height: { ideal: 720 },
-        },
-        audio: true,
-      });
+      let stream: MediaStream;
+      try {
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "user",
+            width: { ideal: 1080 },
+            height: { ideal: 1920 },
+            aspectRatio: { ideal: 9 / 16 },
+          },
+          audio: true,
+        });
+      } catch (portraitErr) {
+        // Fallback for devices or desktop webcams that don't support custom aspect ratio
+        stream = await navigator.mediaDevices.getUserMedia({
+          video: {
+            facingMode: "user",
+          },
+          audio: true,
+        });
+      }
 
       mediaStreamRef.current = stream;
       setIsCameraActive(true);
@@ -936,7 +949,7 @@ export default function ReviewClient() {
                             : "text-slate-600 dark:text-slate-400"
                         }`}
                       >
-                        🎥 Record Live
+                        📱 Record Reel
                       </button>
                       <button
                         type="button"
@@ -955,102 +968,163 @@ export default function ReviewClient() {
                     </div>
                   </div>
 
-                  {/* 1. LIVE CAMERA RECORDING */}
+                  {/* 1. LIVE CAMERA RECORDING (9:16 VERTICAL REEL VIEW) */}
                   {videoSource === "record" && (
-                    <div className="space-y-2">
+                    <div className="space-y-2.5">
                       {recordedVideoUrl ? (
-                        /* Recorded Video Playback Preview */
+                        /* Recorded Reel Playback Preview */
                         <div className="space-y-2">
-                          <div className="relative rounded-xl overflow-hidden bg-black aspect-video border border-slate-700 shadow-inner flex items-center justify-center">
+                          <div className="relative mx-auto w-full max-w-[280px] sm:max-w-[310px] aspect-[9/16] rounded-3xl overflow-hidden bg-black border-4 border-slate-900 dark:border-slate-800 shadow-2xl flex items-center justify-center">
                             <video
                               src={recordedVideoUrl}
                               controls
                               playsInline
-                              className="w-full h-full object-contain"
+                              className="w-full h-full object-cover"
                             />
-                            <div className="absolute top-2 right-2 bg-emerald-600 text-white text-[10px] font-semibold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-md">
+                            {/* Reel Status Badges */}
+                            <div className="absolute top-3 left-3 bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-white/20 pointer-events-none">
+                              <Smartphone className="w-3 h-3 text-indigo-400" />
+                              <span>9:16 Reel Recorded</span>
+                            </div>
+                            <div className="absolute top-3 right-3 bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 shadow-md pointer-events-none">
                               <Check className="w-3 h-3" /> Ready
                             </div>
                           </div>
 
-                          <div className="flex items-center justify-between text-xs">
-                            <span className="text-slate-500">
+                          <div className="flex items-center justify-between max-w-[310px] mx-auto text-xs px-1">
+                            <span className="text-slate-500 font-medium">
                               Duration: {formatSeconds(recordingSeconds || 0)}
                             </span>
                             <button
                               type="button"
                               onClick={handleRetakeVideo}
-                              className="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-50"
+                              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-semibold hover:bg-slate-50 transition-all shadow-xs"
                             >
                               <RotateCcw className="w-3.5 h-3.5 text-indigo-600" />
-                              Retake Video
+                              Retake Reel
                             </button>
                           </div>
                         </div>
                       ) : (
-                        /* Live Camera View */
-                        <div className="space-y-2">
-                          <div className="relative rounded-xl overflow-hidden bg-slate-900 aspect-video border border-slate-700 shadow-inner flex flex-col items-center justify-center text-white">
-                            <video
-                              ref={liveVideoRef}
-                              autoPlay
-                              playsInline
-                              muted
-                              className={`w-full h-full object-cover ${
-                                isCameraActive ? "block" : "hidden"
-                              }`}
-                            />
-
-                            {!isCameraActive && (
-                              <div className="text-center p-4 space-y-2">
-                                <div className="w-12 h-12 bg-indigo-600/30 text-indigo-400 rounded-full flex items-center justify-center mx-auto">
-                                  <Camera className="w-6 h-6" />
+                        /* Live Camera & Reel View */
+                        <div>
+                          {!isCameraActive ? (
+                            /* Pre-Camera Intro Card */
+                            <div className="text-center p-6 bg-gradient-to-b from-indigo-50/50 via-white to-slate-50 dark:from-slate-800/80 dark:to-slate-900 rounded-2xl border border-indigo-100 dark:border-slate-700 space-y-3">
+                              <div className="relative inline-flex items-center justify-center">
+                                <div className="w-14 h-14 bg-gradient-to-tr from-indigo-600 to-rose-500 text-white rounded-2xl flex items-center justify-center shadow-lg shadow-indigo-500/25">
+                                  <Smartphone className="w-7 h-7" />
                                 </div>
-                                <p className="text-xs text-slate-300 max-w-xs">
-                                  Record a 30-90 second video sharing your learning experience and mentors.
+                                <span className="absolute -top-1 -right-2 bg-rose-500 text-white text-[9px] font-extrabold uppercase px-1.5 py-0.5 rounded-full shadow-xs">
+                                  9:16 Reel
+                                </span>
+                              </div>
+
+                              <div>
+                                <h4 className="text-sm font-bold text-slate-900 dark:text-white">
+                                  Record Reel Video Review
+                                </h4>
+                                <p className="text-xs text-slate-500 dark:text-slate-400 max-w-xs mx-auto mt-1 leading-relaxed">
+                                  Turn on the camera to open the 9:16 vertical Reel view. Frame your face, check your lighting, and share your experience (30–90 sec).
                                 </p>
-                                <button
-                                  type="button"
-                                  onClick={handleStartCamera}
-                                  className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs shadow-md transition-all"
-                                >
-                                  <Camera className="w-3.5 h-3.5" />
-                                  Turn On Camera
-                                </button>
                               </div>
-                            )}
 
-                            {/* Recording Timer Badge */}
-                            {isRecording && (
-                              <div className="absolute top-2 left-2 bg-rose-600/90 backdrop-blur-sm text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 animate-pulse shadow-md">
-                                <span className="w-2 h-2 rounded-full bg-white" />
-                                REC {formatSeconds(recordingSeconds)} / 03:00
+                              <button
+                                type="button"
+                                onClick={handleStartCamera}
+                                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-gradient-to-r from-indigo-600 to-rose-600 hover:from-indigo-700 hover:to-rose-700 text-white font-bold text-xs shadow-md shadow-indigo-600/30 transition-all hover:scale-105 active:scale-95"
+                              >
+                                <Camera className="w-4 h-4" />
+                                Turn On Camera (Reel View)
+                              </button>
+                            </div>
+                          ) : (
+                            /* Active 9:16 Vertical Reel Frame */
+                            <div className="space-y-2">
+                              <div className="relative mx-auto w-full max-w-[280px] sm:max-w-[310px] aspect-[9/16] rounded-3xl overflow-hidden bg-black border-4 border-slate-900 dark:border-slate-800 shadow-2xl flex flex-col justify-between">
+                                {/* Mirrored Live Camera Stream */}
+                                <video
+                                  ref={liveVideoRef}
+                                  autoPlay
+                                  playsInline
+                                  muted
+                                  style={{ transform: "scaleX(-1)" }}
+                                  className="absolute inset-0 w-full h-full object-cover z-0"
+                                />
+
+                                {/* Top HUD Overlay */}
+                                <div className="relative z-10 p-3 flex items-center justify-between bg-gradient-to-b from-black/70 via-black/30 to-transparent">
+                                  {isRecording ? (
+                                    <div className="bg-rose-600 text-white text-[11px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 animate-pulse shadow-md">
+                                      <span className="w-2 h-2 rounded-full bg-white" />
+                                      REC {formatSeconds(recordingSeconds)} / 03:00
+                                    </div>
+                                  ) : (
+                                    <div className="bg-black/60 backdrop-blur-md text-white text-[10px] font-bold px-2.5 py-1 rounded-full flex items-center gap-1.5 border border-white/20">
+                                      <Smartphone className="w-3 h-3 text-indigo-400" />
+                                      <span>Reel View (9:16)</span>
+                                    </div>
+                                  )}
+
+                                  <button
+                                    type="button"
+                                    onClick={stopCameraStream}
+                                    className="p-1.5 rounded-full bg-black/60 backdrop-blur-md text-white/80 hover:text-white hover:bg-black/80 transition-all border border-white/20"
+                                    title="Turn off camera"
+                                  >
+                                    <X className="w-3.5 h-3.5" />
+                                  </button>
+                                </div>
+
+                                {/* Center Framing Guide (Visible before recording to help arrange position) */}
+                                {!isRecording ? (
+                                  <div className="relative z-10 flex flex-col items-center justify-center pointer-events-none px-4">
+                                    <div className="w-36 h-48 rounded-[45%] border-2 border-dashed border-white/40 shadow-inner flex items-center justify-center backdrop-brightness-105">
+                                      <span className="text-[10px] font-semibold text-white/80 bg-black/50 px-2 py-0.5 rounded-full backdrop-blur-xs">
+                                        Face Area
+                                      </span>
+                                    </div>
+                                    <p className="text-[10px] text-white/90 font-medium text-center mt-2.5 bg-black/60 px-2.5 py-0.5 rounded-full backdrop-blur-xs shadow-xs">
+                                      Align face & check lighting
+                                    </p>
+                                  </div>
+                                ) : (
+                                  <div className="relative z-10 pointer-events-none" />
+                                )}
+
+                                {/* Bottom Controls Overlay (Reel Style) */}
+                                <div className="relative z-10 p-4 pb-5 flex flex-col items-center justify-center bg-gradient-to-t from-black/85 via-black/40 to-transparent gap-1.5">
+                                  {!isRecording ? (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={handleStartRecording}
+                                        className="group flex items-center justify-center w-16 h-16 rounded-full border-4 border-white/90 bg-white/20 backdrop-blur-xs hover:scale-105 active:scale-95 transition-all shadow-xl"
+                                        title="Start Recording Reel"
+                                      >
+                                        <span className="w-12 h-12 rounded-full bg-rose-600 group-hover:bg-rose-500 transition-colors shadow-lg shadow-rose-600/50" />
+                                      </button>
+                                      <span className="text-[11px] font-bold text-white drop-shadow-md">
+                                        Tap to Record Reel
+                                      </span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <button
+                                        type="button"
+                                        onClick={handleStopRecording}
+                                        className="group flex items-center justify-center w-16 h-16 rounded-full border-4 border-rose-500 bg-rose-500/20 backdrop-blur-xs animate-pulse hover:scale-105 active:scale-95 transition-all shadow-xl"
+                                        title="Stop Recording"
+                                      >
+                                        <span className="w-6 h-6 rounded-md bg-white group-hover:bg-rose-100 transition-colors shadow-md" />
+                                      </button>
+                                      <span className="text-[11px] font-bold text-rose-300 drop-shadow-md">
+                                        Tap to Stop
+                                      </span>
+                                    </>
+                                  )}
+                                </div>
                               </div>
-                            )}
-                          </div>
-
-                          {/* Controls */}
-                          {isCameraActive && (
-                            <div className="flex items-center justify-center gap-3 pt-1">
-                              {!isRecording ? (
-                                <button
-                                  type="button"
-                                  onClick={handleStartRecording}
-                                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white font-bold text-xs shadow-lg shadow-rose-600/30 transition-all hover:scale-105"
-                                >
-                                  <span className="w-2.5 h-2.5 rounded-full bg-white" />
-                                  Start Recording
-                                </button>
-                              ) : (
-                                <button
-                                  type="button"
-                                  onClick={handleStopRecording}
-                                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-900 hover:bg-black text-white font-bold text-xs shadow-lg transition-all"
-                                >
-                                  <Square className="w-3 h-3 fill-white" />
-                                  Stop Recording
-                                </button>
-                              )}
                             </div>
                           )}
                         </div>
