@@ -15,7 +15,7 @@ import FAQ from "./components/home/FAQ";
 import ContactSection from "./components/home/ContactSection";
 
 export const metadata: Metadata = {
-  title: "Inxyme | Job-Ready Online Certification Courses in India",
+  title: "Inxyme | Job-Ready Online Certification Courses - Official Website",
   description:
     "Learn job-ready skills with Inxyme's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
   keywords:
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     canonical: "https://www.inxyme.com",
   },
   openGraph: {
-    title: "Inxyme | Job-Ready Online Certification Courses in India",
+    title: "Inxyme | Job-Ready Online Certification Courses - Official Website",
     description:
       "Learn job-ready skills with Inxyme's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
     url: "https://www.inxyme.com",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Inxyme | Job-Ready Online Certification Courses in India",
+    title: "Inxyme | Job-Ready Online Certification Courses - Official Website",
     description:
       "Learn job-ready skills with Inxyme's online certification courses in Data Science, AI, SAP, Web Development and Digital Marketing with expert mentorship.",
   },
