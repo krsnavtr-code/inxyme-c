@@ -259,7 +259,7 @@ function Navbar() {
 
   const navLinks = [
     { to: "/courses", label: "Courses" },
-    { to: "/#sap-free-training", label: "🎁 7-Day Free SAP" },
+    // { to: "/#sap-free-training", label: "🎁 7-Day Free SAP" },
     // { to: "/categories", label: "Categories" },
     // { to: "/free-courses", label: "Free Course" },
     // { to: "/testimonials", label: "Testimonials" },
@@ -797,7 +797,7 @@ function Navbar() {
               {/* 3. Search Icon & Mobile Actions */}
               <div className="flex items-center gap-2 sm:gap-3">
                 {/* 7-Day Free SAP Training Button */}
-                <button
+                {/* <button
                   type="button"
                   onClick={() => {
                     if (pathname === "/") {
@@ -820,7 +820,7 @@ function Navbar() {
                   <span className="bg-white text-orange-600 text-[9px] font-black px-1.5 py-0.2 rounded-md uppercase tracking-wider">
                     Free
                   </span>
-                </button>
+                </button> */}
 
                 {/* Desktop Search Toggle */}
                 <button
