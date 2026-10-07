@@ -307,7 +307,7 @@ function Banner() {
           {/* Left Content */}
           <div className="lg:w-[55%] space-y-4">
             {/* Top Badges */}
-            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+            {/* <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
               <span className="text-blue-600 dark:text-blue-400 tracking-wider font-extrabold uppercase text-[10px] sm:text-xs bg-blue-50/80 dark:bg-blue-950/60 backdrop-blur-md px-2.5 sm:px-3 py-1 rounded-full border border-blue-200/80 dark:border-blue-800/80 shadow-2xs">
                 ✦ Career Acceleration Platform
               </span>
@@ -317,9 +317,8 @@ function Banner() {
               >
                 <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping shrink-0"></span>
                 <span className="truncate">🔥7 Days Free SAP Live Classes(PP, MM, ABAP...)</span>
-                {/* <FaArrowRight className="text-[10px] group-hover:translate-x-0.5 transition-transform shrink-0" /> */}
               </a>
-            </div>
+            </div> */}
 
             {/* --- REFINED PREMIUM STAIRCASE DESIGN --- */}
             <div className="space-y-2 w-full font-sans">
