@@ -16,6 +16,8 @@ import {
   FaPhoneAlt,
   FaEnvelope,
   FaCreditCard,
+  FaGift,
+  FaFire,
 } from "react-icons/fa";
 import { debounce } from "lodash";
 import api from "../utils/api";
@@ -257,6 +259,7 @@ function Navbar() {
 
   const navLinks = [
     { to: "/courses", label: "Courses" },
+    { to: "/#sap-free-training", label: "🎁 7-Day Free SAP" },
     // { to: "/categories", label: "Categories" },
     // { to: "/free-courses", label: "Free Course" },
     // { to: "/testimonials", label: "Testimonials" },
@@ -286,41 +289,59 @@ function Navbar() {
   return (
     <div className="flex flex-col w-full sticky top-0 z-50 text-black dark:text-white">
       {/* ==================================================================
+          PART 0: TOP NOTIFICATION RIBBON (100% Mobile Responsive)
+      ================================================================== */}
+      <div className="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-amber-600 text-white text-[10px] sm:text-xs font-bold py-1 sm:py-1.5 px-2.5 sm:px-4 shadow-xs">
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5 sm:gap-3">
+          <a
+            href="/#sap-free-training"
+            onClick={(e) => {
+              if (pathname === "/") {
+                e.preventDefault();
+                document.getElementById("sap-free-training")?.scrollIntoView({ behavior: "smooth" });
+              }
+            }}
+            className="flex items-center gap-1.5 hover:underline truncate"
+          >
+            <span className="flex h-1.5 w-1.5 sm:h-2 sm:w-2 relative shrink-0">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-1.5 w-1.5 sm:h-2 sm:w-2 bg-amber-300"></span>
+            </span>
+            <span className="truncate">
+              <strong className="text-amber-300">100% FREE:</strong> 7 Days SAP Live Class (PP, MM, ABAP, FICO, SD)
+            </span>
+          </a>
+          <button
+            type="button"
+            onClick={() => {
+              if (pathname === "/") {
+                document.getElementById("sap-free-training")?.scrollIntoView({ behavior: "smooth" });
+              } else {
+                window.dispatchEvent(
+                  new CustomEvent("open-sap-free-modal", {
+                    detail: { module: "All SAP Modules" },
+                  })
+                );
+              }
+            }}
+            className="shrink-0 bg-white/20 hover:bg-white text-white hover:text-slate-900 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap"
+          >
+            Register Free →
+          </button>
+        </div>
+      </div>
+
+      {/* ==================================================================
           PART 1: TOP BAR (Utilities)
           Hidden on mobile, visible on desktop. Dark background.
       ================================================================== */}
       <div className="bg-white text-blue-700 dark:bg-gray-900 dark:text-orange-500 font-bold text-xs py-1 px-4 border-b border-blue-100 dark:border-gray-800 shadow-sm">
         <div className="max-w-7xl mx-auto flex justify-between items-center">
-          {/* Left Side: Contact / Info */}
-          <div className="hidden md:inline-flex items-center gap-4">
-            {/* <a
-              href="tel:+919990999561"
-              className="flex items-center gap-1 hover:text-blue-900 dark:hover:text-orange-300 transition-colors"
-            >
-              <FaPhoneAlt size={10} /> Call
-            </a>
-            <a
-              href="mailto:info@inxyme.com"
-              className="flex items-center gap-1 hover:text-blue-900 dark:hover:text-orange-300 transition-colors"
-            >
-              <FaEnvelope size={10} /> Mail
-            </a> */}
-          </div>
-
-          {/* Mobile */}
-          <div className="md:hidden flex items-center gap-4">
-            {/* <a
-              href="mailto:info@inxyme.com"
-              className="flex items-center gap-1 hover:text-blue-900 dark:hover:text-orange-300 transition-colors"
-            >
-              <FaEnvelope size={10} />
-            </a>
-            <a
-              href="tel:+919990999561"
-              className="flex items-center gap-1 hover:text-blue-900 dark:hover:text-orange-300 transition-colors"
-            >
-              <FaPhoneAlt size={10} />
-            </a> */}
+          {/* Left Side: Desktop Quick Link */}
+          <div className="hidden md:inline-flex items-center gap-3">
+            <span className="text-[11px] text-slate-500 dark:text-slate-400">
+              🚀 Government Recognized & ISO Certified Online Institute
+            </span>
           </div>
 
           {/* Right Side: Actions (Theme, Pay, Agent, Auth) */}
@@ -514,7 +535,7 @@ function Navbar() {
               href="https://collegevihar.com/"
               target="_blank"
               rel="noopener noreferrer"
-              className="font-extrabold text-orange-600 text-[10px] uppercase tracking-wide whitespace-nowrap hover:text-blue-900 dark:hover:text-orange-300 hover:scale-105 transition-all duration-200"
+              className="font-extrabold text-orange-600 text-[8px] uppercase tracking-wide whitespace-nowrap hover:text-blue-900 dark:hover:text-orange-300 hover:scale-105 transition-all duration-200"
             >
               Online university courses
             </a>
@@ -553,7 +574,7 @@ function Navbar() {
               Agent Register
             </a> */}
 
-            <div className="h-3 w-px bg-blue-300 dark:bg-orange-600"></div>
+            {/* <div className="h-3 w-px bg-blue-300 dark:bg-orange-600"></div> */}
 
             {/* Payment Dropdown (Small Version) */}
             <div className="relative" ref={mobilePaymentDropdownRef}>
@@ -617,7 +638,7 @@ function Navbar() {
               )}
             </div>
 
-            <div className="h-3 w-px bg-blue-300 dark:bg-orange-600 mx-1"></div>
+            {/* <div className="h-3 w-px bg-blue-300 dark:bg-orange-600 mx-1"></div> */}
 
             {/* Auth Section */}
             {isAuthenticated ? (
@@ -676,7 +697,8 @@ function Navbar() {
                 href="/login"
                 className="flex items-center gap-1 text-white bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded transition-colors"
               >
-                <FaSignInAlt size={10} /> <span className="">Login</span>
+                {/* <FaSignInAlt size={10} />  */}
+                <span className="text-sm">Login</span>
               </Link>
             )}
           </div>
@@ -714,7 +736,7 @@ function Navbar() {
                   <img
                     src={logoImg}
                     alt="inxyme – Your Online Learning Partner"
-                    className="h-[46px]"
+                    className="h-[42px]"
                   />
                 </Link>
               </div>
@@ -773,7 +795,33 @@ function Navbar() {
               </div>
 
               {/* 3. Search Icon & Mobile Actions */}
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
+                {/* 7-Day Free SAP Training Button */}
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (pathname === "/") {
+                      const el = document.getElementById("sap-free-training");
+                      if (el) {
+                        el.scrollIntoView({ behavior: "smooth", block: "start" });
+                        return;
+                      }
+                    }
+                    window.dispatchEvent(
+                      new CustomEvent("open-sap-free-modal", {
+                        detail: { module: "All SAP Modules" },
+                      })
+                    );
+                  }}
+                  className="hidden sm:inline-flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-700 text-white font-extrabold text-xs shadow-md shadow-orange-500/25 transition-all hover:scale-105 cursor-pointer shrink-0"
+                >
+                  <FaGift className="text-amber-200" />
+                  <span>7-Day Free SAP</span>
+                  <span className="bg-white text-orange-600 text-[9px] font-black px-1.5 py-0.2 rounded-md uppercase tracking-wider">
+                    Free
+                  </span>
+                </button>
+
                 {/* Desktop Search Toggle */}
                 <button
                   className="hidden lg:flex items-center justify-center w-9 h-9 rounded-full bg-slate-100/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-blue-100 dark:hover:bg-gray-700 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
@@ -1015,6 +1063,39 @@ function Navbar() {
               </Link>
             </div>
           )}
+
+          {/* Mobile 7-Day Free SAP Training Card */}
+          <div className="mb-3 p-3 bg-gradient-to-r from-blue-700 via-indigo-700 to-amber-600 rounded-2xl text-white shadow-lg shadow-blue-900/30">
+            <div className="flex items-center gap-1.5 mb-1">
+              <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
+              <span className="text-[10px] font-black uppercase tracking-wider text-amber-300">
+                100% Free Live Bootcamp
+              </span>
+            </div>
+            <h4 className="text-xs font-black leading-snug">
+              7 Days Free SAP Masterclass (PP, MM, ABAP, FICO, SD)
+            </h4>
+            <p className="text-[10px] text-blue-100 mt-0.5">
+              Zero fee • Live system demo • Free certificate
+            </p>
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                if (pathname === "/") {
+                  document.getElementById("sap-free-training")?.scrollIntoView({ behavior: "smooth" });
+                } else {
+                  window.dispatchEvent(
+                    new CustomEvent("open-sap-free-modal", {
+                      detail: { module: "All SAP Modules" },
+                    })
+                  );
+                }
+              }}
+              className="mt-2 w-full py-2 px-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-black text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
+            >
+              <FaGift className="text-xs" /> Register for Free Now →
+            </button>
+          </div>
 
           {/* Small Screen Payment option */}
           <div className="mb-1" ref={mobilePaymentDropdownRef}>

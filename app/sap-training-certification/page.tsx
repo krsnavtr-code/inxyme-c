@@ -21,6 +21,8 @@ import {
   FaChartLine,
   FaBoxes,
   FaFileInvoiceDollar,
+  FaGift,
+  FaFire,
 } from "react-icons/fa";
 import HowWillYourTrainingWork from "../components/home/HowWillYourTrainingWork";
 import GoogleReviews from "../components/home/GoogleReviews";
@@ -336,12 +338,21 @@ export default function SapTrainingCertification() {
             {/* Left: Content (Spans 7 columns for better text-to-form ratio) */}
             <div className="lg:col-span-7 text-center lg:text-left">
               {/* Trust Badge / Eyebrow */}
-              <div className="inline-flex items-center gap-2 bg-blue-500/10 border border-blue-400/30 text-blue-300 px-3 py-1.5 rounded-full text-xs font-semibold tracking-wide mb-5">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
-                </span>
-                <FaCertificate /> Job-Oriented SAP Program
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-5 justify-center lg:justify-start">
+                <div className="inline-flex items-center gap-1.5 sm:gap-2 bg-blue-500/10 border border-blue-400/30 text-blue-300 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold tracking-wide">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-blue-400 opacity-75"></span>
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-blue-500"></span>
+                  </span>
+                  <FaCertificate /> Job-Oriented SAP Program
+                </div>
+                <a
+                  href="/#sap-free-training"
+                  className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 border border-amber-400/40 text-amber-300 hover:text-white hover:bg-amber-500 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide uppercase transition-all shadow-xs max-w-full"
+                >
+                  <FaFire className="text-red-400 shrink-0" />
+                  <span className="truncate">7 Days Free SAP Live Class (PP, MM, ABAP...) →</span>
+                </a>
               </div>
 
               <h1 className="text-2xl md:text-3xl lg:text-4xl font-extrabold mb-4 leading-tight tracking-tight">
@@ -375,18 +386,25 @@ export default function SapTrainingCertification() {
               </div>
 
               {/* Buttons (Compact and Punchy) */}
-              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start">
+              <div className="flex flex-col sm:flex-row gap-2.5 sm:gap-3 justify-center lg:justify-start w-full">
                 <a
                   href="#sap-courses"
-                  className="bg-blue-600 text-white px-6 py-3 rounded-lg font-bold text-sm hover:bg-blue-500 transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)] text-center"
+                  className="w-full sm:w-auto bg-blue-600 text-white px-5 py-3 rounded-lg font-bold text-sm hover:bg-blue-500 transition-all shadow-[0_0_15px_rgba(37,99,235,0.4)] text-center"
                 >
                   Explore Curriculum
                 </a>
                 <a
-                  href={WHATSAPP_URL} // Replace with your variable
+                  href="/#sap-free-training"
+                  className="w-full sm:w-auto bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-700 text-white px-5 py-3 rounded-lg font-black text-sm transition-all shadow-lg shadow-orange-500/25 text-center flex items-center justify-center gap-2"
+                >
+                  <FaGift className="text-amber-200 shrink-0" />
+                  <span>7 Days Free Training Batch</span>
+                </a>
+                <a
+                  href={WHATSAPP_URL}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-white/5 border border-white/20 text-white px-6 py-3 rounded-lg font-bold text-sm hover:bg-white/10 transition-all text-center backdrop-blur-sm"
+                  className="w-full sm:w-auto bg-white/5 border border-white/20 text-white px-5 py-3 rounded-lg font-bold text-sm hover:bg-white/10 transition-all text-center backdrop-blur-sm"
                 >
                   Chat on WhatsApp
                 </a>

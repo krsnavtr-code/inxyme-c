@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import Banner from "./components/home/Banner";
+import SapFreeTrainingSection from "./components/home/SapFreeTrainingSection";
 import PopularCourses from "./components/home/PopularCourses";
 import Categories from "./components/home/Categories";
 import Assessment from "./components/home/Assessment";
@@ -96,6 +97,9 @@ export default function Home() {
       <div className="flex flex-col relative z-10">
         {/* Hero Banner */}
         <Banner />
+
+        {/* 7 Days Free SAP Training Masterclass Section */}
+        <SapFreeTrainingSection />
 
         {/* Popular Courses */}
         <PopularCourses />

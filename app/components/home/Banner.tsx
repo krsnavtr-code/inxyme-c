@@ -16,6 +16,7 @@ import {
   FaDownload,
   FaPaperPlane,
   FaGraduationCap,
+  FaGift,
 } from "react-icons/fa";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
@@ -305,11 +306,19 @@ function Banner() {
         <div className="relative z-10 flex flex-col lg:flex-row items-center justify-between gap-8 lg:gap-12">
           {/* Left Content */}
           <div className="lg:w-[55%] space-y-4">
-            {/* Top Badge */}
-            <div className="inline-flex items-center">
-              <span className="text-blue-600 dark:text-blue-400 tracking-wider font-extrabold uppercase text-[11px] md:text-xs bg-blue-50/80 dark:bg-blue-950/60 backdrop-blur-md px-3 py-1 rounded-full border border-blue-200/80 dark:border-blue-800/80 shadow-2xs">
+            {/* Top Badges */}
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2">
+              <span className="text-blue-600 dark:text-blue-400 tracking-wider font-extrabold uppercase text-[10px] sm:text-xs bg-blue-50/80 dark:bg-blue-950/60 backdrop-blur-md px-2.5 sm:px-3 py-1 rounded-full border border-blue-200/80 dark:border-blue-800/80 shadow-2xs">
                 ✦ Career Acceleration Platform
               </span>
+              <a
+                href="#sap-free-training"
+                className="group inline-flex items-center gap-1 px-2 sm:px-3 py-1 rounded-full bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-amber-500/15 border border-amber-500/40 text-amber-700 dark:text-amber-300 text-[8px] sm:text-xs font-black tracking-wide uppercase hover:bg-amber-500 hover:text-white transition-all shadow-xs max-w-full"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-red-500 animate-ping shrink-0"></span>
+                <span className="truncate">🔥7 Days Free SAP Live Classes(PP, MM, ABAP...)</span>
+                {/* <FaArrowRight className="text-[10px] group-hover:translate-x-0.5 transition-transform shrink-0" /> */}
+              </a>
             </div>
 
             {/* --- REFINED PREMIUM STAIRCASE DESIGN --- */}
@@ -373,21 +382,29 @@ function Banner() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex flex-row items-center gap-3 pt-2">
+            <div className="flex flex-col xs:flex-row flex-wrap items-stretch xs:items-center gap-2 sm:gap-2.5 pt-2 w-full">
               <button
                 onClick={() => setShowContactModal(true)}
-                className="group bg-blue-600 hover:bg-blue-700 text-white px-2 md:px-6 py-1.5 md:py-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-200 flex items-center justify-center shadow-md shadow-blue-600/20"
+                className="group bg-blue-600 hover:bg-blue-700 text-white px-3 sm:px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm transition-all duration-200 flex items-center justify-center shadow-md shadow-blue-600/20 text-center"
               >
                 <span>Start Learning Today</span>
-                <FaArrowRight className="ml-2 text-xs group-hover:translate-x-1 transition-transform duration-200" />
+                <FaArrowRight className="ml-1.5 text-xs group-hover:translate-x-1 transition-transform duration-200" />
               </button>
+
+              <a
+                href="#sap-free-training"
+                className="group bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-700 text-white px-3 sm:px-5 py-2.5 rounded-lg font-black text-xs sm:text-sm transition-all duration-200 flex items-center justify-center shadow-md shadow-orange-500/25 text-center"
+              >
+                <FaGift className="mr-1.5 text-xs text-amber-100 shrink-0" />
+                <span>7 Days Free SAP Class</span>
+              </a>
 
               <button
                 onClick={() => setShowBrochureModal(true)}
-                className="group bg-orange-600 hover:bg-orange-700 text-white px-2 md:px-6 py-1.5 md:py-3 rounded-lg font-bold text-xs md:text-sm transition-all duration-200 flex items-center justify-center shadow-md shadow-orange-600/20"
+                className="group bg-slate-800 hover:bg-slate-900 text-white px-3 sm:px-5 py-2.5 rounded-lg font-bold text-xs sm:text-sm transition-all duration-200 flex items-center justify-center shadow-md shadow-slate-900/20 text-center"
               >
                 <span>Download Brochure</span>
-                <FaDownload className="ml-2 text-xs group-hover:translate-y-1 transition-transform duration-200" />
+                <FaDownload className="ml-1.5 text-xs group-hover:translate-y-1 transition-transform duration-200" />
               </button>
             </div>
           </div>
