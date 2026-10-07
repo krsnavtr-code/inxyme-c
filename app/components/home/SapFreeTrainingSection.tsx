@@ -266,7 +266,7 @@ export default function SapFreeTrainingSection() {
         {/* ==================================================================
             SECTION HEADER (Compact & Professional)
         ================================================================== */}
-        <div className="text-center max-w-3xl mx-auto space-y-2 mb-4 sm:mb-6 px-1">
+        <div className="text-center max-w-5xl mx-auto space-y-2 mb-4 sm:mb-6 px-1">
           <div className="inline-flex items-center gap-1.5 px-3 py-0.5 rounded-full bg-gradient-to-r from-amber-500/15 via-orange-500/15 to-red-500/15 border border-amber-500/30 text-amber-600 dark:text-amber-400 text-[10px] font-bold tracking-wide uppercase shadow-2xs">
             <span className="flex h-1.5 w-1.5 relative shrink-0">
               <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
