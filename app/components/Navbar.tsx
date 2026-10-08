@@ -293,14 +293,8 @@ function Navbar() {
       ================================================================== */}
       <div className="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-amber-600 text-white text-[10px] sm:text-xs font-bold py-1 sm:py-1.5 px-2.5 sm:px-4 shadow-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5 sm:gap-3">
-          <a
-            href="/#sap-free-training"
-            onClick={(e) => {
-              if (pathname === "/") {
-                e.preventDefault();
-                document.getElementById("sap-free-training")?.scrollIntoView({ behavior: "smooth" });
-              }
-            }}
+          <Link
+            href="/7-days-free-sap-training"
             className="flex items-center gap-1.5 hover:underline truncate"
           >
             <span className="flex h-1.5 w-1.5 sm:h-2 sm:w-2 relative shrink-0">
@@ -310,24 +304,13 @@ function Navbar() {
             <span className="truncate">
               <strong className="text-amber-300">100% FREE:</strong> 7 Days SAP Live Class (PP, MM, ABAP, FICO, SD)
             </span>
-          </a>
-          <button
-            type="button"
-            onClick={() => {
-              if (pathname === "/") {
-                document.getElementById("sap-free-training")?.scrollIntoView({ behavior: "smooth" });
-              } else {
-                window.dispatchEvent(
-                  new CustomEvent("open-sap-free-modal", {
-                    detail: { module: "All SAP Modules" },
-                  })
-                );
-              }
-            }}
+          </Link>
+          <Link
+            href="/7-days-free-sap-training"
             className="shrink-0 bg-white/20 hover:bg-white text-white hover:text-slate-900 px-2 sm:px-2.5 py-0.5 rounded-full text-[10px] sm:text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap"
           >
             Register Free →
-          </button>
+          </Link>
         </div>
       </div>
 
@@ -1078,23 +1061,13 @@ function Navbar() {
             <p className="text-[10px] text-blue-100 mt-0.5">
               Zero fee • Live system demo • Free certificate
             </p>
-            <button
-              onClick={() => {
-                setIsMobileMenuOpen(false);
-                if (pathname === "/") {
-                  document.getElementById("sap-free-training")?.scrollIntoView({ behavior: "smooth" });
-                } else {
-                  window.dispatchEvent(
-                    new CustomEvent("open-sap-free-modal", {
-                      detail: { module: "All SAP Modules" },
-                    })
-                  );
-                }
-              }}
+            <Link
+              href="/7-days-free-sap-training"
+              onClick={() => setIsMobileMenuOpen(false)}
               className="mt-2 w-full py-2 px-3 bg-amber-500 hover:bg-amber-600 text-slate-900 font-black text-xs rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-sm cursor-pointer"
             >
               <FaGift className="text-xs" /> Register for Free Now →
-            </button>
+            </Link>
           </div>
 
           {/* Small Screen Payment option */}

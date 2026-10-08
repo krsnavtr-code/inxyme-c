@@ -308,6 +308,12 @@ export default function SapFreeTrainingSection() {
               <FaShieldAlt className="text-purple-500 text-xs shrink-0" />
               <span>Zero Cost</span>
             </div>
+            <a
+              href="/7-days-free-sap-training"
+              className="flex items-center gap-1 bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-700 hover:to-indigo-700 px-3 py-1 rounded-lg border border-blue-500 justify-center font-bold transition-all shadow-xs"
+            >
+              <span>View Full Syllabus & Modules Page →</span>
+            </a>
           </div>
         </div>
 

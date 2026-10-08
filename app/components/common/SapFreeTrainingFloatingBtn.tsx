@@ -20,6 +20,13 @@ export default function SapFreeTrainingFloatingBtn() {
   }, []);
 
   const handleClick = () => {
+    if (pathname === "/7-days-free-sap-training") {
+      const formEl = document.getElementById("free-registration-form");
+      if (formEl) {
+        formEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    }
     if (pathname === "/") {
       const section = document.getElementById("sap-free-training");
       if (section) {

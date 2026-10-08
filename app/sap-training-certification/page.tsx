@@ -347,7 +347,7 @@ export default function SapTrainingCertification() {
                   <FaCertificate /> Job-Oriented SAP Program
                 </div>
                 <a
-                  href="/#sap-free-training"
+                  href="/7-days-free-sap-training"
                   className="inline-flex items-center gap-1.5 bg-gradient-to-r from-amber-500/20 via-orange-500/20 to-amber-500/20 border border-amber-400/40 text-amber-300 hover:text-white hover:bg-amber-500 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-black tracking-wide uppercase transition-all shadow-xs max-w-full"
                 >
                   <FaFire className="text-red-400 shrink-0" />
@@ -394,7 +394,7 @@ export default function SapTrainingCertification() {
                   Explore Curriculum
                 </a>
                 <a
-                  href="/#sap-free-training"
+                  href="/7-days-free-sap-training"
                   className="w-full sm:w-auto bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-700 text-white px-5 py-3 rounded-lg font-black text-sm transition-all shadow-lg shadow-orange-500/25 text-center flex items-center justify-center gap-2"
                 >
                   <FaGift className="text-amber-200 shrink-0" />

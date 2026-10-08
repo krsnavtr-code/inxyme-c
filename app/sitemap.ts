@@ -25,6 +25,7 @@ const staticPaths = [
   { path: "/terms-of-service", priority: 0.5 },
   { path: "/payment-terms-and-conditions", priority: 0.5 },
   { path: "/scholarship", priority: 0.7 },
+  { path: "/7-days-free-sap-training", priority: 0.95 },
   { path: "/register", priority: 0.6 },
   { path: "/login", priority: 0.6 },
 ];

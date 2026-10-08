@@ -390,13 +390,13 @@ function Banner() {
                 <FaArrowRight className="ml-1.5 text-xs group-hover:translate-x-1 transition-transform duration-200" />
               </button>
 
-              <a
-                href="#sap-free-training"
+              <Link
+                href="/7-days-free-sap-training"
                 className="group bg-gradient-to-r from-amber-500 via-orange-500 to-amber-600 hover:from-amber-600 hover:to-orange-700 text-white px-3 sm:px-5 py-2.5 rounded-lg font-black text-xs sm:text-sm transition-all duration-200 flex items-center justify-center shadow-md shadow-orange-500/25 text-center"
               >
                 <FaGift className="mr-1.5 text-xs text-amber-100 shrink-0" />
                 <span>7 Days Free SAP Class</span>
-              </a>
+              </Link>
 
               <button
                 onClick={() => setShowBrochureModal(true)}
