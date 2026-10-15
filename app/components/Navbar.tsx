@@ -591,22 +591,22 @@ function Navbar() {
                     <div className="space-y-2 text-gray-700">
                       <div className="flex justify-between border-y py-2">
                         <span className="font-medium">Bank Name</span>
-                        <strong>IndusInd Bank</strong>
+                        <strong>Yes Bank</strong>
                       </div>
 
                       <div className="flex justify-between border-b pb-2">
                         <span className="font-medium">Account Number</span>
-                        <strong>201037792463</strong>
+                        <strong>020861900007608</strong>
                       </div>
 
                       <div className="flex justify-between border-b pb-2">
                         <span className="font-medium">IFSC Code</span>
-                        <strong>INDB0000588</strong>
+                        <strong>YESB0000208</strong>
                       </div>
 
                       <div className="flex justify-between border-b pb-2">
                         <span className="font-medium">Branch</span>
-                        <strong>Noida Sector 62</strong>
+                        <strong>Okhla Phase II , Delhi</strong>
                       </div>
                     </div>
 
