@@ -585,7 +585,18 @@ function Navbar() {
                 Pay <FaChevronDown size={8} />
               </button>
               {showPaymentDropdown && (
-                <div className="absolute right-[-20px] top-6 w-72 bg-white text-gray-800 rounded shadow-xl border border-gray-100 z-50 max-h-[85vh] overflow-y-auto">
+                <div className="fixed left-1/2 -translate-x-1/2 top-14 w-[calc(100vw-2rem)] max-w-sm bg-white text-gray-800 rounded-xl shadow-2xl border border-gray-200 z-50 max-h-[85vh] overflow-y-auto">
+                  <div className="flex items-center justify-between px-4 pt-3 pb-1 border-b border-gray-100">
+                    <span className="text-xs font-bold text-gray-600">Payment Options</span>
+                    <button
+                      type="button"
+                      onClick={() => setShowPaymentDropdown(false)}
+                      className="text-gray-400 hover:text-gray-600 p-1 rounded-full hover:bg-gray-100 transition-colors"
+                      aria-label="Close"
+                    >
+                      <FaTimes size={13} />
+                    </button>
+                  </div>
                   <button
                     type="button"
                     onClick={handlePayRazorpay}
