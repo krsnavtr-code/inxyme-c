@@ -28,18 +28,22 @@ import { toast } from "react-hot-toast";
 import api from "../utils/api";
 import { submitContactForm } from "../api/contactApi";
 import SEO from "../components/SEO";
+import { getNewsEvents } from "../api/newsEventApi";
 
 export interface NewsOrEvent {
-  id: string;
-  type: "masterclass" | "placement" | "press" | "announcement" | "archive";
-  category: "upcoming" | "news" | "placement" | "past";
+  _id?: string;
+  id?: string;
+  type: "masterclass" | "placement" | "press" | "announcement" | "archive" | string;
+  category: "upcoming" | "news" | "placement" | "past" | string;
   title: string;
   description: string;
   fullContent?: string;
   date: string;
   time?: string;
   location?: string;
-  mode?: "Live Interactive Webinar" | "Virtual Drive" | "Official Notice" | "On-Demand Recording";
+  mode?: "Live Interactive Webinar" | "Virtual Drive" | "Official Notice" | "On-Demand Recording" | string;
+  organizerName?: string;
+  organizerDivision?: string;
   organizedBy: {
     name: string;
     division: string;
@@ -206,21 +210,57 @@ export default function NewsAndEventsPage() {
   const [isSubmittingRsvp, setIsSubmittingRsvp] = useState(false);
   const [rsvpSuccess, setRsvpSuccess] = useState(false);
 
-  // Sync real media mentions from backend if available
+  // Sync real news, events, and media mentions from backend
   useEffect(() => {
-    const fetchMediaMentions = async () => {
+    const fetchNewsEvents = async () => {
       try {
         setLoading(true);
-        const response = await api.get("/media-mentions", {
-          params: { limit: 20 },
-        });
+        const [newsEventsRes, mediaMentionsRes] = await Promise.allSettled([
+          getNewsEvents(),
+          api.get("/media-mentions", { params: { limit: 20 } }),
+        ]);
 
-        const mentions =
-          response?.data?.data?.mentions || response?.data?.mentions || [];
+        let dynamicItems: NewsOrEvent[] = [];
 
-        if (Array.isArray(mentions) && mentions.length > 0) {
+        if (
+          newsEventsRes.status === "fulfilled" &&
+          newsEventsRes.value?.data?.items?.length > 0
+        ) {
+          const apiEvents: NewsOrEvent[] = newsEventsRes.value.data.items.map((m: any) => ({
+            id: m._id || m.id,
+            _id: m._id,
+            type: m.type,
+            category: m.category,
+            title: m.title,
+            description: m.description,
+            fullContent: m.fullContent,
+            date: m.date,
+            time: m.time,
+            location: m.location,
+            mode: m.mode,
+            organizedBy: {
+              name: m.organizerName || m.organizedBy?.name || "Inxyme",
+              division: m.organizerDivision || m.organizedBy?.division || "Executive Directorate",
+            },
+            publisher: m.publisher,
+            image: m.image,
+            tag: m.tag || "Masterclass",
+            featured: Boolean(m.featured),
+            registrationOpen: m.registrationOpen !== undefined ? Boolean(m.registrationOpen) : true,
+            externalLink: m.externalLink,
+          }));
+          dynamicItems = apiEvents;
+        }
+
+        // Include media mentions if available
+        if (
+          mediaMentionsRes.status === "fulfilled" &&
+          mediaMentionsRes.value?.data?.data?.mentions?.length > 0
+        ) {
+          const mentions = mediaMentionsRes.value.data.data.mentions;
           const formattedNews: NewsOrEvent[] = mentions.map((m: any) => ({
             id: m._id || m.slug,
+            _id: m._id,
             type: "press",
             category: "news",
             title: m.title,
@@ -240,15 +280,13 @@ export default function NewsAndEventsPage() {
             registrationOpen: false,
           }));
 
-          setItems((prev) => {
-            const existingTitles = new Set(
-              formattedNews.map((n) => n.title.toLowerCase()),
-            );
-            const nonDuplicateCurated = professionalCuratedEvents.filter(
-              (d) => !existingTitles.has(d.title.toLowerCase()),
-            );
-            return [...formattedNews, ...nonDuplicateCurated];
-          });
+          const existingTitles = new Set(dynamicItems.map((n) => n.title.toLowerCase()));
+          const newMentions = formattedNews.filter((n) => !existingTitles.has(n.title.toLowerCase()));
+          dynamicItems = [...dynamicItems, ...newMentions];
+        }
+
+        if (dynamicItems.length > 0) {
+          setItems(dynamicItems);
         }
       } catch (err) {
         console.warn("Using curated institutional events:", err);
@@ -257,7 +295,7 @@ export default function NewsAndEventsPage() {
       }
     };
 
-    fetchMediaMentions();
+    fetchNewsEvents();
   }, []);
 
   // Filter items
@@ -591,10 +629,10 @@ export default function NewsAndEventsPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredItems.map((item) => {
+            {filteredItems.map((item, idx) => {
               return (
                 <div
-                  key={item.id}
+                  key={item._id || item.id || `event-${idx}`}
                   className="bg-white dark:bg-gray-900 rounded-3xl border border-slate-200/80 dark:border-slate-800 overflow-hidden shadow-sm hover:shadow-xl hover:border-blue-300 dark:hover:border-blue-600/50 transition-all duration-300 flex flex-col justify-between group"
                 >
                   <div className="p-6 space-y-4">
