@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import {
   FaStar,
@@ -18,24 +18,23 @@ import {
   FaUsers,
 } from "react-icons/fa";
 import SEO from "../components/SEO";
+import { getSuccessStories, SuccessStoryItem } from "../api/successStoryApi";
 
-interface Testimonial {
-  id: number;
+export interface Testimonial {
+  _id?: string;
+  id?: number | string;
   name: string;
   role: string;
   company?: string;
   course: string;
-  category:
-  | "Career Switch"
-  | "Upskilling"
-  | "College Graduates"
-  | "SAP Enterprise"
-  | "AI & Data";
+  category: string;
   image?: string;
   hike?: string;
   content: string;
   rating: number;
   featured?: boolean;
+  batchYear?: number;
+  cardIdNumber?: string;
 }
 
 const ALL_TESTIMONIALS: Testimonial[] = [
@@ -286,22 +285,58 @@ function AlumniBarcode({ value }: { value: string }) {
 }
 
 export default function TestimonialsPage() {
+  const [testimonials, setTestimonials] = useState<Testimonial[]>(ALL_TESTIMONIALS);
   const [activeCategory, setActiveCategory] = useState("All Stories");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(true);
 
-  const filteredTestimonials = ALL_TESTIMONIALS.filter((item) => {
+  // Fetch dynamic success stories from backend
+  useEffect(() => {
+    let isMounted = true;
+    const fetchStories = async () => {
+      try {
+        const res = await getSuccessStories();
+        const items = res.data?.stories || res.stories || [];
+        if (isMounted && Array.isArray(items) && items.length > 0) {
+          setTestimonials(items);
+        }
+      } catch (err) {
+        console.warn("Could not fetch dynamic success stories, keeping default data:", err);
+      } finally {
+        if (isMounted) setLoading(false);
+      }
+    };
+
+    fetchStories();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Compute dynamic categories including any custom categories created in admin
+  const dynamicCategories = React.useMemo(() => {
+    const set = new Set(CATEGORIES);
+    testimonials.forEach((t) => {
+      if (t.category && t.category.trim()) {
+        set.add(t.category.trim());
+      }
+    });
+    return Array.from(set);
+  }, [testimonials]);
+
+  const filteredTestimonials = testimonials.filter((item) => {
     if (activeCategory !== "All Stories" && item.category !== activeCategory) {
       return false;
     }
 
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase().trim();
-      const matchName = item.name.toLowerCase().includes(q);
-      const matchRole = item.role.toLowerCase().includes(q);
-      const matchCourse = item.course.toLowerCase().includes(q);
+      const matchName = item.name?.toLowerCase().includes(q);
+      const matchRole = item.role?.toLowerCase().includes(q);
+      const matchCourse = item.course?.toLowerCase().includes(q);
       const matchCompany = item.company?.toLowerCase().includes(q);
-      const matchContent = item.content.toLowerCase().includes(q);
-      return (
+      const matchContent = item.content?.toLowerCase().includes(q);
+      return Boolean(
         matchName || matchRole || matchCourse || matchCompany || matchContent
       );
     }
@@ -310,7 +345,7 @@ export default function TestimonialsPage() {
   });
 
   const featuredTestimonial =
-    ALL_TESTIMONIALS.find((t) => t.featured) || ALL_TESTIMONIALS[0];
+    testimonials.find((t) => t.featured) || testimonials[0];
 
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-gray-950 text-slate-900 dark:text-white transition-colors duration-300 pb-20">
@@ -469,7 +504,7 @@ export default function TestimonialsPage() {
           <div className="flex flex-col md:flex-row items-stretch md:items-center justify-between gap-4">
             {/* Filter Tabs */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-2 md:pb-0 scrollbar-none">
-              {CATEGORIES.map((cat) => {
+              {dynamicCategories.map((cat) => {
                 const isActive = activeCategory === cat;
                 return (
                   <button
@@ -529,15 +564,19 @@ export default function TestimonialsPage() {
               const palette = ID_CARD_PALETTES[index % ID_CARD_PALETTES.length];
 
               // Non-sequential, realistic alumni credentials with mixed 2025 & 2026 batch years
-              const badgeYear = [2025, 2026, 2025, 2026, 2026, 2025, 2025, 2026][item.id % 8] || (item.id % 2 === 0 ? 2026 : 2025);
-              // Fixed 4-digit code starting with 0 and followed by 3 deterministic pseudo-random digits (fixed across page reloads)
-              const hashSeed = Math.abs((item.id ^ 0x45d9) * 2654435761);
+              const itemNumericId = typeof item.id === "number" ? item.id : index;
+              const badgeYear =
+                item.batchYear ||
+                [2025, 2026, 2025, 2026, 2026, 2025, 2025, 2026][itemNumericId % 8] ||
+                (itemNumericId % 2 === 0 ? 2026 : 2025);
+              // Fixed 4-digit code starting with 0 and followed by 3 deterministic pseudo-random digits
+              const hashSeed = Math.abs(((itemNumericId + 1) ^ 0x45d9) * 2654435761);
               const randomThreeDigits = 100 + (hashSeed % 900);
-              const cardIdNumber = `INX-${badgeYear}-0${randomThreeDigits}`;
+              const cardIdNumber = item.cardIdNumber || `INX-${badgeYear}-0${randomThreeDigits}`;
 
               return (
                 <div
-                  key={item.id}
+                  key={item._id || item.id || `story-${index}`}
                   className={`relative bg-white dark:bg-gray-900 rounded-3xl border ${palette.cardBorder} shadow-sm hover:shadow-xl ${palette.cardShadow} transition-all duration-300 flex flex-col justify-between overflow-hidden group hover:-translate-y-1.5 pt-2`}
                 >
                   {/* Top Lanyard Punch Slot */}
