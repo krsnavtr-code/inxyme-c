@@ -393,7 +393,7 @@ function Navbar() {
                 <FaChevronDown size={8} />
               </button>
               {showPaymentDropdown && (
-                <div className="absolute right-0 top-6 w-80 bg-white text-gray-800 rounded shadow-xl border border-gray-100 z-50">
+                <div className="absolute right-0 top-6 w-80 bg-white text-gray-800 rounded shadow-xl border border-gray-100 z-50 max-h-[85vh] overflow-y-auto">
                   <button
                     type="button"
                     onClick={handlePayRazorpay}
@@ -412,6 +412,23 @@ function Navbar() {
                     <h2 className="text-lg font-bold text-gray-800 mb-2">
                       Pay Using Bank Transfer
                     </h2>
+
+                    {/* Yes Bank UPI QR Code */}
+                    <div className="my-3 p-3 bg-slate-50 border border-slate-200 rounded-xl text-center flex flex-col items-center">
+                      <div className="flex items-center gap-1.5 mb-2">
+                        <span className="text-xs font-bold text-slate-700">Scan & Pay via UPI</span>
+                      </div>
+                      <div className="bg-white p-2 rounded-lg border border-slate-200 shadow-xs">
+                        <img
+                          src="/images/yes-bank-qrcode.jpeg"
+                          alt="Yes Bank UPI QR Code"
+                          className="w-44 h-auto rounded object-contain"
+                        />
+                      </div>
+                      <p className="text-[11px] font-mono font-semibold text-slate-600 mt-2 bg-slate-100 px-2 py-0.5 rounded border border-slate-200 select-all">
+                        yespay.bizsbiz272046@yesbankltd
+                      </p>
+                    </div>
 
                     <div className="space-y-2 text-gray-700">
                       <div className="flex justify-between border-y py-2">
@@ -568,7 +585,7 @@ function Navbar() {
                 Pay <FaChevronDown size={8} />
               </button>
               {showPaymentDropdown && (
-                <div className="absolute right-[-20px] top-6 w-64 bg-white text-gray-800 rounded shadow-xl border border-gray-100 z-50">
+                <div className="absolute right-[-20px] top-6 w-72 bg-white text-gray-800 rounded shadow-xl border border-gray-100 z-50 max-h-[85vh] overflow-y-auto">
                   <button
                     type="button"
                     onClick={handlePayRazorpay}
@@ -583,10 +600,27 @@ function Navbar() {
                     </span>
                   </button>
 
-                  <div className="bg-white border-t border-gray-200 px-6 py-2 shadow-sm">
+                  <div className="bg-white border-t border-gray-200 px-4 py-2 shadow-sm">
                     <h2 className="text-sm font-bold text-gray-800 mb-2">
                       Pay Using Bank & UPI
                     </h2>
+
+                    {/* Yes Bank UPI QR Code */}
+                    <div className="my-2.5 p-2 bg-slate-50 border border-slate-200 rounded-xl text-center flex flex-col items-center">
+                      <div className="flex items-center gap-1.5 mb-1.5">
+                        <span className="text-xs font-bold text-slate-700">Scan & Pay via UPI</span>
+                      </div>
+                      <div className="bg-white p-1.5 rounded-lg border border-slate-200 shadow-xs">
+                        <img
+                          src="/images/yes-bank-qrcode.jpeg"
+                          alt="Yes Bank UPI QR Code"
+                          className="w-36 h-auto rounded object-contain"
+                        />
+                      </div>
+                      <p className="text-[10px] font-mono font-semibold text-slate-600 mt-1.5 bg-slate-100 px-1.5 py-0.5 rounded border border-slate-200 select-all">
+                        yespay.bizsbiz272046@yesbankltd
+                      </p>
+                    </div>
 
                     <div className="space-y-2 text-gray-700">
                       <div className="flex justify-between border-y py-2">
@@ -1102,6 +1136,23 @@ function Navbar() {
                   <h3 className="text-sm font-bold text-gray-800 dark:text-gray-200 mb-3">
                     Pay Using Bank Transfer
                   </h3>
+
+                  {/* Yes Bank UPI QR Code */}
+                  <div className="my-3 p-3 bg-gray-50 dark:bg-gray-800/60 border border-gray-200 dark:border-gray-700 rounded-xl text-center flex flex-col items-center">
+                    <div className="flex items-center gap-1.5 mb-2">
+                      <span className="text-xs font-bold text-gray-700 dark:text-gray-200">Scan & Pay via UPI</span>
+                    </div>
+                    <div className="bg-white p-2 rounded-lg border border-gray-200 shadow-xs">
+                      <img
+                        src="/images/yes-bank-qrcode.jpeg"
+                        alt="Yes Bank UPI QR Code"
+                        className="w-40 h-auto rounded object-contain"
+                      />
+                    </div>
+                    <p className="text-[11px] font-mono font-semibold text-gray-600 dark:text-gray-300 mt-2 bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded border border-gray-200 dark:border-gray-600 select-all">
+                      yespay.bizsbiz272046@yesbankltd
+                    </p>
+                  </div>
 
                   <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
                     <div className="flex justify-between py-2 border-b border-gray-100 dark:border-gray-700">
