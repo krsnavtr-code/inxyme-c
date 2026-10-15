@@ -263,7 +263,7 @@ function Navbar() {
     // { to: "/categories", label: "Categories" },
     // { to: "/free-courses", label: "Free Course" },
     // { to: "/testimonials", label: "Testimonials" },
-    ...(isAdmin ? [{ to: "/admin", label: "Admin" }] : []),
+    ...(isAdmin ? [{ to: "https://admin.inxyme.com/", label: "Admin" }] : []),
     {
       label: "Achievements",
       children: [
@@ -802,6 +802,19 @@ function Navbar() {
                         </div>
                       );
                     }
+                    if (link.to?.startsWith("http")) {
+                      return (
+                        <a
+                          key={link.to}
+                          href={link.to}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm font-semibold transition-all duration-300 relative text-gray-700 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400"
+                        >
+                          {link.label}
+                        </a>
+                      );
+                    }
                     const isActive = pathname === link.to;
                     return (
                       <Link
@@ -1240,6 +1253,17 @@ function Navbar() {
                     </Link>
                   ))}
                 </div>
+              ) : link.to?.startsWith("http") ? (
+                <a
+                  key={link.to}
+                  href={link.to}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center font-medium rounded-lg bg-gray-200 dark:bg-gray-800 px-2 py-2 hover:bg-gray-50 dark:hover:bg-gray-800"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  {link.label}
+                </a>
               ) : (
                 <Link
                   key={link.to!}
