@@ -5,4 +5,5 @@
 export const STANDALONE_PATHS: string[] = [
   "/sap-training-certification",
   "/review",
+  "/pay",
 ];
