@@ -3,8 +3,8 @@
 import { usePathname } from "next/navigation";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import SapFreeTrainingModal from "./common/SapFreeTrainingModal";
-import SapFreeTrainingFloatingBtn from "./common/SapFreeTrainingFloatingBtn";
+// import SapFreeTrainingModal from "./common/SapFreeTrainingModal";
+// import SapFreeTrainingFloatingBtn from "./common/SapFreeTrainingFloatingBtn";
 import { STANDALONE_PATHS } from "../lib/standaloneRoutes";
 
 interface AppShellProps {
@@ -30,8 +30,9 @@ export default function AppShell({ children }: AppShellProps) {
       {!hideLayout && <Navbar />}
       {children}
       {!hideLayout && <Footer />}
-      {!hideLayout && <SapFreeTrainingModal />}
-      {!hideLayout && <SapFreeTrainingFloatingBtn />}
+      {/* 7-Day Free SAP Training Modal & Floating Button - Commented Out */}
+      {/* {!hideLayout && <SapFreeTrainingModal />} */}
+      {/* {!hideLayout && <SapFreeTrainingFloatingBtn />} */}
     </>
   );
 }

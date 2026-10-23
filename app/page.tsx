@@ -1,6 +1,6 @@
 import { Metadata } from "next";
 import Banner from "./components/home/Banner";
-import SapFreeTrainingSection from "./components/home/SapFreeTrainingSection";
+// import SapFreeTrainingSection from "./components/home/SapFreeTrainingSection";
 import PopularCourses from "./components/home/PopularCourses";
 import Categories from "./components/home/Categories";
 import Assessment from "./components/home/Assessment";
@@ -98,8 +98,8 @@ export default function Home() {
         {/* Hero Banner */}
         <Banner />
 
-        {/* 7 Days Free SAP Training Masterclass Section */}
-        <SapFreeTrainingSection />
+        {/* 7 Days Free SAP Training Masterclass Section - Commented Out */}
+        {/* <SapFreeTrainingSection /> */}
 
         {/* Popular Courses */}
         <PopularCourses />

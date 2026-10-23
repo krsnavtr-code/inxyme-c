@@ -1,6 +1,8 @@
-import { Metadata } from "next";
-import FreeTrainingClientPage from "./FreeTrainingClientPage";
+import { notFound } from "next/navigation";
+// import { Metadata } from "next";
+// import FreeTrainingClientPage from "./FreeTrainingClientPage";
 
+/*
 export const metadata: Metadata = {
   title: "7 Days Free SAP Live Training Masterclass | PP, MM, ABAP, FICO & SD | Inxyme",
   description:
@@ -32,8 +34,14 @@ export const metadata: Metadata = {
       "Join the 7-Day 100% Free Live SAP Training. Master FICO, MM, SD, PP & ABAP with live system demo and free certificate.",
   },
 };
+*/
 
+// 7 Days Free SAP Training Page - Commented Out
 export default function FreeSapTrainingPage() {
+  notFound();
+  return null;
+
+  /*
   const courseSchema = {
     "@context": "https://schema.org",
     "@type": "Course",
@@ -136,4 +144,5 @@ export default function FreeSapTrainingPage() {
       <FreeTrainingClientPage />
     </main>
   );
+  */
 }

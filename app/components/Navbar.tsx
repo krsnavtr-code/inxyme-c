@@ -289,9 +289,9 @@ function Navbar() {
   return (
     <div className="flex flex-col w-full sticky top-0 z-50 text-black dark:text-white">
       {/* ==================================================================
-          PART 0: TOP NOTIFICATION RIBBON (100% Mobile Responsive)
+          PART 0: TOP NOTIFICATION RIBBON (100% Mobile Responsive) - Commented Out (7 Days Free Training)
       ================================================================== */}
-      <div className="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-amber-600 text-white text-[10px] sm:text-xs font-bold py-1 sm:py-1.5 px-2.5 sm:px-4 shadow-xs">
+      {/* <div className="w-full bg-gradient-to-r from-blue-700 via-indigo-700 to-amber-600 text-white text-[10px] sm:text-xs font-bold py-1 sm:py-1.5 px-2.5 sm:px-4 shadow-xs">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-1.5 sm:gap-3">
           <Link
             href="/7-days-free-sap-training"
@@ -312,7 +312,7 @@ function Navbar() {
             Register Free →
           </Link>
         </div>
-      </div>
+      </div> */}
 
       {/* ==================================================================
           PART 1: TOP BAR (Utilities)
@@ -1105,8 +1105,8 @@ function Navbar() {
             </div>
           )}
 
-          {/* Mobile 7-Day Free SAP Training Card */}
-          <div className="mb-3 p-3 bg-gradient-to-r from-blue-700 via-indigo-700 to-amber-600 rounded-2xl text-white shadow-lg shadow-blue-900/30">
+          {/* Mobile 7-Day Free SAP Training Card - Commented Out */}
+          {/* <div className="mb-3 p-3 bg-gradient-to-r from-blue-700 via-indigo-700 to-amber-600 rounded-2xl text-white shadow-lg shadow-blue-900/30">
             <div className="flex items-center gap-1.5 mb-1">
               <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping"></span>
               <span className="text-[10px] font-black uppercase tracking-wider text-amber-300">
@@ -1126,7 +1126,7 @@ function Navbar() {
             >
               <FaGift className="text-xs" /> Register for Free Now →
             </Link>
-          </div>
+          </div> */}
 
           {/* Small Screen Payment option */}
           <div className="mb-1" ref={mobilePaymentDropdownRef}>
