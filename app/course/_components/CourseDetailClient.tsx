@@ -477,7 +477,7 @@ const CourseDetailClient: React.FC<CourseDetailClientProps> = ({ course }) => {
         onShowContactForm={() => setShowContactForm(true)}
       />
 
-      <TestimonialsSection />
+      <TestimonialsSection testimonials={course.studentTestimonials} />
 
       <div className="container mx-auto px-4">
         <div className="border-b border-gray-200 dark:border-gray-700 mb-8 sticky top-4 md:top-20 z-10 bg-white/95 dark:bg-slate-900/95 backdrop-blur-sm shadow-xs">

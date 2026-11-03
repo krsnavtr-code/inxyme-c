@@ -24,7 +24,7 @@ import {
   FaFileAlt,
   FaInfoCircle,
 } from "react-icons/fa";
-import { toast } from "react-hot-toast";
+import { toast } from "react-hot-toast"; 
 import api from "../utils/api";
 import { submitContactForm } from "../api/contactApi";
 import SEO from "../components/SEO";

@@ -94,7 +94,18 @@ const COURSE_FIELDS = [
   "brochureGeneratedAt",
   "previewVideo",
   "imageUrl",
+  "studentTestimonials",
 ].join(",");
+
+export interface TestimonialData {
+  _id?: string;
+  id?: string | number;
+  name: string;
+  platform: "google" | "facebook" | "x" | "instagram";
+  rating: number;
+  text: string;
+  date?: string;
+}
 
 export interface CourseData {
   _id: string;
@@ -122,6 +133,7 @@ export interface CourseData {
   whoIsThisFor?: string[];
   skills?: string[];
   faqs?: Array<{ question: string; answer: string }>;
+  studentTestimonials?: TestimonialData[];
   rating?: number;
   reviews?: any[];
   enrolledStudents?: number;

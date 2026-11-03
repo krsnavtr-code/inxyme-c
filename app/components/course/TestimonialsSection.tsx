@@ -13,16 +13,17 @@ import { FaXTwitter } from "react-icons/fa6";
 
 type Platform = "google" | "facebook" | "x" | "instagram";
 
-interface Testimonial {
-  id: number;
+export interface TestimonialItem {
+  id?: number | string;
+  _id?: string;
   name: string;
   platform: Platform;
   rating: number;
   text: string;
-  date: string;
+  date?: string;
 }
 
-const testimonials: Testimonial[] = [
+const defaultTestimonials: TestimonialItem[] = [
   {
     id: 1,
     name: "Vaibhav Thakur",
@@ -109,7 +110,28 @@ const StarRating: React.FC<{ rating: number }> = ({ rating }) => (
   </div>
 );
 
-const TestimonialsSection: React.FC = () => {
+interface TestimonialsSectionProps {
+  testimonials?: TestimonialItem[];
+}
+
+const TestimonialsSection: React.FC<TestimonialsSectionProps> = ({
+  testimonials: propTestimonials,
+}) => {
+  const activeTestimonials =
+    propTestimonials && propTestimonials.length > 0
+      ? propTestimonials
+      : defaultTestimonials;
+
+  // Ensure enough items for smooth continuous marquee animation
+  const repeatMultiplier = Math.max(
+    4,
+    Math.ceil(12 / (activeTestimonials.length || 1)),
+  );
+  const marqueeItems = Array.from(
+    { length: repeatMultiplier },
+    () => activeTestimonials,
+  ).flat();
+
   return (
     <section className="py-12 md:py-16 bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-900">
       <div className="container mx-auto px-4 max-w-7xl">
@@ -133,13 +155,12 @@ const TestimonialsSection: React.FC = () => {
           <div className="absolute top-0 right-0 bottom-0 w-16 bg-gradient-to-l from-slate-50 dark:from-slate-900 to-transparent z-10 pointer-events-none"></div>
 
           <div className="flex w-max gap-6 py-4 animate-marquee-rtl hover:[animation-play-state:paused]">
-            {[
-              ...testimonials,
-              ...testimonials,
-              ...testimonials,
-              ...testimonials,
-            ].map((review, index) => {
-              const config = platformConfig[review.platform];
+            {marqueeItems.map((review, index) => {
+              const platformKey =
+                review.platform && platformConfig[review.platform]
+                  ? review.platform
+                  : "google";
+              const config = platformConfig[platformKey];
               const PlatformIcon = config.icon;
 
               // ==========================================
@@ -156,7 +177,7 @@ const TestimonialsSection: React.FC = () => {
 
               return (
                 <div
-                  key={`${review.id}-${index}`}
+                  key={`${review._id || review.id || "rev"}-${index}`}
                   className={`${dynamicWidthClass} shrink-0 relative group rounded-2xl bg-white dark:bg-slate-800/95 border border-slate-200 dark:border-slate-700/50 shadow-lg shadow-slate-200/40 dark:shadow-black/20 p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl hover:shadow-slate-300/40 dark:hover:shadow-blue-900/20 border-t-4 ${config.border}`}
                 >
                   <div
@@ -167,9 +188,9 @@ const TestimonialsSection: React.FC = () => {
                   </div>
 
                   <div className="mt-4 flex items-center gap-1 mb-4">
-                    <StarRating rating={review.rating} />
+                    <StarRating rating={review.rating || 5} />
                     <span className="ml-auto text-xs text-slate-500 dark:text-slate-400">
-                      {review.date}
+                      {review.date || "Recently"}
                     </span>
                   </div>
 
@@ -181,11 +202,14 @@ const TestimonialsSection: React.FC = () => {
                   <div className="flex items-center gap-3 pt-4 border-t border-slate-200 dark:border-slate-700/50 mt-auto">
                     <div className="w-9 h-9 rounded-full bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white text-xs font-bold shadow-md shrink-0">
                       {review.name
-                        .split(" ")
-                        .map((n) => n[0])
-                        .join("")
-                        .slice(0, 2)
-                        .toUpperCase()}
+                        ? review.name
+                            .split(" ")
+                            .filter(Boolean)
+                            .map((n) => n[0])
+                            .join("")
+                            .slice(0, 2)
+                            .toUpperCase()
+                        : "IN"}
                     </div>
                     <div>
                       <p className="text-sm font-bold text-slate-900 dark:text-white">

@@ -26,11 +26,25 @@ export const metadata: Metadata = {
   title: "Inxyme",
   description: "Inxyme - Online Learning Platform",
   icons: {
-    icon: {
-      rel: "icon",
-      type: "image/png",
-      url: "https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png",
-    },
+    icon: [
+      {
+        rel: "icon",
+        type: "image/png",
+        url: "/images/inxyme-logo.png",
+      },
+      {
+        rel: "icon",
+        type: "image/x-icon",
+        url: "/favicon.ico",
+      },
+      {
+        rel: "icon",
+        type: "image/png",
+        url: "https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png",
+      },
+    ],
+    shortcut: "/images/inxyme-logo.png",
+    apple: "/images/inxyme-logo.png",
   },
   verification: {
     google: "CknxLEi-2fHtHDEyeKydZvqLUFbx5eRVDUNT7UM_ueo",
