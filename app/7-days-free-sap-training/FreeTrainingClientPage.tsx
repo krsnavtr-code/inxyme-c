@@ -626,7 +626,7 @@ export default function FreeTrainingClientPage() {
                 </button>
 
                 <a
-                  href="https://wa.me/919990999561?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%207%20Days%20Free%20SAP%20Live%20Training%20program."
+                  href="https://wa.me/919891030303?text=Hi%2C%20I%20want%20to%20know%20more%20about%20the%207%20Days%20Free%20SAP%20Live%20Training%20program."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-full sm:w-auto px-5 py-3.5 bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 border border-emerald-500/40 font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2"
@@ -708,7 +708,7 @@ export default function FreeTrainingClientPage() {
 
                     <div className="space-y-2 pt-2">
                       <a
-                        href="https://wa.me/919990999561?text=Hi%2C%20I%20have%20registered%20for%20the%207%20Days%20Free%20SAP%20Live%20Class.%20Please%20share%20the%20batch%20group%20link."
+                        href="https://wa.me/919891030303?text=Hi%2C%20I%20have%20registered%20for%20the%207%20Days%20Free%20SAP%20Live%20Class.%20Please%20share%20the%20batch%20group%20link."
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full py-3 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm flex items-center justify-center gap-2 shadow-md transition-all hover:scale-[1.01]"
@@ -1496,7 +1496,7 @@ export default function FreeTrainingClientPage() {
             </button>
 
             <a
-              href="https://wa.me/919990999561?text=Hi%2C%20I%20have%20questions%20regarding%20the%207%20Days%20Free%20SAP%20Live%20Class."
+              href="https://wa.me/919891030303?text=Hi%2C%20I%20have%20questions%20regarding%20the%207%20Days%20Free%20SAP%20Live%20Class."
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto px-6 py-3.5 bg-white/10 hover:bg-white/20 text-white border border-white/20 font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2"

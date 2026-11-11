@@ -520,7 +520,7 @@ export default function SapFreeTrainingSection() {
 
                   <div className="pt-1 space-y-1.5">
                     <a
-                      href="https://wa.me/919990999561?text=Hi%2C%20I%20have%20registered%20for%20the%207%20Days%20Free%20SAP%20Training%20batch.%20Please%20send%20the%20batch%20schedule."
+                      href="https://wa.me/919891030303?text=Hi%2C%20I%20have%20registered%20for%20the%207%20Days%20Free%20SAP%20Training%20batch.%20Please%20send%20the%20batch%20schedule."
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full py-2.5 px-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg text-xs flex items-center justify-center gap-1.5 transition-all shadow-xs"

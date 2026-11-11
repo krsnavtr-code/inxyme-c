@@ -1002,7 +1002,7 @@ export default function WhyInxymePage() {
               </button>
 
               <a
-                href="https://wa.me/919990999561?text=Hi%20Inxyme%2C%20I%20want%20to%20know%20more%20about%20your%20student%20benefits%20and%20career%20programs."
+                href="https://wa.me/919891030303?text=Hi%20Inxyme%2C%20I%20want%20to%20know%20more%20about%20your%20student%20benefits%20and%20career%20programs."
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm rounded-2xl shadow-md transition-all"

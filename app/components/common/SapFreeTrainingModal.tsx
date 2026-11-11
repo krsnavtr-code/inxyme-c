@@ -238,7 +238,7 @@ export default function SapFreeTrainingModal({
 
               <div className="pt-2 flex flex-col sm:flex-row gap-2">
                 <a
-                  href="https://wa.me/919990999561?text=Hi%20Inxyme%2C%20I%20just%20registered%20for%20the%207%20Days%20Free%20SAP%20Training%20batch.%20Please%20share%20the%20class%20schedule."
+                  href="https://wa.me/919891030303?text=Hi%20Inxyme%2C%20I%20just%20registered%20for%20the%207%20Days%20Free%20SAP%20Training%20batch.%20Please%20share%20the%20class%20schedule."
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex-1 py-2.5 px-4 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-xs flex items-center justify-center gap-2 transition-all shadow-md shadow-emerald-600/20"
