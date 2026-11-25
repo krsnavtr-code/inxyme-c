@@ -616,12 +616,12 @@ const CourseTopSection: React.FC<CourseTopSectionProps> = ({
                 >
                   <MessageSquare className="w-4 h-4" /> Request Details
                 </button>
-                <button
+                {/* <button
                   onClick={onVideoPreview}
                   className="w-full py-1.5 px-4 bg-slate-100 hover:bg-slate-200 dark:bg-slate-700 dark:hover:bg-slate-600 text-slate-900 dark:text-white rounded-xl font-bold text-sm transition-colors flex items-center justify-center gap-2"
                 >
                   Watch Preview
-                </button>
+                </button> */}
               </div>
 
               {/* Features List */}
