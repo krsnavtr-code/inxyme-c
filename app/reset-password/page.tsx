@@ -1,12 +1,24 @@
 "use client";
 
-import { useState, FormEvent, Suspense } from "react";
+import { useState, useEffect, FormEvent, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { toast } from "react-hot-toast";
-import { Eye, EyeOff, Lock, CheckCircle2, AlertCircle } from "lucide-react";
+import {
+  Eye,
+  EyeOff,
+  Lock,
+  CheckCircle2,
+  AlertCircle,
+  Send,
+  MailCheck,
+} from "lucide-react";
 import SEO from "../components/SEO";
-import { resetPassword } from "../api/userApi";
+import {
+  forgotPassword,
+  resetPassword,
+  verifyResetToken,
+} from "../api/userApi";
 
 function ResetPasswordContent() {
   const router = useRouter();
@@ -24,9 +36,68 @@ function ResetPasswordContent() {
   const [serverError, setServerError] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [isResending, setIsResending] = useState(false);
+  const [resendMessage, setResendMessage] = useState("");
 
   const effectiveEmail = queryEmail || emailInput;
   const isMissingToken = !token;
+  const isTokenExpiredOrInvalid =
+    isMissingToken ||
+    /expired|invalid.*token|no password reset request/i.test(serverError);
+
+  // Pre-check token expiry on mount when backend verification endpoint is available
+  useEffect(() => {
+    if (!token || !queryEmail) return;
+    let cancelled = false;
+
+    verifyResetToken(token, queryEmail.trim().toLowerCase()).catch(
+      (err: unknown) => {
+        if (cancelled) return;
+        const errObj = err as { status?: number; message?: string };
+        if (errObj?.status === 400 && errObj?.message) {
+          setServerError(errObj.message);
+        }
+      },
+    );
+
+    return () => {
+      cancelled = true;
+    };
+  }, [token, queryEmail]);
+
+  const handleSendLinkAgain = async () => {
+    const trimmedEmail = effectiveEmail.trim().toLowerCase();
+    if (
+      !trimmedEmail ||
+      !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(trimmedEmail)
+    ) {
+      setErrors((prev) => ({
+        ...prev,
+        email: "Please enter a valid registered email address first",
+      }));
+      toast.error("Please enter a valid email address to resend the link");
+      return;
+    }
+
+    setIsResending(true);
+    setResendMessage("");
+    try {
+      const response = await forgotPassword(trimmedEmail);
+      const successMsg =
+        response?.message ||
+        `A fresh password reset link has been sent to ${trimmedEmail}.`;
+      setResendMessage(successMsg);
+      setServerError("");
+      toast.success(successMsg);
+    } catch (err: unknown) {
+      const errObj = err as { message?: string };
+      const msg =
+        errObj?.message || "Failed to send reset link. Please try again.";
+      toast.error(msg);
+    } finally {
+      setIsResending(false);
+    }
+  };
 
   const validate = () => {
     const nextErrors: Record<string, string> = {};
@@ -167,32 +238,73 @@ function ResetPasswordContent() {
                   Reset link is valid for 10 minutes from when it was requested.
                 </p>
 
-                {isMissingToken && (
+                {resendMessage && (
+                  <div
+                    role="status"
+                    className="mb-4 rounded-md border border-emerald-200 bg-emerald-50 p-3 text-sm text-emerald-800 space-y-2"
+                  >
+                    <div className="flex items-start gap-2">
+                      <MailCheck className="h-4 w-4 shrink-0 mt-0.5 text-emerald-600" />
+                      <div>
+                        <p className="font-medium">{resendMessage}</p>
+                        <p className="text-xs text-emerald-700 mt-0.5">
+                          Please check your inbox and open the newest reset link
+                          within 10 minutes.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
+                {isMissingToken && !resendMessage && (
                   <div
                     role="alert"
-                    className="mb-4 flex items-start gap-2.5 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+                    className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 space-y-2.5"
                   >
-                    <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                    <div>
-                      <p className="font-medium">Invalid reset link</p>
-                      <p className="text-xs mt-0.5">
-                        The reset token is missing. Please go back to{" "}
-                        <Link href="/login" className="underline font-semibold">
-                          Login
-                        </Link>{" "}
-                        and click &ldquo;Forgot Password?&rdquo; again.
-                      </p>
+                    <div className="flex items-start gap-2.5">
+                      <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-medium">Invalid reset link</p>
+                        <p className="text-xs mt-0.5">
+                          The reset token is missing. Enter your email below and
+                          click &ldquo;Send Link Again&rdquo;.
+                        </p>
+                      </div>
                     </div>
+                    <button
+                      type="button"
+                      onClick={handleSendLinkAgain}
+                      disabled={isResending}
+                      className="inline-flex items-center gap-1.5 rounded-md bg-red-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-red-700 disabled:opacity-50 transition"
+                    >
+                      <Send className="h-3.5 w-3.5" />
+                      {isResending ? "Sending Link..." : "Send Link Again"}
+                    </button>
                   </div>
                 )}
 
                 {serverError && !isMissingToken && (
                   <div
                     role="alert"
-                    className="mb-4 flex items-start gap-2 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700"
+                    className="mb-4 rounded-md border border-red-200 bg-red-50 p-3 text-sm text-red-700 space-y-2.5"
                   >
-                    <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
-                    <span>{serverError}</span>
+                    <div className="flex items-start gap-2">
+                      <AlertCircle className="h-4 w-4 shrink-0 mt-0.5" />
+                      <span>{serverError}</span>
+                    </div>
+                    {isTokenExpiredOrInvalid && (
+                      <div className="pt-0.5">
+                        <button
+                          type="button"
+                          onClick={handleSendLinkAgain}
+                          disabled={isResending}
+                          className="inline-flex items-center gap-1.5 rounded-md bg-blue-600 px-3.5 py-1.5 text-xs font-semibold text-white shadow-xs hover:bg-blue-700 disabled:opacity-50 transition"
+                        >
+                          <Send className="h-3.5 w-3.5" />
+                          {isResending ? "Sending Link..." : "Send Link Again"}
+                        </button>
+                      </div>
+                    )}
                   </div>
                 )}
 

@@ -13,6 +13,13 @@ export const forgotPassword = async (email: string) => {
   return response.data;
 };
 
+export const verifyResetToken = async (token: string, email: string) => {
+  const response = await api.get("/auth/verify-reset-token", {
+    params: { token, email },
+  });
+  return response.data;
+};
+
 export const verifyAdminOTP = async (email: string, otp: string) => {
   const response = await api.post("/auth/verify-admin-otp", { email, otp });
   return response.data;
