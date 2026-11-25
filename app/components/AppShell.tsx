@@ -15,6 +15,7 @@ const HIDDEN_LAYOUT_PATHS = [
   "/login",
   "/register",
   "/forgot-password",
+  "/reset-password",
   "/forgot",
   ...STANDALONE_PATHS,
 ];
