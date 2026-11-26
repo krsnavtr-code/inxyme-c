@@ -16,7 +16,7 @@ function getPostImageUrl(
   imagePath: string | undefined,
   siteBase: string,
 ): string {
-  if (!imagePath) return `${siteBase}/images/inxyme-logo-fit-E.jpeg`;
+  if (!imagePath) return `${siteBase}/images/inxyme-logo.png`;
   const resolved = getImageUrl(imagePath);
   if (resolved.startsWith("http://") || resolved.startsWith("https://")) {
     return resolved;
@@ -145,7 +145,7 @@ export default async function BlogPostPage({
       url: siteBase,
       logo: {
         "@type": "ImageObject",
-        url: `${siteBase}/images/inxyme-logo-fit-E.jpeg`,
+        url: `${siteBase}/images/inxyme-logo.png`,
       },
     },
     mainEntityOfPage: {

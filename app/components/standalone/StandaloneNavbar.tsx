@@ -15,8 +15,7 @@ interface StandaloneNavbarProps {
   ctaHref?: string;
 }
 
-const LOGO_URL =
-  "https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png";
+const LOGO_URL = "/images/inxyme-logo.png";
 
 // Self-contained navbar for standalone landing pages. Uses the main site's
 // logo but only scrolls to sections within the current page — it never
@@ -53,7 +52,7 @@ export default function StandaloneNavbar({
               <img
                 src={LOGO_URL}
                 alt="inxyme – Your Online Learning Partner"
-                className="h-20 rounded"
+                className="h-10 md:h-12 w-auto object-contain rounded-lg dark:bg-white dark:px-1.5 dark:py-0.5"
               />
             </a>
 

@@ -20,7 +20,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png",
+        url: "https://www.inxyme.com/images/inxyme-logo.png",
         width: 800,
         height: 600,
         alt: "7 Days Free SAP Live Masterclass Inxyme",

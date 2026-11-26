@@ -66,8 +66,7 @@ export default function StudentPaymentPage({
   const [paymentSuccess, setPaymentSuccess] = useState(false);
   const [receiptData, setReceiptData] = useState<any>(null);
 
-  const logoImg =
-    "https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png";
+  const logoImg = "/images/inxyme-logo.png";
 
   // Load link details
   useEffect(() => {
@@ -471,7 +470,7 @@ export default function StudentPaymentPage({
             <img
               src={logoImg}
               alt="inxyme – Your Online Learning Partner"
-              className="h-[42px]"
+              className="h-[42px] w-auto object-contain rounded-lg"
             />
           </div>
           <div className="flex items-center gap-2 bg-white/80 backdrop-blur-sm border border-emerald-200/80 px-3 py-1.5 rounded-full text-xs text-emerald-800 font-medium shadow-sm">

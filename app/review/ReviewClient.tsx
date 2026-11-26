@@ -818,9 +818,9 @@ export default function ReviewClient() {
           <div className="bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-2xl p-6 sm:p-8 shadow-xl border border-indigo-100 dark:border-slate-800 text-center space-y-4 animate-in fade-in zoom-in-95 duration-200">
             <div className="flex justify-center">
               <img
-                src="https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png"
+                src="/images/inxyme-logo.png"
                 alt="Inxyme Logo"
-                className="h-7 w-auto object-contain"
+                className="h-8 w-auto object-contain rounded-lg dark:bg-white dark:px-2 dark:py-0.5"
               />
             </div>
 
@@ -865,9 +865,9 @@ export default function ReviewClient() {
             <div className="text-center space-y-1.5">
               <div className="flex justify-center">
                 <img
-                  src="https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png"
+                  src="/images/inxyme-logo.png"
                   alt="Inxyme Logo"
-                  className="h-8 w-auto object-contain"
+                  className="h-8 w-auto object-contain rounded-lg dark:bg-white dark:px-2 dark:py-0.5"
                 />
               </div>
               <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-medium bg-indigo-50 dark:bg-indigo-950/80 text-indigo-700 dark:text-indigo-300 border border-indigo-200/60 dark:border-indigo-800">

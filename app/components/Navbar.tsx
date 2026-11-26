@@ -50,8 +50,7 @@ function Navbar() {
   const router = useRouter();
   const pathname = usePathname();
   const { currentUser, isAuthenticated, isAdmin, logout } = useAuth();
-  const logoImg =
-    "https://www.inxyme.com/api/upload/file/Inxyme-png-logo-2232.png";
+  const logoImg = "/images/inxyme-logo.png";
 
   // --- State ---
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -759,12 +758,12 @@ function Navbar() {
                 </button>
                 <Link
                   href="/"
-                  className="text-lg font-bold text-blue-600 dark:text-blue-400"
+                  className="inline-flex items-center text-lg font-bold text-blue-600 dark:text-blue-400"
                 >
                   <img
                     src={logoImg}
                     alt="inxyme – Your Online Learning Partner"
-                    className="h-[42px]"
+                    className="h-[38px] md:h-[40px] w-auto object-contain rounded-lg dark:bg-white dark:px-1.5 dark:py-0.5"
                   />
                 </Link>
               </div>

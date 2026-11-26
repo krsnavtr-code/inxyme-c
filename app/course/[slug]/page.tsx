@@ -23,7 +23,7 @@ export async function generateMetadata({
   }
 
   const siteBase = getSiteBase() || FALLBACK_SITE_URL;
-  const courseImage = course.imageUrl || "/images/inxyme-logo-fit-E.jpeg";
+  const courseImage = course.imageUrl || "/images/inxyme-logo.png";
   const courseImageUrl = getCourseImageUrl(courseImage, siteBase);
 
   const title = course.metaTitle || course.title;
@@ -68,7 +68,7 @@ export default async function CoursePage({
   }
 
   const siteBase = getSiteBase() || FALLBACK_SITE_URL;
-  const courseImage = course.imageUrl || "/images/inxyme-logo-fit-E.jpeg";
+  const courseImage = course.imageUrl || "/images/inxyme-logo.png";
   const courseImageUrl = getCourseImageUrl(courseImage, siteBase);
   const canonical = `${siteBase}/course/${course.slug || slug}`;
   const seoDescription =
