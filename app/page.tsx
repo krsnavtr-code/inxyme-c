@@ -59,7 +59,8 @@ export default function Home() {
     "@type": "Organization",
     "@id": "https://www.inxyme.com/#organization",
     name: "Inxyme",
-    alternateName: "Inxyme Online Learning Platform",
+    legalName: "Eklavya Centre of Excellence Pvt. Ltd.",
+    alternateName: "Eklavya Centre of Excellence Pvt. Ltd. (Brand: Inxyme)",
     url: "https://www.inxyme.com",
     logo: {
       "@type": "ImageObject",

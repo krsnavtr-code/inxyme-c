@@ -2,31 +2,193 @@
 
 import Link from "next/link";
 import SEO from "../components/SEO";
-import { FaBookOpen, FaGraduationCap, FaUsers, FaAward } from "react-icons/fa";
+import {
+  FaBookOpen,
+  FaGraduationCap,
+  FaUsers,
+  FaAward,
+  FaBuilding,
+  FaShieldAlt,
+  FaCheckCircle,
+  FaArrowRight,
+} from "react-icons/fa";
 
 export default function About() {
+  const organizationSchema = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: "Inxyme",
+    legalName: "Eklavya Centre of Excellence Pvt. Ltd.",
+    alternateName: "Inxyme (A Brand of Eklavya Centre of Excellence Pvt. Ltd.)",
+    url: "https://www.inxyme.com",
+    logo: "https://www.inxyme.com/images/inxyme-logo.png",
+    description:
+      "Inxyme is the flagship online learning and professional certification brand operated by Eklavya Centre of Excellence Pvt. Ltd.",
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen bg-slate-50 dark:bg-gray-900">
       <SEO
-        title="About Inxyme | Online Learning and Career Growth"
-        description="Discover Inxyme, an online learning platform offering career-focused courses, certifications and flexible skill training for modern professionals."
-        keywords="Inxyme, about Inxyme, online learning platform, career development, online courses, skill development, professional certifications, career growth, flexible learning, online education, career-focused courses, job-ready skills, professional training, e-learning platform, skill training"
+        title="About Inxyme | A Brand of Eklavya Centre of Excellence Pvt. Ltd."
+        description="Discover Inxyme, the flagship EdTech and professional learning brand operated by Eklavya Centre of Excellence Pvt. Ltd., offering career-focused courses, certifications, and job-ready skill training."
+        keywords="Inxyme, Eklavya Centre of Excellence Pvt. Ltd., Eklavya Center of Excellence Pvt Ltd, about Inxyme, online learning platform, professional certifications, career growth, skill training"
         og={{
-          title: "About Inxyme | Online Learning and Career Growth",
+          title: "About Inxyme | A Brand of Eklavya Centre of Excellence Pvt. Ltd.",
           description:
-            "Discover Inxyme, an online learning platform offering career-focused courses, certifications and flexible skill training for modern professionals.",
+            "Inxyme is the flagship professional learning brand of Eklavya Centre of Excellence Pvt. Ltd., delivering industry-aligned certifications and skill training.",
           type: "website",
         }}
       />
+
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+
       {/* Hero Section */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-r from-blue-600 to-indigo-700 text-white">
+      <section className="relative py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 via-blue-900 to-indigo-900 text-white border-b border-indigo-800/60">
         <div className="max-w-7xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/15 border border-white/25 text-blue-100 text-xs sm:text-sm font-semibold tracking-wide mb-6">
+            <FaBuilding className="text-amber-300 shrink-0" aria-hidden="true" />
+            <span>A Flagship Brand of Eklavya Centre of Excellence Pvt. Ltd.</span>
+          </div>
+          <h1 className="text-4xl md:text-5xl font-extrabold tracking-tight mb-5">
             About Us – Inxyme
           </h1>
-          <p className="text-xl md:text-2xl max-w-3xl mx-auto">
-            Empowering minds through knowledge and learning resources
+          <p className="text-lg sm:text-xl md:text-2xl text-blue-100 max-w-3xl mx-auto leading-relaxed">
+            Empowering learners worldwide under our flagship brand{" "}
+            <strong className="text-white font-bold">Inxyme</strong>, backed by{" "}
+            <strong className="text-white font-bold">
+              Eklavya Centre of Excellence Pvt. Ltd.
+            </strong>
           </p>
+        </div>
+      </section>
+
+      {/* Corporate Entity & Brand Identity Showcase */}
+      <section
+        aria-labelledby="corporate-brand-heading"
+        className="pt-14 pb-6 px-4 sm:px-6 lg:px-8"
+      >
+        <div className="max-w-7xl mx-auto">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-lg overflow-hidden">
+            <div className="bg-slate-900 dark:bg-slate-950 px-6 sm:px-10 py-6 border-b border-slate-800 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+              <div>
+                <p className="text-xs font-bold uppercase tracking-widest text-amber-400 mb-1">
+                  Corporate &amp; Brand Identity
+                </p>
+                <h2
+                  id="corporate-brand-heading"
+                  className="text-2xl sm:text-3xl font-bold text-white"
+                >
+                  Eklavya Centre of Excellence Pvt. Ltd. &rarr; Inxyme
+                </h2>
+              </div>
+              <div className="inline-flex items-center gap-2 self-start md:self-auto px-3.5 py-2 rounded-xl bg-white/10 border border-white/20 text-xs sm:text-sm font-semibold text-white">
+                <FaShieldAlt className="text-emerald-400 shrink-0" aria-hidden="true" />
+                <span>Registered Private Limited Company</span>
+              </div>
+            </div>
+
+            <div className="p-6 sm:p-10 space-y-8">
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
+                {/* Parent Company Card */}
+                <div className="lg:col-span-5 rounded-2xl border border-blue-200 dark:border-blue-800/60 bg-blue-50/70 dark:bg-slate-900/80 p-6 flex flex-col justify-between">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-600 text-white text-xs font-bold uppercase tracking-wider mb-4">
+                      <FaBuilding aria-hidden="true" />
+                      <span>Registered Company Name</span>
+                    </div>
+                    <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white leading-snug">
+                      Eklavya Centre of Excellence Pvt. Ltd.
+                    </h3>
+                    <p className="mt-3 text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+                      Our registered corporate organization responsible for
+                      governance, academic partnerships, curriculum quality,
+                      verified certifications, and official student &amp; enterprise
+                      operations.
+                    </p>
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-blue-200/80 dark:border-slate-700 flex items-center gap-2 text-xs sm:text-sm font-semibold text-blue-900 dark:text-blue-300">
+                    <FaCheckCircle className="text-blue-600 dark:text-blue-400 shrink-0" aria-hidden="true" />
+                    <span>Official Legal Entity &amp; Parent Organization</span>
+                  </div>
+                </div>
+
+                {/* Connector */}
+                <div className="lg:col-span-2 flex flex-col items-center justify-center py-2 text-center">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-600 to-amber-500 text-white flex items-center justify-center shadow-md mb-2">
+                    <FaArrowRight className="rotate-90 lg:rotate-0 text-lg" aria-hidden="true" />
+                  </div>
+                  <span className="text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-300">
+                    Known Worldwide As
+                  </span>
+                </div>
+
+                {/* Public Brand Card */}
+                <div className="lg:col-span-5 rounded-2xl border border-amber-200 dark:border-amber-700/50 bg-amber-50/60 dark:bg-slate-900/80 p-6 flex flex-col justify-between">
+                  <div>
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-600 text-white text-xs font-bold uppercase tracking-wider mb-4">
+                      <FaAward aria-hidden="true" />
+                      <span>Public Brand Name</span>
+                    </div>
+                    <div className="flex flex-wrap items-center gap-4 mb-3">
+                      <div className="bg-white rounded-xl px-3.5 py-2 border border-slate-200 shadow-2xs inline-flex items-center">
+                        <img
+                          src="/images/inxyme-logo.png"
+                          alt="Inxyme – Official Brand of Eklavya Centre of Excellence Pvt. Ltd."
+                          width={654}
+                          height={544}
+                          className="h-11 w-auto object-contain"
+                        />
+                      </div>
+                      <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900 dark:text-white">
+                        Inxyme
+                      </h3>
+                    </div>
+                    <p className="text-sm sm:text-base text-slate-700 dark:text-slate-300 leading-relaxed">
+                      The recognized brand name by which students, trainers,
+                      hiring partners, and corporate learners know our
+                      e-learning platform, certification tracks, and live career
+                      mentorship programs.
+                    </p>
+                  </div>
+                  <div className="mt-5 pt-4 border-t border-amber-200/80 dark:border-slate-700 flex items-center gap-2 text-xs sm:text-sm font-semibold text-amber-900 dark:text-amber-300">
+                    <FaCheckCircle className="text-amber-600 dark:text-amber-400 shrink-0" aria-hidden="true" />
+                    <span>Business &amp; Platform Identity (inxyme.com)</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Semantic Key-Value Corporate Facts */}
+              <dl className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 p-4">
+                  <dt className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Registered Company
+                  </dt>
+                  <dd className="mt-1 text-base font-bold text-slate-900 dark:text-white">
+                    Eklavya Centre of Excellence Pvt. Ltd.
+                  </dd>
+                </div>
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 p-4">
+                  <dt className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Operating Brand Name
+                  </dt>
+                  <dd className="mt-1 text-base font-bold text-slate-900 dark:text-white">
+                    Inxyme (Known Publicly &amp; Globally)
+                  </dd>
+                </div>
+                <div className="rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 p-4">
+                  <dt className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
+                    Governance &amp; Trust
+                  </dt>
+                  <dd className="mt-1 text-base font-bold text-slate-900 dark:text-white">
+                    Unified Billing, Receipts &amp; Credentials
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -38,13 +200,15 @@ export default function About() {
               Empowering Learners. Shaping Futures.
             </h2>
             <div className="w-20 h-1 bg-blue-600 mx-auto mb-8"></div>
-            <p className="text-lg text-black dark:text-white max-w-4xl mx-auto">
-              We believe that education should be accessible, practical, and
-              aligned with real-world needs. As a leading e-learning platform,
-              we offer high-quality certification programs, degree courses, and
-              career development tools — designed for students, graduates, and
-              working professionals seeking to stay competitive in today&apos;s
-              fast-changing world.
+            <p className="text-lg text-slate-800 dark:text-slate-200 max-w-4xl mx-auto">
+              Operated by{" "}
+              <strong>Eklavya Centre of Excellence Pvt. Ltd.</strong> under the
+              widely recognized brand name <strong>Inxyme</strong>, we believe
+              that education should be accessible, practical, and aligned with
+              real-world industry needs. As a leading e-learning platform, we
+              offer high-quality certification programs, career tracks, and
+              skill development tools designed for students, graduates, and
+              working professionals.
             </p>
           </div>
           <div className="text-center mb-16">
@@ -52,15 +216,18 @@ export default function About() {
               Who We Are
             </h2>
             <div className="w-20 h-1 bg-blue-600 mx-auto mb-8"></div>
-            <p className="text-lg text-black dark:text-white max-w-4xl mx-auto">
-              Our journey began with a clear purpose: to bridge the gap between
+            <p className="text-lg text-slate-800 dark:text-slate-200 max-w-4xl mx-auto">
+              <strong>Inxyme</strong> is the dedicated education and upskilling
+              brand of{" "}
+              <strong>Eklavya Centre of Excellence Pvt. Ltd.</strong> Our
+              journey began with a clear purpose: to bridge the gap between
               theoretical education and industry requirements. Backed by a
               passionate team of academic experts, corporate trainers, and
               technology professionals, we are committed to delivering a
               future-ready learning experience.
             </p>
-            <p className="text-lg text-black dark:text-white max-w-4xl mx-auto mt-5">
-              We work in collaboration with recognized universities, global
+            <p className="text-lg text-slate-800 dark:text-slate-200 max-w-4xl mx-auto mt-5">
+              We work in collaboration with recognized institutions, global
               educators, and experienced mentors to develop relevant,
               career-focused content that supports learners at every stage of
               their professional journey.
@@ -281,8 +448,10 @@ export default function About() {
               Browse Courses
             </Link>
           </div>
-          <p className="text-center text-lg text-black dark:text-white mt-12">
-            Welcome to Inxyme — your partner in skill-building and success.
+          <p className="text-center text-lg text-slate-800 dark:text-slate-200 mt-12">
+            Welcome to <strong>Inxyme</strong> (a brand of{" "}
+            <strong>Eklavya Centre of Excellence Pvt. Ltd.</strong>) — your
+            partner in skill-building and career success.
           </p>
         </div>
       </section>
