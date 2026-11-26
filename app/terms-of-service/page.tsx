@@ -7,13 +7,13 @@ const TermsOfService = () => {
   return (
     <div className="min-h-screen bg-gray-50 dark:bg-slate-900">
       <SEO
-        title="Inxyme Terms of Service | User Agreement & Rules"
-        description="Read Inxyme Terms of Service to understand user responsibilities, website rules, intellectual property rights, services and legal terms."
-        keywords="Inxyme terms of service, Inxyme user agreement, terms and conditions, website terms, user responsibilities, legal terms, online learning terms, education platform rules, intellectual property rights"
+        title="Terms of Service | Inxyme (Eklavya Centre of Excellence Pvt. Ltd.)"
+        description="Read the Terms of Service for Inxyme, operated by Eklavya Centre of Excellence Pvt. Ltd., covering user responsibilities, website rules, intellectual property rights, services, and legal terms."
+        keywords="Inxyme terms of service, Eklavya Centre of Excellence Pvt. Ltd., Inxyme user agreement, terms and conditions, website terms, user responsibilities, legal terms, online learning terms"
         og={{
-          title: "Inxyme Terms of Service | User Agreement & Rules",
+          title: "Terms of Service | Inxyme (Eklavya Centre of Excellence Pvt. Ltd.)",
           description:
-            "Read Inxyme Terms of Service to understand user responsibilities, website rules, intellectual property rights, services and legal terms.",
+            "Read the Terms of Service for Inxyme, operated by Eklavya Centre of Excellence Pvt. Ltd., covering user responsibilities, rules, and legal terms.",
           type: "article",
         }}
       />
@@ -30,8 +30,25 @@ const TermsOfService = () => {
             <h2 className="text-2xl font-semibold mt-8 mb-4">
               AGREEMENT TO OUR LEGAL TERMS
             </h2>
+            <div className="bg-blue-50 dark:bg-slate-900/80 border border-blue-200 dark:border-blue-800/60 rounded-xl p-4 sm:p-5 mb-6 text-sm text-slate-800 dark:text-slate-200">
+              <p className="font-bold text-slate-900 dark:text-white mb-1">
+                Legal Entity &amp; Brand Relationship
+              </p>
+              <p>
+                <strong>Eklavya Centre of Excellence Pvt. Ltd.</strong> is the
+                registered corporate entity behind this platform, operating and
+                conducting business publicly under its well-known brand name{" "}
+                <strong>Inxyme</strong>.
+              </p>
+            </div>
+
             <p className="mb-4">
-              We are Inxyme ("Company," "we," "us,"
+              We are{" "}
+              <strong>
+                Eklavya Centre of Excellence Pvt. Ltd.
+              </strong>
+              , operating publicly under our brand name{" "}
+              <strong>Inxyme</strong> ("Company," "Inxyme," "we," "us,"
               "our"). We operate https://www.inxyme.com/, as well as any other
               related products and services that refer or link to these legal
               terms (the "Legal Terms") (collectively, the "Services"). You can
@@ -40,7 +57,11 @@ const TermsOfService = () => {
             <p className="mb-4">
               These Legal Terms constitute a legally binding agreement made
               between you, whether personally or on behalf of an entity ("you"),
-              and Inxyme, concerning your access to and
+              and{" "}
+              <strong>
+                Eklavya Centre of Excellence Pvt. Ltd. (operating as Inxyme)
+              </strong>
+              , concerning your access to and
               use of the Services. You agree that by accessing the Services, you
               have read, understood, and agreed to be bound by all of these
               Legal Terms. IF YOU DO NOT AGREE WITH ALL OF THESE LEGAL TERMS,
@@ -622,7 +643,8 @@ const TermsOfService = () => {
             </h2>
             <p className="mb-4">
               These Legal Terms shall be governed by and defined following the
-              laws of India. Inxyme and yourself
+              laws of India. Eklavya Centre of Excellence Pvt. Ltd. (Inxyme) and
+              yourself
               irrevocably consent that the courts of Noida, Uttar Pradesh shall
               have exclusive jurisdiction to resolve any dispute which may arise
               in connection with these Legal Terms.
@@ -870,7 +892,9 @@ const TermsOfService = () => {
               contact us at:
             </p>
             <address className="not-italic text-black dark:text-white mb-4">
-              Inxyme
+              <strong>Eklavya Centre of Excellence Pvt. Ltd.</strong>
+              <br />
+              Brand Name: Inxyme
               <br />
               B-127, B Block, Sector 2
               <br />

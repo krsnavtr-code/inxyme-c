@@ -13,13 +13,13 @@ const PrivacyPolicy = () => {
   return (
     <div className="min-h-screen mt-10 bg-gray-50 dark:bg-slate-900">
       <SEO
-        title="Privacy Policy | Inxyme Online Learning Platform"
-        description="Read Inxyme Privacy Policy to learn how we collect, use, protect and manage your personal data, privacy rights and online information."
-        keywords="Inxyme privacy policy, Inxyme data privacy, online learning privacy policy, personal data protection, privacy rights, user data security, Inxyme"
+        title="Privacy Policy | Inxyme (Eklavya Centre of Excellence Pvt. Ltd.)"
+        description="Read the Privacy Policy of Inxyme, operated by Eklavya Centre of Excellence Pvt. Ltd., to learn how we collect, use, protect, and manage your personal data and privacy rights."
+        keywords="Inxyme privacy policy, Eklavya Centre of Excellence Pvt. Ltd., Inxyme data privacy, online learning privacy policy, personal data protection, privacy rights, user data security, Inxyme"
         og={{
-          title: "Privacy Policy | Inxyme Online Learning Platform",
+          title: "Privacy Policy | Inxyme (Eklavya Centre of Excellence Pvt. Ltd.)",
           description:
-            "Read Inxyme Privacy Policy to learn how we collect, use, protect and manage your personal data, privacy rights and online information.",
+            "Read the Privacy Policy of Inxyme, operated by Eklavya Centre of Excellence Pvt. Ltd., to learn how we collect, use, protect, and manage your personal data.",
           type: "article",
         }}
       />
@@ -33,11 +33,32 @@ const PrivacyPolicy = () => {
           </p>
 
           <div className="prose dark:prose-invert max-w-none space-y-6 text-black dark:text-white">
+            <div className="bg-blue-50 dark:bg-slate-900/80 border border-blue-200 dark:border-blue-800/60 rounded-xl p-4 sm:p-5 text-sm text-slate-800 dark:text-slate-200">
+              <p className="font-bold text-slate-900 dark:text-white mb-1">
+                Corporate &amp; Brand Identity Disclosure
+              </p>
+              <p>
+                <strong>Inxyme</strong> is the public-facing e-learning brand name
+                of{" "}
+                <strong>Eklavya Centre of Excellence Pvt. Ltd.</strong>{" "}
+                (Registered Company). All data collection, platform operations,
+                student enrollments, and privacy commitments on this website are
+                managed by Eklavya Centre of Excellence Pvt. Ltd. under the
+                Inxyme brand.
+              </p>
+            </div>
+
             <p>
-              This Privacy Notice for Inxyme ("we," "us," or "our") describes
-              how and why we might access, collect, store, use, and/or share
-              ("process") your personal information when you use our services
-              ("Services"), including when you:
+              This Privacy Notice for{" "}
+              <strong>
+                Eklavya Centre of Excellence Pvt. Ltd. (operating under its
+                brand name &ldquo;Inxyme&rdquo;
+              </strong>
+              , hereinafter &quot;Company,&quot; &quot;Inxyme,&quot;
+              &quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) describes how
+              and why we might access, collect, store, use, and/or share
+              (&quot;process&quot;) your personal information when you use our
+              services (&quot;Services&quot;), including when you:
             </p>
             <ul className="list-disc pl-6 space-y-2">
               <li>
@@ -700,7 +721,9 @@ const PrivacyPolicy = () => {
               Notice or our privacy practices, you may contact us at:
             </p>
             <address className="not-italic mb-4">
-              Inxyme
+              <strong>Eklavya Centre of Excellence Pvt. Ltd.</strong>
+              <br />
+              Operating Brand: Inxyme
               <br />
               B-127, B Block, Sector 2, Noida
               <br />
