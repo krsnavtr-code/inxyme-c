@@ -704,11 +704,14 @@ export default function StudentPaymentPage({
                 </div>
 
                 {/* Secure Payment Footer Badges */}
-                <div className="pt-3 text-center">
-                  <p className="text-[11px] text-gray-400 flex items-center justify-center gap-2">
+                <div className="pt-3 text-center space-y-1">
+                  <p className="text-[11px] text-gray-500 flex items-center justify-center gap-2">
                     <span>Secured by Razorpay</span>
                     <span>•</span>
                     <span>UPI, Cards, NetBanking Supported</span>
+                  </p>
+                  <p className="text-[11px] text-gray-500">
+                    Eklavya Centre of Excellence Pvt. Ltd. (Inxyme) &bull; Any kind of legal dispute will come under jurisdiction of Delhi High Court.
                   </p>
                 </div>
               </form>

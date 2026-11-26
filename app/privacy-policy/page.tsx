@@ -44,7 +44,8 @@ const PrivacyPolicy = () => {
                 (Registered Company). All data collection, platform operations,
                 student enrollments, and privacy commitments on this website are
                 managed by Eklavya Centre of Excellence Pvt. Ltd. under the
-                Inxyme brand.
+                Inxyme brand. Any kind of legal dispute will come under
+                jurisdiction of Delhi High Court.
               </p>
             </div>
 
@@ -275,6 +276,14 @@ const PrivacyPolicy = () => {
                 >
                   13. How Can You Review, Update, or Delete the Data We Collect
                   From You?
+                </a>
+              </p>
+              <p>
+                <a
+                  href="#section-14"
+                  className="text-blue-600 dark:text-blue-400 hover:underline"
+                >
+                  14. Governing Law &amp; Jurisdiction
                 </a>
               </p>
             </div>
@@ -760,6 +769,15 @@ const PrivacyPolicy = () => {
               . We will review and respond to valid requests in accordance with
               applicable data protection and privacy laws. Some requests may be
               subject to identity verification and applicable legal limitations.
+            </p>
+
+            {/* Section 14 */}
+            <h2 id="section-14" className="text-2xl font-semibold mt-8 mb-4">
+              14. GOVERNING LAW &amp; JURISDICTION
+            </h2>
+            <p className="mb-4">
+              This Privacy Notice is governed by the laws of India. Any kind of
+              legal dispute will come under jurisdiction of Delhi High Court.
             </p>
           </div>
         </div>

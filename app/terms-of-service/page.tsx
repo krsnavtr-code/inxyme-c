@@ -38,7 +38,8 @@ const TermsOfService = () => {
                 <strong>Eklavya Centre of Excellence Pvt. Ltd.</strong> is the
                 registered corporate entity behind this platform, operating and
                 conducting business publicly under its well-known brand name{" "}
-                <strong>Inxyme</strong>.
+                <strong>Inxyme</strong>. Any kind of legal dispute will come
+                under jurisdiction of Delhi High Court.
               </p>
             </div>
 
@@ -644,10 +645,12 @@ const TermsOfService = () => {
             <p className="mb-4">
               These Legal Terms shall be governed by and defined following the
               laws of India. Eklavya Centre of Excellence Pvt. Ltd. (Inxyme) and
-              yourself
-              irrevocably consent that the courts of Noida, Uttar Pradesh shall
-              have exclusive jurisdiction to resolve any dispute which may arise
-              in connection with these Legal Terms.
+              yourself irrevocably consent that{" "}
+              <strong>
+                any kind of legal dispute will come under jurisdiction of Delhi
+                High Court
+              </strong>
+              .
             </p>
 
             {/* Section 11 */}

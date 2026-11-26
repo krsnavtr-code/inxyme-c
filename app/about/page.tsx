@@ -180,10 +180,11 @@ export default function About() {
                 </div>
                 <div className="rounded-xl bg-slate-50 dark:bg-slate-900/70 border border-slate-200 dark:border-slate-700 p-4">
                   <dt className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                    Governance &amp; Trust
+                    Legal Jurisdiction
                   </dt>
                   <dd className="mt-1 text-base font-bold text-slate-900 dark:text-white">
-                    Unified Billing, Receipts &amp; Credentials
+                    Delhi High Court (Any kind of legal dispute will come under
+                    jurisdiction of Delhi High Court)
                   </dd>
                 </div>
               </dl>

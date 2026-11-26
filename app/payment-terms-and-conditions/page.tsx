@@ -71,6 +71,13 @@ export default function PaymentTAndC() {
             If the student gets access and is allocated a batch, the fee is
             non-refundable.
           </p>
+          <h2 className="text-xl font-bold mt-6 mb-4">
+            Governing Law &amp; Jurisdiction
+          </h2>
+          <p className="mb-4">
+            Any kind of legal dispute will come under jurisdiction of Delhi High
+            Court.
+          </p>
           <p>
             By completing this transaction, I acknowledge that I have read,
             understood, and agreed to all the terms and conditions mentioned

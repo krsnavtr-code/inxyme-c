@@ -299,9 +299,14 @@ function Footer() {
 
         {/* Bottom Bar */}
         <div className="mt-6 pt-6 border-t border-slate-200 dark:border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
-          <p className="text-xs text-slate-600 dark:text-slate-400">
-            &copy; {currentYear} Inxyme — A brand of Eklavya Centre of Excellence Pvt. Ltd. All rights reserved.
-          </p>
+          <div className="text-center sm:text-left space-y-1">
+            <p className="text-xs text-slate-600 dark:text-slate-400">
+              &copy; {currentYear} Inxyme — A brand of Eklavya Centre of Excellence Pvt. Ltd. All rights reserved.
+            </p>
+            <p className="text-[11px] text-slate-600 dark:text-slate-400">
+              Any kind of legal dispute will come under jurisdiction of Delhi High Court.
+            </p>
+          </div>
           <div className="flex items-center gap-2 text-xs text-slate-800 dark:text-slate-300 font-medium">
             <FaBook className="h-4 w-4 text-blue-500" />
             <span>Learn something new today</span>
