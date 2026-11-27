@@ -64,6 +64,9 @@ export default function PaymentForm({
   const [isLoadingCourses, setIsLoadingCourses] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [courseSearch, setCourseSearch] = useState(courseName || initialData?.course || "");
+  const [selectedCourseIdState, setSelectedCourseIdState] = useState<string>(
+    courseId || "",
+  );
   const [selectedCoursePrice, setSelectedCoursePrice] = useState<number | null>(
     price !== undefined && price !== null ? Number(price) : null,
   );
@@ -99,6 +102,89 @@ export default function PaymentForm({
     price !== undefined && price !== null
       ? Number(price)
       : selectedCoursePrice;
+
+  const findMatchedSnapshot = (
+    targetCourseId: string | undefined,
+    targetCourseName: string | undefined,
+  ) => {
+    if (!currentUser) return null;
+    const tid = targetCourseId ? String(targetCourseId) : "";
+    const ttitle = String(targetCourseName || "").trim().toLowerCase();
+    const list = Array.isArray(currentUser.courseDiscounts)
+      ? currentUser.courseDiscounts
+      : [];
+    if (tid) {
+      const byId = list.find((item) => item?.courseId && String(item.courseId) === tid);
+      if (byId && Number(byId.originalCoursePrice) > 0) return byId;
+    }
+    if (ttitle) {
+      const byTitle = list.find(
+        (item) =>
+          item?.courseTitle &&
+          String(item.courseTitle).trim().toLowerCase() === ttitle,
+      );
+      if (byTitle && Number(byTitle.originalCoursePrice) > 0) return byTitle;
+    }
+    if (
+      Number(currentUser.discountCoursePrice) > 0 &&
+      currentUser.discountedCoursePrice !== null &&
+      currentUser.discountedCoursePrice !== undefined
+    ) {
+      const snapId = currentUser.discountCourseId ? String(currentUser.discountCourseId) : "";
+      const snapTitle = String(currentUser.discountCourseTitle || "").trim().toLowerCase();
+      if (
+        (tid && snapId && tid === snapId) ||
+        (ttitle && snapTitle && ttitle === snapTitle)
+      ) {
+        return {
+          courseId: currentUser.discountCourseId,
+          courseTitle: currentUser.discountCourseTitle,
+          originalCoursePrice: Number(currentUser.discountCoursePrice),
+          offeredPrice: Number(currentUser.discountedCoursePrice),
+          discountAmount: Number(
+            currentUser.discountAmount ||
+              Math.max(
+                0,
+                Number(currentUser.discountCoursePrice) -
+                  Number(currentUser.discountedCoursePrice),
+              ),
+          ),
+          discountPercent: Number(currentUser.discount || 0),
+        };
+      }
+    }
+    return null;
+  };
+
+  const matchedSnapshot = findMatchedSnapshot(
+    selectedCourseIdState || courseId,
+    formData.course || courseSearch || courseName,
+  );
+
+  const displayBasePrice = matchedSnapshot
+    ? Number(matchedSnapshot.originalCoursePrice)
+    : Number(effectivePrice || 0);
+
+  const computedUserDiscountAmount = matchedSnapshot
+    ? Math.max(
+        0,
+        Number(
+          (
+            matchedSnapshot.originalCoursePrice - matchedSnapshot.offeredPrice
+          ).toFixed(2),
+        ),
+      )
+    : displayBasePrice > 0 && (currentUser?.discount ?? 0) > 0
+      ? Math.round(displayBasePrice * ((currentUser?.discount ?? 0) / 100))
+      : 0;
+
+  const hasAvailableDiscount =
+    Boolean(matchedSnapshot && computedUserDiscountAmount > 0) ||
+    (currentUser?.discount ?? 0) > 0;
+
+  const displayDiscountPercent = matchedSnapshot
+    ? Number(Number(matchedSnapshot.discountPercent || currentUser?.discount || 0).toFixed(2))
+    : Number(Number(currentUser?.discount || 0).toFixed(2));
 
   // Fetch courses list if courseName wasn't pre-provided
   useEffect(() => {
@@ -156,7 +242,19 @@ export default function PaymentForm({
       try {
         const response = await api.get("/auth/profile");
         if (response.data?.user) {
-          updateUser({ discount: response.data.user.discount || 0 });
+          const u = response.data.user;
+          updateUser({
+            discount: u.discount || 0,
+            discountCourseId: u.discountCourseId || null,
+            discountCourseTitle: u.discountCourseTitle || "",
+            discountCoursePrice: u.discountCoursePrice || 0,
+            discountedCoursePrice:
+              u.discountedCoursePrice !== undefined && u.discountedCoursePrice !== null
+                ? Number(u.discountedCoursePrice)
+                : null,
+            discountAmount: u.discountAmount || 0,
+            courseDiscounts: Array.isArray(u.courseDiscounts) ? u.courseDiscounts : [],
+          });
         }
       } catch (error) {
         console.error("Error fetching profile:", error);
@@ -170,34 +268,56 @@ export default function PaymentForm({
     if (paymentType === "registration") {
       const fee = 2000;
       setFormData((prev) => ({ ...prev, paymentAmount: String(fee) }));
-    } else if (paymentType === "full" && effectivePrice !== null && effectivePrice > 0) {
-      const total = Number(effectivePrice);
-      if (discountApplied && currentUser?.discount) {
-        const discount = Math.round(total * (currentUser.discount / 100));
+    } else if (paymentType === "full" && (displayBasePrice > 0 || (effectivePrice !== null && effectivePrice > 0))) {
+      const baseTotal = displayBasePrice > 0 ? displayBasePrice : Number(effectivePrice || 0);
+      if (discountApplied && hasAvailableDiscount) {
+        const netTotal = matchedSnapshot
+          ? Number(matchedSnapshot.offeredPrice)
+          : Math.max(0, baseTotal - computedUserDiscountAmount);
         setFormData((prev) => ({
           ...prev,
-          paymentAmount: String(total - discount),
+          coursePrice: String(baseTotal),
+          paymentAmount: String(netTotal),
         }));
       } else {
-        setFormData((prev) => ({ ...prev, paymentAmount: String(total) }));
+        const normalTotal = Number(effectivePrice || baseTotal);
+        setFormData((prev) => ({
+          ...prev,
+          coursePrice: String(normalTotal),
+          paymentAmount: String(normalTotal),
+        }));
       }
     }
-  }, [paymentType, effectivePrice, discountApplied, currentUser?.discount]);
+  }, [
+    paymentType,
+    effectivePrice,
+    displayBasePrice,
+    discountApplied,
+    hasAvailableDiscount,
+    computedUserDiscountAmount,
+    matchedSnapshot,
+  ]);
 
   const handleSelectCourse = (courseItem: any) => {
     const cPrice = courseItem.price ?? courseItem.originalPrice ?? 0;
     const numericPrice = Number(cPrice);
+    setSelectedCourseIdState(courseItem._id || "");
     setSelectedCoursePrice(numericPrice);
     setCourseSearch(courseItem.title);
     setIsDropdownOpen(false);
 
+    const itemSnapshot = findMatchedSnapshot(courseItem._id, courseItem.title);
+    const activeBase = itemSnapshot ? Number(itemSnapshot.originalCoursePrice) : numericPrice;
+
     let newAmount = "";
     if (paymentType === "registration") {
       newAmount = "2000";
-    } else if (numericPrice > 0) {
-      let total = numericPrice;
-      if (discountApplied && currentUser?.discount) {
-        total -= Math.round(total * (currentUser.discount / 100));
+    } else if (activeBase > 0) {
+      let total = discountApplied && itemSnapshot
+        ? Number(itemSnapshot.offeredPrice)
+        : numericPrice;
+      if (discountApplied && !itemSnapshot && currentUser?.discount) {
+        total = Math.max(0, numericPrice - Math.round(numericPrice * (currentUser.discount / 100)));
       }
       newAmount = String(total);
     } else {
@@ -207,7 +327,7 @@ export default function PaymentForm({
     setFormData((prev) => ({
       ...prev,
       course: courseItem.title,
-      coursePrice: String(numericPrice),
+      coursePrice: String(discountApplied && itemSnapshot ? activeBase : numericPrice),
       paymentAmount: newAmount,
     }));
   };
@@ -221,6 +341,7 @@ export default function PaymentForm({
 
   const handleClearCourse = () => {
     setCourseSearch("");
+    setSelectedCourseIdState("");
     setSelectedCoursePrice(null);
     setFormData((prev) => ({
       ...prev,
@@ -750,22 +871,24 @@ export default function PaymentForm({
                       <div className="flex justify-between">
                         <span>Course Price:</span>
                         <span>
-                          ₹{effectivePrice ? Number(effectivePrice).toLocaleString() : 0}
+                          ₹
+                          {(discountApplied && matchedSnapshot
+                            ? Number(matchedSnapshot.originalCoursePrice)
+                            : effectivePrice
+                              ? Number(effectivePrice)
+                              : 0
+                          ).toLocaleString("en-IN")}
                         </span>
                       </div>
                       <div className="flex justify-between text-gray-500 dark:text-gray-400">
                         <span>GST (18%):</span>
                         <span>Included in price</span>
                       </div>
-                      {discountApplied && currentUser?.discount ? (
+                      {discountApplied && hasAvailableDiscount ? (
                         <div className="flex justify-between text-green-600">
-                          <span>Discount ({currentUser.discount}%):</span>
+                          <span>Discount ({displayDiscountPercent}%):</span>
                           <span>
-                            -₹
-                            {Math.round(
-                              Number(effectivePrice || 0) *
-                                (currentUser.discount / 100),
-                            ).toLocaleString()}
+                            -₹{computedUserDiscountAmount.toLocaleString("en-IN")}
                           </span>
                         </div>
                       ) : null}
@@ -802,8 +925,7 @@ export default function PaymentForm({
               </label>
             </div>
 
-            {paymentType === "full" &&
-            (currentUser?.discount ?? 0) > 0 ? (
+            {paymentType === "full" && hasAvailableDiscount ? (
               <div className="text-center">
                 {!discountApplied ? (
                   <button
@@ -811,7 +933,11 @@ export default function PaymentForm({
                     onClick={() => setDiscountApplied(true)}
                     className="px-3 py-1 bg-green-600 text-white text-xs rounded hover:bg-green-700"
                   >
-                    Apply Discount ({currentUser?.discount}%)
+                    {matchedSnapshot
+                      ? `Apply Offered Price (₹${Number(
+                          matchedSnapshot.offeredPrice,
+                        ).toLocaleString("en-IN")} • ${displayDiscountPercent}% OFF)`
+                      : `Apply Discount (${displayDiscountPercent}%)`}
                   </button>
                 ) : (
                   <button

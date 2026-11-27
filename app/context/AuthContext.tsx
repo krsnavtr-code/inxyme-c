@@ -10,6 +10,15 @@ import React, {
 import { useRouter } from "next/navigation";
 import api from "../utils/api";
 
+interface CourseDiscountSnapshot {
+  courseId?: string | null;
+  courseTitle?: string;
+  originalCoursePrice: number;
+  offeredPrice: number;
+  discountAmount?: number;
+  discountPercent: number;
+}
+
 interface User {
   _id: string;
   name?: string;
@@ -17,6 +26,12 @@ interface User {
   email: string;
   phone?: string;
   discount?: number;
+  discountCourseId?: string | null;
+  discountCourseTitle?: string;
+  discountCoursePrice?: number;
+  discountedCoursePrice?: number | null;
+  discountAmount?: number;
+  courseDiscounts?: CourseDiscountSnapshot[];
   role?: string;
   isAdmin?: boolean;
   isApproved?: boolean;
@@ -61,6 +76,15 @@ const normalizeUser = (user: any): User => ({
   email: user.email || "",
   phone: user.phone || "",
   discount: user.discount || 0,
+  discountCourseId: user.discountCourseId || null,
+  discountCourseTitle: user.discountCourseTitle || "",
+  discountCoursePrice: user.discountCoursePrice || 0,
+  discountedCoursePrice:
+    user.discountedCoursePrice !== undefined && user.discountedCoursePrice !== null
+      ? Number(user.discountedCoursePrice)
+      : null,
+  discountAmount: user.discountAmount || 0,
+  courseDiscounts: Array.isArray(user.courseDiscounts) ? user.courseDiscounts : [],
   role: user.role || "user",
   isAdmin: user.role === "admin" || user.isAdmin || false,
   isApproved: user.isApproved || false,
